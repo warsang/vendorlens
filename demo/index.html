@@ -1,0 +1,124 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>VendorLens on-device verdict — jev-web demo</title>
+<style>
+  body { font-family: system-ui, sans-serif; max-width: 720px; margin: 2rem auto; padding: 0 1rem; }
+  textarea { width: 100%; height: 140px; font: inherit; }
+  button { font: inherit; padding: .5rem 1.2rem; margin-top: .5rem; cursor: pointer; }
+  button:disabled { opacity: .5; cursor: wait; }
+  .q { margin-top: 1.2rem; border-top: 1px solid #ddd; padding-top: .8rem; }
+  .bar-row { display: flex; align-items: center; gap: .5rem; margin: .25rem 0; }
+  .bar-row .lbl { width: 220px; text-align: right; font-size: .9rem; }
+  .bar { height: 14px; background: #2a7de1; border-radius: 3px; }
+  .meta { color: #555; font-size: .85rem; }
+  #status { margin-top: 1rem; }
+  .err { color: #b00020; }
+</style>
+<script type="importmap">
+{
+  "imports": {
+    "jev-web": "./node_modules/jev-web/src/index.mjs",
+    "@huggingface/transformers": "https://cdn.jsdelivr.net/npm/@huggingface/transformers@4.3.0/dist/transformers.min.js",
+    "onnxruntime-web": "https://cdn.jsdelivr.net/npm/onnxruntime-web@1.22.0/dist/ort.web.min.mjs"
+  }
+}
+</script>
+</head>
+<body>
+<h1>VendorLens: on-device risk verdict</h1>
+<p class="meta">Paste a vendor's homepage text. A typed-decision model
+(<code>jev-web</code>, Bekko 17m) scores it <b>entirely in your browser</b> —
+no text leaves this page. This is the client-side verdict layer of VendorLens.</p>
+
+<textarea id="state">Acme Cloud Services - Cut your cloud bill by 90% overnight!
+Limited offer ends tonight. No company registration number listed.
+Contact us on Telegram @acmeclouddeals. Wire transfer only.
+Our revolutionary AI does everything, trusted by thousands (reviews coming soon).</textarea>
+<br>
+<button id="assess">Assess</button>
+<div id="status" class="meta">Model not loaded yet. First run downloads ~29 MB of weights (cached afterwards).</div>
+<div id="out"></div>
+
+<script type="module">
+import { createBekkoDecider } from "jev-web";
+
+const status = document.getElementById("status");
+const out = document.getElementById("out");
+const btn = document.getElementById("assess");
+let decider = null;
+
+const QUESTIONS = [
+  { type: "noul", instructions: "This text shows signs of a scam operation." },
+  { type: "score", instructions: "How trustworthy does this vendor appear?",
+    options: ["very untrustworthy", "untrustworthy", "neutral", "trustworthy", "very trustworthy"] },
+  { type: "choice", instructions: "What is the dominant risk signal in this text?",
+    options: ["none visible", "pressure tactics", "too-good-to-be-true pricing",
+              "vague company identity", "suspicious payment request"] },
+];
+
+function barRow(label, p) {
+  const row = document.createElement("div");
+  row.className = "bar-row";
+  const l = document.createElement("span");
+  l.className = "lbl"; l.textContent = label;
+  const b = document.createElement("div");
+  b.className = "bar"; b.style.width = Math.round(p * 320) + "px";
+  const v = document.createElement("span");
+  v.className = "meta"; v.textContent = (p * 100).toFixed(1) + "%";
+  row.append(l, b, v);
+  return row;
+}
+
+btn.addEventListener("click", async () => {
+  btn.disabled = true;
+  out.innerHTML = "";
+  const state = document.getElementById("state").value.trim();
+  if (!state) { status.textContent = "Paste some vendor text first."; btn.disabled = false; return; }
+  try {
+    if (!decider) {
+      status.textContent = "Loading model weights (first run only)...";
+      decider = await createBekkoDecider({
+        onProgress: (p) => { status.textContent = "Loading: " + (p.file || p.phase || ""); },
+      });
+      status.textContent = "Model ready (" + decider.info.model + ").";
+    }
+    status.textContent = "Scoring...";
+    const t0 = performance.now();
+    const { answers, timings } = await decider.decide(state, QUESTIONS);
+    const ms = Math.round(performance.now() - t0);
+    status.textContent = "Done in " + ms + " ms on-device (infer " +
+      Math.round(timings?.inferMs ?? 0) + " ms). Zero network requests for the decision itself.";
+
+    answers.forEach((a, i) => {
+      const div = document.createElement("div");
+      div.className = "q";
+      const h = document.createElement("strong");
+      h.textContent = QUESTIONS[i].instructions;
+      div.appendChild(h);
+      const probs = a.probabilities || {};
+      Object.entries(probs).sort((x, y) => y[1] - x[1])
+        .forEach(([label, p]) => div.appendChild(barRow(label, p)));
+      const m = document.createElement("div");
+      m.className = "meta";
+      m.textContent = "answer: " + (a.choice ?? a.level ?? (a.noul > 0.5 ? "yes" : "no")) +
+        " · confidence " + (a.confidence * 100).toFixed(1) + "%";
+      div.appendChild(m);
+      out.appendChild(div);
+    });
+  } catch (e) {
+    status.innerHTML = "";
+    const s = document.createElement("span");
+    s.className = "err";
+    s.textContent = "Could not load or run the model in this browser: " + (e && e.message ? e.message : e) +
+      " — the Python agent and its brief still work; this layer needs a modern browser with WebAssembly.";
+    status.appendChild(s);
+  } finally {
+    btn.disabled = false;
+  }
+});
+</script>
+</body>
+</html>
