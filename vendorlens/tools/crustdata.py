@@ -1,12 +1,12 @@
 """Crustdata company/people enrichment.
 
-API: https://www.crustdata.com/api-documentation
-Auth: Authorization: Token <CRUSTDATA_API_KEY>
-Free tier for the hackathon: 5,000 credits with promo code NEATLOGS-OCT2026.
+API: https://docs.crustdata.com/company-docs/enrichment
+Auth: Authorization: Bearer <CRUSTDATA_API_KEY> (+ x-api-version header).
+Free tier for the hackathon: credits with promo code NEATLOGS-OCT2026.
 
-Endpoint paths follow Crustdata's screener API; every call is wrapped so any
-failure degrades gracefully (the agent records the miss and continues with
-the other tools). In --demo mode, canned data is returned instead.
+Endpoint: POST /company/enrich with {"domains": [...]}. Every call is wrapped
+so any failure degrades gracefully (the agent records the miss and continues
+with the other tools). In --demo mode, canned data is returned instead.
 """
 from __future__ import annotations
 
@@ -20,6 +20,7 @@ DESCRIPTION = (
     "founding year, LinkedIn, key people. Returns structured firmographics."
 )
 BASE = "https://api.crustdata.com"
+API_VERSION = "2025-11-01"
 
 DEMO_DATA = {
     "company_name": "Acme Cloud Services Ltd",
@@ -35,6 +36,13 @@ DEMO_DATA = {
 }
 
 
+def _pick(d: dict, *keys):
+    for k in keys:
+        if d.get(k) not in (None, "", []):
+            return d[k]
+    return None
+
+
 async def run(args: dict, ctx: dict) -> dict:
     domain = args["domain"]
     if ctx.get("demo"):
@@ -46,31 +54,48 @@ async def run(args: dict, ctx: dict) -> dict:
     if not key:
         return {"ok": False, "error": "CRUSTDATA_API_KEY not set",
                 "sources": []}
-    headers = {"Authorization": f"Token {key}",
-               "Content-Type": "application/json"}
+    headers = {"Authorization": f"Bearer {key}",
+               "Content-Type": "application/json",
+               "x-api-version": API_VERSION}
     try:
-        async with httpx.AsyncClient(timeout=20) as c:
+        async with httpx.AsyncClient(timeout=25) as c:
             r = await c.post(
-                f"{BASE}/screener/company/search",
+                f"{BASE}/company/enrich",
                 headers=headers,
-                json={"filters": {"company_website_domain": [domain]},
-                      "page": 1},
+                json={"domains": [domain],
+                      "fields": ["basic_info", "headcount", "funding",
+                                 "locations", "social_profiles"],
+                      "exact_match": True},
             )
             r.raise_for_status()
-            hits = r.json().get("companies") or r.json().get("results") or []
-            if not hits:
+            payload = r.json()
+            entries = payload if isinstance(payload, list) else \
+                payload.get("results") or payload.get("data") or []
+            match = None
+            for entry in entries:
+                matches = entry.get("matches") or []
+                if matches:
+                    match = max(matches,
+                                key=lambda m: m.get("confidence_score") or 0)
+                    break
+            if not match:
                 return {"ok": True, "data": {"found": False},
-                        "sources": [f"{BASE}/screener/company/search"]}
-            top = hits[0]
+                        "sources": [f"{BASE}/company/enrich"]}
+            cd = match.get("company_data") or {}
+            basic = cd.get("basic_info") or {}
+            loc = cd.get("locations") or {}
+            if isinstance(loc, list):
+                loc = loc[0] if loc else {}
             return {"ok": True, "data": {
                 "found": True,
-                "company_name": top.get("company_name"),
-                "location": top.get("company_location") or top.get("location"),
-                "headcount": top.get("headcount") or top.get("company_size"),
-                "founded": top.get("founded_year") or top.get("year_founded"),
-                "linkedin_url": top.get("linkedin_company_url"),
-                "description": (top.get("company_description") or "")[:500],
-            }, "sources": [f"{BASE}/screener/company/search"]}
+                "company_name": _pick(basic, "name", "company_name"),
+                "location": _pick(loc, "headquarters", "city", "country"),
+                "headcount": _pick(basic, "employee_count_range"),
+                "founded": _pick(basic, "year_founded"),
+                "linkedin_url": _pick(basic, "professional_network_url"),
+                "description": str(_pick(basic, "description") or "")[:500],
+                "confidence": match.get("confidence_score"),
+            }, "sources": [f"{BASE}/company/enrich"]}
     except Exception as exc:  # noqa: BLE001 - degrade, never crash the agent
         return {"ok": False, "error": f"{type(exc).__name__}: {exc}",
                 "sources": []}
