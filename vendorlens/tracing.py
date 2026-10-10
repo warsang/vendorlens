@@ -39,7 +39,9 @@ def _key() -> str:
 def init_tracing(workflow_name: str = "vendorlens-investigation") -> bool:
     """Init neatlogs once. Returns True when live tracing is active."""
     if _SDK and _key():
-        neatlogs.init(api_key=_key(), workflow_name=workflow_name)
+        neatlogs.init(api_key=_key(),
+                      endpoint="https://ingest.neatlogs.com",
+                      workflow_name=workflow_name)
         return True
     return False
 
@@ -49,6 +51,20 @@ def wrap_client(client):
     if _SDK and _key():
         return neatlogs.wrap(client)
     return client
+
+
+@contextmanager
+def workflow(name: str, **attrs):
+    """Root WORKFLOW span for one investigation run.
+
+    Groups the whole agent loop (planner, tool steps, observer) under one
+    trace in the neatlogs dashboard. No-op when the SDK or key is missing.
+    """
+    if _SDK and _key():
+        with neatlogs.trace(name, kind="WORKFLOW", **attrs):
+            yield
+    else:
+        yield
 
 
 def set_trace_file(path: Path, run_id: str) -> None:
