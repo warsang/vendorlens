@@ -15,6 +15,8 @@ def main() -> int:
     ap.add_argument("domain", help="vendor domain to investigate")
     ap.add_argument("--demo", action="store_true",
                     help="run with canned data (no API keys needed)")
+    ap.add_argument("--no-llm", action="store_true",
+                    help="live tools with a deterministic plan (no LLM key needed)")
     ap.add_argument("--out", default="runs",
                     help="output directory for run artifacts")
     args = ap.parse_args()
@@ -31,7 +33,8 @@ def main() -> int:
     tracing.set_trace_file(run_dir / "trace.jsonl", run_id)
 
     state = asyncio.run(
-        agent.run_investigation(args.domain, demo=args.demo, run_id=run_id))
+        agent.run_investigation(args.domain, demo=args.demo,
+                                run_id=run_id, no_llm=args.no_llm))
 
     (run_dir / "brief.md").write_text(state["brief_md"], encoding="utf-8")
     (run_dir / "state.json").write_text(
