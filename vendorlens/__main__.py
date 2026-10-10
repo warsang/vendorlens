@@ -32,9 +32,13 @@ def main() -> int:
     run_id = uuid.uuid4().hex[:8]
     tracing.set_trace_file(run_dir / "trace.jsonl", run_id)
 
-    state = asyncio.run(
-        agent.run_investigation(args.domain, demo=args.demo,
-                                run_id=run_id, no_llm=args.no_llm))
+    state = None
+    with tracing.workflow("vendorlens-investigation", domain=args.domain,
+                           mode="demo" if args.demo else
+                           ("no-llm" if args.no_llm else "live")):
+        state = asyncio.run(
+            agent.run_investigation(args.domain, demo=args.demo,
+                                    run_id=run_id, no_llm=args.no_llm))
 
     (run_dir / "brief.md").write_text(state["brief_md"], encoding="utf-8")
     (run_dir / "state.json").write_text(
