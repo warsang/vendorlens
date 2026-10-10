@@ -116,7 +116,7 @@ npx serve .   # open the page it prints
 - **LiteLLM shared key**: grab it from the check-in email or the Discord → `LITELLM_API_BASE`, `LITELLM_API_KEY`, `LITELLM_MODEL` in `.env`. $20 budget for the team, keep prompts tight.
 - **Crustdata**: app.crustdata.com, promo code `NEATLOGS-OCT2026`, **email signup (not "Continue with Google")** so the code applies → `CRUSTDATA_API_KEY`. 5,000 credits.
 
-**2. Run it:** `python -m vendorlens <domain>` for a live investigation; `python -m vendorlens acme.example --demo` for the canned no-keys run. Artifacts land in `runs/<domain>/<ts>/` (brief.md, state.json, trace.jsonl).
+**2. Run it:** `./setup.sh` first (interactive, writes a gitignored `.env` — keys never touch the repo). Then `python -m vendorlens <domain>` for a live investigation, `python -m vendorlens <domain> --no-llm` for live tools with a deterministic plan and no LLM key, or `python -m vendorlens acme.example --demo` for the canned no-keys run. No LLM key at all? `--no-llm` is the way; local Ollama also works via `LITELLM_API_BASE=http://localhost:11434/v1`. Artifacts land in `runs/<domain>/<ts>/` (brief.md, state.json, trace.jsonl).
 
 **3. Demo page:** open `demo/index.html` in a real browser, hit Assess, confirm the jev-web probability bars render (API-correctness verified statically; needs one live load).
 
