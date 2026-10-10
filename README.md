@@ -106,3 +106,24 @@ npx serve .   # open the page it prints
   which httpx misparses — override with:
   `export no_proxy='localhost,127.0.0.1,::1,198.19.0.1,198.19.0.2'`.
 - `--demo` mode runs the whole loop with canned data and no keys.
+
+## Next steps (pick up here)
+
+**1. Signups — all on you (nothing here needs them to build, everything needs them to run live):**
+- **neatlogs**: sign up at app.neatlogs.com, create a project, put the Project API key (the top key, not `nlw_`) in `NEATLOGS_API_KEY`. Traces must exist for the submission.
+- **Entire**: run `entire/setup.sh`, sign in with GitHub in the browser, import `warsang/vendorlens`, commit, and capture your first checkpoint — you need the checkpoint **link + ID** for the submission.
+- **cfo.ai**: sign up at cfo.ai/neathacks — a card is required, **cancel immediately** in Settings → Billing (their own instructions; you won't be billed). Then paste `docs/business-plan-inputs.md` into cfo.ai and export the resulting business plan.
+- **LiteLLM shared key**: grab it from the check-in email or the Discord → `LITELLM_API_BASE`, `LITELLM_API_KEY`, `LITELLM_MODEL` in `.env`. $20 budget for the team, keep prompts tight.
+- **Crustdata**: app.crustdata.com, promo code `NEATLOGS-OCT2026`, **email signup (not "Continue with Google")** so the code applies → `CRUSTDATA_API_KEY`. 5,000 credits.
+
+**2. Run it:** `python -m vendorlens <domain>` for a live investigation; `python -m vendorlens acme.example --demo` for the canned no-keys run. Artifacts land in `runs/<domain>/<ts>/` (brief.md, state.json, trace.jsonl).
+
+**3. Demo page:** open `demo/index.html` in a real browser, hit Assess, confirm the jev-web probability bars render (API-correctness verified statically; needs one live load).
+
+**4. Record the demo video** (≤3 min) following `docs/demo-script.md` — it must explicitly cover neatlogs, Entire, and cfo.ai.
+
+**5. Build in public:** `docs/build-in-public.md` has three drafted #neatHack X posts — approve the exact text before anything posts.
+
+**6. Submit Oct 12, 7:00–11:55 PM IST (15:30–20:25 CEST):** quote post of the official neatlogs X post with team (`solohackaton`), name, project, public repo, and demo link. Include the Entire checkpoint link + ID, the cfo.ai business plan, and neatlogs trace links.
+
+**⚠️ Repo visibility:** this repo MUST be public at submission time — judges verify the code and the Oct 10–12 commit history. Flip it back to public before you submit.
