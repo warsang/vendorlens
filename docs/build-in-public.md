@@ -3,7 +3,7 @@
 DRAFTS ONLY. Do not post without his explicit approval of the exact text.
 Written in first person as a solo dev. Tag #neatHack in each.
 
-## Post 1 — kickoff (Sat morning)
+## Post 1 — kickoff (Sat)
 
 Day 1 of #neatHack. I'm building VendorLens solo: give it a company domain,
 an AI agent runs a full due-diligence investigation (WHOIS, DNS, TLS,
@@ -17,7 +17,7 @@ VendorLens update: the agent now retries failed tool calls with backoff
 instead of dying, and replans when a result is surprising. Watching it
 recover in the @neatlogs trace is genuinely satisfying. #neatHack
 
-## Post 3 — submission (Sun)
+## Post 3 — submission (Mon, before the 15:30–20:25 CEST window closes)
 
 Shipped VendorLens for #neatHack. An agent that investigates vendors end to
 end, a risk brief with every claim cited, plus an on-device verdict layer
