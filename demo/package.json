@@ -1,0 +1,9 @@
+{
+  "dependencies": {
+    "jev-web": "file:vendor/jev-web-0.7.2.tgz"
+  },
+  "name": "vendorlens-demo",
+  "private": true,
+  "type": "module",
+  "version": "0.1.0"
+}
