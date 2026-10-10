@@ -20,7 +20,10 @@ def get_client():
     if not base or not key:
         raise RuntimeError(
             "LITELLM_API_BASE / LITELLM_API_KEY not set; "
-            "run with --demo or add the shared hackathon key.")
+            "run with --demo (canned data), --no-llm (live tools, fixed plan), "
+            "or add the shared hackathon key. "
+            "Ollama also works: LITELLM_API_BASE=http://localhost:11434/v1 "
+            "with any model name.")
     client = OpenAI(base_url=base, api_key=key)
     return tracing.wrap_client(client), model
 
