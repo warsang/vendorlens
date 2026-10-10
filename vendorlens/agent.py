@@ -56,7 +56,8 @@ async def execute_with_retry(step: dict, ctx: dict, state: dict) -> dict:
 
 
 async def run_investigation(domain: str, demo: bool = False,
-                          run_id: str | None = None) -> dict:
+                          run_id: str | None = None,
+                          no_llm: bool = False) -> dict:
     run_id = run_id or uuid.uuid4().hex[:8]
     state = {
         "domain": domain,
@@ -70,7 +71,9 @@ async def run_investigation(domain: str, demo: bool = False,
     tracing.log_event("run_start", "investigation",
                       {"domain": domain, "demo": demo})
 
-    if demo:
+    if demo or no_llm:
+        # Deterministic plan, no LLM needed. In --demo the tools also return
+        # canned data; in --no-llm they run live.
         plan = [dict(s, args={**s["args"], "domain": domain})
                 for s in DEMO_PLAN]
         client = model = None
@@ -88,8 +91,8 @@ async def run_investigation(domain: str, demo: bool = False,
         state["findings"][step["tool"]] = result
         tracing.log_event("step_end", step["id"],
                           {"ok": result.get("ok")})
-        # Observer: replan on surprising results (live mode only).
-        if not demo and client is not None:
+        # Observer: replan on surprising results (LLM live mode only).
+        if not demo and not no_llm and client is not None:
             try:
                 extra = llm.replan_with_llm(client, model, domain, state,
                                             {"step": step["id"],
