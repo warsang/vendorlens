@@ -1,0 +1,612 @@
+{
+  "domain": "stripe.com",
+  "run_id": "2cb9f362",
+  "mode": "no-llm",
+  "tag": null,
+  "started": "2026-10-11T23:03:19.982664+00:00",
+  "findings": {
+    "rdap_lookup": {
+      "ok": true,
+      "data": {
+        "found": true,
+        "created": "1995-09-12T04:00:00Z",
+        "last_changed": "2025-10-01T01:39:51Z",
+        "expires": "2027-09-11T04:00:00Z",
+        "age_days": 11352,
+        "registrar": "SafeNames Ltd.",
+        "status": [
+          "client delete prohibited",
+          "client transfer prohibited",
+          "client update prohibited",
+          "server delete prohibited",
+          "server transfer prohibited",
+          "server update prohibited"
+        ],
+        "nameservers": [
+          "NS-1087.AWSDNS-07.ORG",
+          "NS-1882.AWSDNS-43.CO.UK",
+          "NS-423.AWSDNS-52.COM",
+          "NS-705.AWSDNS-24.NET"
+        ]
+      },
+      "sources": [
+        "rdap.org:stripe.com"
+      ]
+    },
+    "doh_dns": {
+      "ok": true,
+      "data": {
+        "A": [
+          "198.202.176.231",
+          "198.137.150.231"
+        ],
+        "MX": [
+          "30 aspmx3.googlemail.com.",
+          "10 aspmx.l.google.com.",
+          "20 alt1.aspmx.l.google.com.",
+          "30 aspmx2.googlemail.com.",
+          "20 alt2.aspmx.l.google.com."
+        ],
+        "NS": [
+          "ns-1087.awsdns-07.org.",
+          "ns-423.awsdns-52.com.",
+          "ns-1882.awsdns-43.co.uk.",
+          "ns-705.awsdns-24.net."
+        ],
+        "TXT": [
+          "vercel-domain-verification-9rcztj=vE2uCkG0lJyU17dOW1DamoD7v",
+          "vercel-domain-verification-n462w8=JRePwTQbccpon6VAqYhidisHw",
+          "v=MCPv1; k=ed25519; p=WMeka0C1fIH9HQLMtsSM9DD9cM6Bz6Wz34mHnK86UcM=",
+          "edcbf4c7-b604-457b-870e-1b05f655e769",
+          "_c2ygqoyhcuwjjnqk7h1mcm0x144rm1z",
+          "v=spf1 ip4:198.2.180.60/32 ip4:13.111.2.227/32 include:spf1.stripe.com include:greenhouse-outbound-mail.stripe.com include:_spf.qualtrics.com ~all",
+          "docker-verification=ccde1a0d-8d2c-44b5-9d20-6c4e19113fc9",
+          "atlassian-domain-verification=upLp21qQgja1aHG2gnAb1AmXRqb/zG0UK1a0n3zTSXZg5DgOSttR3i5uzA3T9Cdk",
+          "google-site-verification=hPfjsDwiisKJ4RP1ExOst9gAOD_0P8Q7-kxdcKUvEcc",
+          "docusign=4a93db58-af07-4632-a881-b569d41a6c57",
+          "google-site-verification=PrlpJHdk11CIkPsiXoHEAJevWHAk39JRFAqVSe9l7n0",
+          "anthropic-domain-verification-zk7x9c=QfN52ECybLPUWh51R9pKF0QO3",
+          "_2m7hdcar6jar33f5vyr8h0xaru6rvrn",
+          "google-site-verification=NLkFgZLHeVMVYlR3t1UZC9_1LzmqCAefJyNDs6ZQqBA",
+          "canva-site-verification=xLypn0D9XANRy-lbwcMfHA",
+          "docusign=4c9f5602-1c19-4e4c-bde7-77dc4b9ea8a0",
+          "whimsical=253112f9add9790f3a27b9d9893626451fc4cda1",
+          "stripe-verification=82ce82470fb8324e19fa65abdb6fd370da5a8f90bba09712f259760f625d0790",
+          "MS=ms80697640",
+          "postman-domain-verification=c3b168067b16085c452b04b643ae1000079b095e383b53d1074e409b0e600b6265e1c7963beca1ca87cc63c381dcea332544c92c919651e4cda69f9a6303079c",
+          "facebook-domain-verification=m7id9rt8ehlgcg9tt2yggbsi6gro7i",
+          "neat-pulse-domain-verification-8GMn8nv=36eba03d-345e-421a-a823-d6d1f28938a4",
+          "openai-domain-verification=dv-9tiBE20GDN0Td9lCfVtA3DwG",
+          "google-site-verification=pmz8ueKvWMPxNlwUDcVroF91-tq6I9VM6wSO_0i7-wc",
+          "linear-domain-verification=prudk75mtrrj",
+          "fastly-domain-delegation-3c9tdnjzdwy7wfffvyyy-786084-2024-07-08",
+          "z4mthhzk10l6qc0rg4211mnnppkh2y5b",
+          "cursor-domain-verification-vncvvm=D0NzeIDbQa8PPgIf1ukp9UPiu",
+          "google-site-verification=ZgGi2-xDdfnaWxdfjn5AqtUS11jKWqSXAV_EHODFzdE",
+          "asv=8de0c1a866b958297e22a36216e594a6",
+          "vercel-domain-verification-0x8270=XezzJjJYrYZwY6CahDneh2ruB",
+          "elevenlabs=NpcIkVJW_8Vyd2gLKzPviuaU1g5rz83KiWQQ3sWKGtI",
+          "00D50000000JV6w=1TBTQ0000000CIv;00DDn000000HWol=1TBVY00000002Hx;00D4x000003vxGL=1TBPQ00000008Tp;00Dfn00000BUlWD=1TBan0000000LPR",
+          "h1-domain-verification=KhpNX9YNAc7bX95agGvFsPPKbYTVe1KC6xj7P1zKZrRzxcuS",
+          "google-site-verification=qjP3OAiraClha_40cX9Z9FrG5q3O_0InXSamXOswY-s",
+          "apple-domain-verification=8kIS0gmJTvILWQuI",
+          "VISA=38A3D7A1AA5D71E43525144DD886F6B8",
+          "liveramp-site-verification=7gyFkTwGYsvgd7IUQwyAOfImETwR06wgKjKiXq90KEY",
+          "vercel-domain-verification-d2ks5d=rkbS4OdBoLxPogGq2IhBN1OZV"
+        ],
+        "CNAME": [],
+        "DMARC": [
+          "v=DMARC1; p=reject; pct=100; fo=1; rua=mailto:dmarc-reports@stripe.com; ruf=mailto:dmarc-forensics@stripe.com;"
+        ],
+        "domain": "stripe.com",
+        "statuses": {
+          "A": 0,
+          "MX": 0,
+          "NS": 0,
+          "TXT": 0,
+          "CNAME": 0,
+          "DMARC": 0
+        },
+        "_doh": true
+      },
+      "sources": [
+        "dns.google:stripe.com"
+      ]
+    },
+    "tls_inspect": {
+      "ok": true,
+      "data": {
+        "issuer": "DigiCert, Inc.",
+        "subject_cn": "stripe.com",
+        "not_after": "2026-12-10T23:59:59+00:00",
+        "days_left": 60,
+        "self_signed": false
+      },
+      "sources": [
+        "tls:stripe.com:443"
+      ]
+    },
+    "ct_logs": {
+      "ok": true,
+      "data": {
+        "cert_count": 2321,
+        "earliest_cert": "2009-02-05T00:00:00",
+        "latest_cert": "2026-12-30T23:59:59",
+        "subdomain_count": 213,
+        "issuers": [
+          "\"DigiCert",
+          "\"GeoTrust",
+          "\"GoDaddy.com",
+          "=Amazon",
+          "=Amazon RSA 2048 M01",
+          "=Amazon RSA 2048 M02"
+        ]
+      },
+      "sources": [
+        "crt.sh:stripe.com"
+      ]
+    },
+    "urlscan_reputation": {
+      "ok": true,
+      "data": {
+        "total_scans": 100,
+        "malicious_scans": 0,
+        "worst_score": 0,
+        "categories": [],
+        "first_seen": "2026-10-11T21:04:24.067Z",
+        "last_seen": "2026-10-11T23:02:47.712Z"
+      },
+      "sources": [
+        "urlscan.io:stripe.com"
+      ]
+    },
+    "fetch_homepage": {
+      "ok": true,
+      "data": {
+        "url": "https://stripe.com/es",
+        "final_url": "https://stripe.com/es",
+        "title": "Stripe | Infraestructura financiera para tu negocio",
+        "text": "La infraestructura financiera para hacer crecer tu negocio. Acepta pagos, ofrece servicios financieros e implementa modelos personalizados de ingresos, desde tu primera transacci\u00f3n.\nSoluciones flexibles para cualquier modelo de negocio.\nHaz crecer tu negocio con un conjunto completo de herramientas para pagos y finanzas. Elige solo lo que necesitas y combina los productos para que trabajen de la mano en el crecimiento de tu negocio.\nHaz crecer tu negocio con el conjunto m\u00e1s completo de herramientas financieras y de pagos.\nLa columna vertebral del comercio mundial\nM\u00e1s de 135\ndivisas y m\u00e9todos de pago aceptados\n1,9 B US$\nen volumen de pagos procesados en 2025.\n99,999 %\ntiempo de actividad hist\u00f3rico de los servicios de Stripe\nM\u00e1s de 200 M\nde suscripciones activas gestionadas en Stripe Billing\nUna infraestructura financiera para empresas de todos los tama\u00f1os.\nHaz crecer tu negocio desde una plataforma fiable que se adapta a tus necesidades.\nTransforma tu empresa con una infraestructura financiera \u00e1gil\n50 % de las empresas de la lista Fortune 100 han utilizado Stripe para hacer crecer sus negocios, desde la expansi\u00f3n internacional hasta la reinvenci\u00f3n de la experiencia del cliente.\nServicios profesionales.\nRecibe ayuda a medida sobre tu implementaci\u00f3n de Stripe, integraciones o migraciones complejas.\nExpertos certificados por Stripe.\nTrabaja con consultores asociados con Stripe que te ayuden a integrar e implementar soluciones en tu negocio.\nPlanes de soporte.\nRecibe asistencia continua y soporte para las preguntas t\u00e9cnicas de tu d\u00eda a d\u00eda con planes por niveles que se adaptan a tus necesidades.\nLa base que necesita tu startup para acelerar el crecimiento\nDesde los pioneros de las stablecoins hasta el 88 % de los integrantes de la lista Forbes AI 50, Stripe ayuda a las startups a darle forma al futuro de la econom\u00eda sobre una infraestructura financiera f\u00e1cil de integrar.\nPrograma Stripe Startups.\nConsigue descuentos, \u00fanete a una comunidad especializada y accede a recursos creados por expertos para acelerar el crecimiento de tu negocio.\nStripe Atlas.\nConstituye tu empresa y obt\u00e9n todo lo que necesitas para recaudar fondos, organizar las finanzas de tu empresa y aceptar pagos en dos d\u00edas h\u00e1biles.\nConvierte tu plataforma de SaaS en el sistema operativo de las finanzas de tus usuarios\nLas plataformas de SaaS vertical \u2014desde peque\u00f1as startups hasta empresas que aparecen en la lista Fortune 100 o Forbes Cloud 100\u2014 recurren a Stripe para expandir su cartera de productos con soluciones de pagos y servicios financieros integrados.\nAcelera tu lanzamiento.\nLanza y escala productos de pagos con menos gastos operativos: aprovecha los componentes integrados y nuestras herramientas no-code.\nCrea nuevas fuentes de ingresos.\nMonetiza las transacciones de la plataforma, desde el procesamiento de pagos hasta las tasas de intercambio de tarjetas o comisiones por financiaci\u00f3n.\nGestiona el riesgo de la plataforma.\nMantente a la vanguardia de las normativas internacionales con herramientas de cumplimiento de la normativa, riesgo de cr\u00e9dito, prevenci\u00f3n de fraude y seguridad de cuentas.\nCon Stripe, contamos con un socio tecnol\u00f3gico internacional para ayudar a nuestros clientes, desde estudios de yoga en Canad\u00e1 hasta clases de boxeo en Reino Unido, a seguir creciendo y a evolucionar en este nuevo universo del bienestar.\nConoce su historia\nSin Stripe, nos habr\u00eda llevado mucho tiempo y esfuerzo de nuestro equipo de ingenier\u00eda ofrecer estos recursos a nuestros clientes. La infraestructura financiera que ofrece Stripe es incre\u00edblemente valiosa para Jobber, y estamos impacientes por ver lo que est\u00e1 por venir.\nConoce su historia\nStripe facilita enormemente las suscripciones y los pagos para todos los participantes en el proceso. As\u00ed, simplificamos la labor de escritores y creadores en Substack, garantizando que reciban su pago.\nConoce su historia\nStripe ofrece una infraestructura de nivel empresarial que sit\u00faa a nuestros clientes a la vanguardia de la tecnolog\u00eda de pagos moderna. La combinaci\u00f3n de Terminal y Connect es una soluci\u00f3n integrada muy potente.\nConoce su historia\nLa infraestructura fiable y escalable que mejora tu pila tecnol\u00f3gica.\nAprovecha la flexibilidad de nuestras opciones de integraci\u00f3n para adaptar Stripe a las necesidades de tu negocio.\nConecta Stripe a tus sistemas actuales.\nPodr\u00e1s gestionar los pagos desde distintos procesadores, dise\u00f1ar procesos a medida y conectarte con servicios de terceros: elige si prefieres usar nuestras API, aplicaciones de nuestros socios o integraciones predise\u00f1adas.\nHaz crecer tu negocio con seguridad.\nGestiona miles de transacciones por segundo con una velocidad y una fiabilidad constantes, incluso durante los per\u00edodos de mayor tr\u00e1fico.\nM\u00e1s de 500 M\nde solicitudes diarias a nuestra API\nM\u00e1s de 10 mil\nSolicitudes de API por segundo\nM\u00e1s de 150 mil\ntransacciones por minuto\nElige tu tipo de integraci\u00f3n.\nUsa nuestro soporte con IA, nuestra documentaci\u00f3n exhaustiva y las herramientas integradas de depuraci\u00f3n para poner en marcha tu negocio con la opci\u00f3n que mejor se adapte a tus necesidades.\n\u00bfNo programas?\nConfigura ciclos de facturaci\u00f3n, acepta pagos en persona o comparte un enlace de pago, directamente desde el Dashboard de Stripe: no tendr\u00e1s que escribir ni una sola l\u00ednea de c\u00f3digo.\nUtiliza una plataforma predise\u00f1ada.\nExplora nuestro directorio de plataformas que integran Stripe con herramientas de creaci\u00f3n de sitios web.\nCrea tu propia integraci\u00f3n.\nUtiliza nuestros SDK, API, servidor MCP y herramientas de desarrollo de IA para crear y mantener tu propia integraci\u00f3n con Stripe.\nSiempre al d\u00eda:\nConsulta las \u00faltimas noticias de Stripe.\nLas empresas que usan Stripe generaron 1,9 B US$ en 2025.\nNuestra carta anual analiza las tendencias que definen la econom\u00eda de Internet, entre las que se incluyen un crecimiento m\u00e1s pronunciado de las empresas m\u00e1s nuevas, una expansi\u00f3n internacional m\u00e1s r\u00e1pida, el progreso de las monedas estables, el comercio ag\u00e9ntico y mucho m\u00e1s.\n- Las empresas que ",
+        "status_code": 200,
+        "headers": [
+          "strict-transport-security",
+          "content-security-policy",
+          "x-content-type-options",
+          "referrer-policy"
+        ],
+        "policy_pages": [
+          "privacy"
+        ],
+        "security_txt": {
+          "found": true,
+          "contact": [
+            "https://hackerone.com/stripe"
+          ]
+        }
+      },
+      "sources": [
+        "https://stripe.com/es"
+      ]
+    },
+    "web_search_reports": {
+      "ok": true,
+      "data": {
+        "query": "stripe.com scam reviews complaints",
+        "results": [
+          {
+            "title": "Stripe Reviews | Read Customer Service Reviews of stripe.com",
+            "url": "https://www.trustpilot.com/review/stripe.com",
+            "snippet": "Stripe Reviews 17,538 Payment Service Write a review Visit website We use technology to protect platform integrity, but we don't fact-check reviews"
+          },
+          {
+            "title": "Complaints - Stripe",
+            "url": "https://stripe.com/complaints",
+            "snippet": "Complaints Submit your complaint for review. We treat any expression of dissatisfaction with our services or products as a complaint. We want to help resolve your complaint as quickly as possible and learn how we can make Stripe better. Our complaint policies, acknowledgments, and response timelines"
+          },
+          {
+            "title": "Do Not Use Stripe!!! This is your warning. Learn from my mistake!",
+            "url": "https://www.reddit.com/r/ecommerce/comments/wa20e0/do_not_use_stripe_this_is_your_warning_learn_from/",
+            "snippet": "Stripe is taking advantage of a lack of regulation in this space to steal small merchant's large transactions. They see a big, outlier transaction and lick their chops, hiding behind KYC and \"Fraud prevention\" To hold your money indefinitely."
+          },
+          {
+            "title": "Stripe Reviews - 447 Customer Reviews of stripe.com, Rated 2.1/5",
+            "url": "https://www.smartcustomer.com/reviews/stripe.com",
+            "snippet": "447 reviews for Stripe, 2.1 stars: 'After so many communications, emails, mails, requests, etc... they are still keeping my money- a legitimate income. 180 days clearing period? FALSE. How about 731 days and counting?'"
+          },
+          {
+            "title": "Is Stripe a Scam? An Investigative Report - thefinrate.com",
+            "url": "https://thefinrate.com/is-stripe-a-scam-an-investigative-report/",
+            "snippet": "Explore whether Stripe is a scam through our investigative report. We examine user complaints, regulatory compliance, security measures, and overall user reviews to provide a comprehensive assessment of Stripe's legitimacy as a payment processing platform."
+          },
+          {
+            "title": "How to Identify a Stripe Scam Before It Costs You Money in 2026",
+            "url": "https://socialcatfish.com/scamfish/how-to-identify-a-stripe-scam-before-it-costs-you-money-in-2026/",
+            "snippet": "Stripe scams target sellers, freelancers, and buyers. Learn how to spot fake Stripe emails, payment links, and deposit fraud."
+          },
+          {
+            "title": "Stripe Reviews | Read Customer Service Reviews of stripe.com | 2 of 710",
+            "url": "https://www.trustpilot.com/review/stripe.com?page=2",
+            "snippet": "Stripe Reviews 17,538 Payment Service Write a review Visit website We use technology to protect platform integrity, but we don't fact-check reviews"
+          },
+          {
+            "title": "stripe.com Reviews | check if the site is a scam or legit | Scamadviser",
+            "url": "https://www.scamadviser.com/check-website/stripe.com",
+            "snippet": "Check stripe.com with our free review tool and find out if stripe.com is legit and reliable. Need advice? Report scams Check Scamadviser!"
+          }
+        ]
+      },
+      "sources": [
+        "https://www.trustpilot.com/review/stripe.com",
+        "https://stripe.com/complaints",
+        "https://www.reddit.com/r/ecommerce/comments/wa20e0/do_not_use_stripe_this_is_your_warning_learn_from/",
+        "https://www.smartcustomer.com/reviews/stripe.com",
+        "https://thefinrate.com/is-stripe-a-scam-an-investigative-report/",
+        "https://socialcatfish.com/scamfish/how-to-identify-a-stripe-scam-before-it-costs-you-money-in-2026/",
+        "https://www.trustpilot.com/review/stripe.com?page=2",
+        "https://www.scamadviser.com/check-website/stripe.com"
+      ]
+    },
+    "crustdata_enrich": {
+      "ok": true,
+      "data": {
+        "found": true,
+        "company_name": "Stripe",
+        "location": "South San Francisco, California, United States",
+        "headcount": "5001-10000",
+        "founded": 2010,
+        "linkedin_url": "https://www.linkedin.com/company/stripe",
+        "description": "Stripe builds programmable financial services. Millions of companies\u2014from the world\u2019s largest enterprises to the most ambitious startups\u2014use Stripe to accept payments, grow their revenue, and accelerate new business opportunities. Headquartered in San Francisco and Dublin, the company aims to increase the GDP of the internet.",
+        "confidence": 1.0
+      },
+      "sources": [
+        "https://api.crustdata.com/company/enrich"
+      ]
+    }
+  },
+  "step_results": [
+    {
+      "id": "s1",
+      "tool": "rdap_lookup",
+      "ok": true,
+      "attempts": 1,
+      "error": null,
+      "injected": false,
+      "latency_ms": 551.1
+    },
+    {
+      "id": "s2",
+      "tool": "doh_dns",
+      "ok": true,
+      "attempts": 1,
+      "error": null,
+      "injected": false,
+      "latency_ms": 747.2
+    },
+    {
+      "id": "s3",
+      "tool": "tls_inspect",
+      "ok": true,
+      "attempts": 1,
+      "error": null,
+      "injected": false,
+      "latency_ms": 252.7
+    },
+    {
+      "id": "s4",
+      "tool": "ct_logs",
+      "ok": true,
+      "attempts": 1,
+      "error": null,
+      "injected": false,
+      "latency_ms": 26584.6
+    },
+    {
+      "id": "s5",
+      "tool": "urlscan_reputation",
+      "ok": true,
+      "attempts": 1,
+      "error": null,
+      "injected": false,
+      "latency_ms": 618.1
+    },
+    {
+      "id": "s6",
+      "tool": "fetch_homepage",
+      "ok": true,
+      "attempts": 1,
+      "error": null,
+      "injected": false,
+      "latency_ms": 1267.0
+    },
+    {
+      "id": "s7",
+      "tool": "web_search_reports",
+      "ok": true,
+      "attempts": 1,
+      "error": null,
+      "injected": false,
+      "latency_ms": 1138.1
+    },
+    {
+      "id": "s8",
+      "tool": "crustdata_enrich",
+      "ok": true,
+      "attempts": 1,
+      "error": null,
+      "injected": false,
+      "latency_ms": 1453.5
+    }
+  ],
+  "retries": {},
+  "plan_history": [
+    {
+      "id": "s1",
+      "tool": "rdap_lookup",
+      "args": {
+        "domain": "stripe.com"
+      },
+      "why": "Registration age is the cheapest strong signal."
+    },
+    {
+      "id": "s2",
+      "tool": "doh_dns",
+      "args": {
+        "domain": "stripe.com"
+      },
+      "why": "Does the domain resolve, and does it take mail?"
+    },
+    {
+      "id": "s3",
+      "tool": "tls_inspect",
+      "args": {
+        "domain": "stripe.com"
+      },
+      "why": "Certificate hygiene check."
+    },
+    {
+      "id": "s4",
+      "tool": "ct_logs",
+      "args": {
+        "domain": "stripe.com"
+      },
+      "why": "Certificate history and subdomains show an established org."
+    },
+    {
+      "id": "s5",
+      "tool": "urlscan_reputation",
+      "args": {
+        "domain": "stripe.com"
+      },
+      "why": "Independent web-scan verdicts for the domain."
+    },
+    {
+      "id": "s6",
+      "tool": "fetch_homepage",
+      "args": {
+        "domain": "stripe.com"
+      },
+      "why": "Homepage scam-copy + security-posture analysis."
+    },
+    {
+      "id": "s7",
+      "tool": "web_search_reports",
+      "args": {
+        "domain": "stripe.com"
+      },
+      "why": "Independent reports and reviews."
+    },
+    {
+      "id": "s8",
+      "tool": "crustdata_enrich",
+      "args": {
+        "domain": "stripe.com"
+      },
+      "why": "Firmographic confirmation of a real company."
+    }
+  ],
+  "replans": {
+    "llm": 0,
+    "rule": 0
+  },
+  "assessment": {
+    "domain": "stripe.com",
+    "score": 0,
+    "band": "LOW",
+    "signals": [
+      {
+        "signal": "domain_well_established",
+        "weight": -12,
+        "detail": "Domain registered 11352 days ago (over 4 years of history).",
+        "sources": [
+          "rdap.org:stripe.com"
+        ],
+        "tool": "rdap_lookup",
+        "layer": "real & established",
+        "verification": "single_source",
+        "tools": [
+          "rdap_lookup"
+        ]
+      },
+      {
+        "signal": "spf_record_present",
+        "weight": -3,
+        "detail": "Domain publishes an SPF record authorising its mail senders.",
+        "sources": [
+          "dns.google:stripe.com"
+        ],
+        "tool": "doh_dns",
+        "layer": "security posture",
+        "verification": "single_source",
+        "tools": [
+          "doh_dns"
+        ]
+      },
+      {
+        "signal": "dmarc_enforced",
+        "weight": -3,
+        "detail": "DMARC enforcement is on (p=reject).",
+        "sources": [
+          "dns.google:stripe.com"
+        ],
+        "tool": "doh_dns",
+        "layer": "security posture",
+        "verification": "single_source",
+        "tools": [
+          "doh_dns"
+        ]
+      },
+      {
+        "signal": "certificate_history",
+        "weight": -6,
+        "detail": "2321 certificate(s) in transparency logs covering 213 name(s).",
+        "sources": [
+          "crt.sh:stripe.com"
+        ],
+        "tool": "ct_logs",
+        "layer": "real & established",
+        "verification": "single_source",
+        "tools": [
+          "ct_logs"
+        ]
+      },
+      {
+        "signal": "certificate_history_long",
+        "weight": -8,
+        "detail": "Certificates publicly logged since 2009 (more than three years of continuity).",
+        "sources": [
+          "crt.sh:stripe.com"
+        ],
+        "tool": "ct_logs",
+        "layer": "real & established",
+        "verification": "single_source",
+        "tools": [
+          "ct_logs"
+        ]
+      },
+      {
+        "signal": "urlscan_scan_history_clean",
+        "weight": -8,
+        "detail": "100 urlscan.io scans on record with no malicious verdicts.",
+        "sources": [
+          "urlscan.io:stripe.com"
+        ],
+        "tool": "urlscan_reputation",
+        "layer": "threat & reputation",
+        "verification": "single_source",
+        "tools": [
+          "urlscan_reputation"
+        ]
+      },
+      {
+        "signal": "hsts_enabled",
+        "weight": -3,
+        "detail": "Homepage sends HSTS, binding browsers to HTTPS.",
+        "sources": [
+          "https://stripe.com/es"
+        ],
+        "tool": "fetch_homepage",
+        "layer": "security posture",
+        "verification": "single_source",
+        "tools": [
+          "fetch_homepage"
+        ]
+      },
+      {
+        "signal": "csp_enabled",
+        "weight": -2,
+        "detail": "Homepage sends a Content-Security-Policy header.",
+        "sources": [
+          "https://stripe.com/es"
+        ],
+        "tool": "fetch_homepage",
+        "layer": "security posture",
+        "verification": "single_source",
+        "tools": [
+          "fetch_homepage"
+        ]
+      },
+      {
+        "signal": "security_txt_present",
+        "weight": -4,
+        "detail": "Publishes a security.txt contact (https://hackerone.com/stripe).",
+        "sources": [
+          "https://stripe.com/es"
+        ],
+        "tool": "fetch_homepage",
+        "layer": "security posture",
+        "verification": "single_source",
+        "tools": [
+          "fetch_homepage"
+        ]
+      },
+      {
+        "signal": "established_company",
+        "weight": -20,
+        "detail": "Company found in business data: Stripe (South San Francisco, California, United States, 5001-10000 employees).",
+        "sources": [
+          "https://api.crustdata.com/company/enrich"
+        ],
+        "tool": "crustdata_enrich",
+        "layer": "real & established",
+        "verification": "single_source",
+        "tools": [
+          "crustdata_enrich"
+        ]
+      },
+      {
+        "signal": "company_name_on_site",
+        "weight": -6,
+        "detail": "The registered company name appears on the fetched homepage, cross-checking the business record.",
+        "sources": [
+          "https://api.crustdata.com/company/enrich",
+          "https://stripe.com/es"
+        ],
+        "tool": "crustdata_enrich",
+        "layer": "real & established",
+        "verification": "single_source",
+        "tools": [
+          "crustdata_enrich"
+        ]
+      },
+      {
+        "signal": "negative_reports",
+        "weight": 12,
+        "detail": "5 independent negative report(s); e.g. reddit.com: Stripe is taking advantage of a lack of regulation in this space to steal small ...; smartcustomer.com: 447 reviews for Stripe, 2.1 stars: 'After so many communications, emails, mails,...; thefinrate.com: Explore whether Stripe is a scam through our investigative report. We examine us.... (discounted: registration age, certificate history, a clean scan history, the company record corroborate a real business, outweigh a keyword search hit)",
+        "sources": [
+          "https://www.reddit.com/r/ecommerce/comments/wa20e0/do_not_use_stripe_this_is_your_warning_learn_from/",
+          "https://www.smartcustomer.com/reviews/stripe.com",
+          "https://thefinrate.com/is-stripe-a-scam-an-investigative-report/",
+          "https://socialcatfish.com/scamfish/how-to-identify-a-stripe-scam-before-it-costs-you-money-in-2026/",
+          "https://www.scamadviser.com/check-website/stripe.com"
+        ],
+        "tool": "web_search_reports",
+        "layer": "threat & reputation",
+        "verification": "single_source",
+        "tools": [
+          "web_search_reports"
+        ]
+      }
+    ],
+    "sources": [
+      "crt.sh:stripe.com",
+      "dns.google:stripe.com",
+      "https://api.crustdata.com/company/enrich",
+      "https://socialcatfish.com/scamfish/how-to-identify-a-stripe-scam-before-it-costs-you-money-in-2026/",
+      "https://stripe.com/es",
+      "https://thefinrate.com/is-stripe-a-scam-an-investigative-report/",
+      "https://www.reddit.com/r/ecommerce/comments/wa20e0/do_not_use_stripe_this_is_your_warning_learn_from/",
+      "https://www.scamadviser.com/check-website/stripe.com",
+      "https://www.smartcustomer.com/reviews/stripe.com",
+      "rdap.org:stripe.com",
+      "urlscan.io:stripe.com"
+    ],
+    "re_registered": false,
+    "could_not_verify": [
+      {
+        "item": "tls_inspect",
+        "reason": "ran, no signal produced"
+      }
+    ],
+    "notes": []
+  }
+}

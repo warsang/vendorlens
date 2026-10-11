@@ -1,0 +1,522 @@
+{
+  "domain": "linear.app",
+  "run_id": "a4e7044c",
+  "mode": "no-llm",
+  "tag": null,
+  "started": "2026-10-11T23:03:52.616889+00:00",
+  "findings": {
+    "rdap_lookup": {
+      "ok": true,
+      "data": {
+        "found": true,
+        "created": "2018-05-09T23:45:22.384Z",
+        "last_changed": "2026-03-09T19:23:14.594Z",
+        "expires": "2030-05-09T23:45:22.384Z",
+        "age_days": 3076,
+        "registrar": "CloudFlare, Inc.",
+        "status": [
+          "client transfer prohibited"
+        ],
+        "nameservers": [
+          "tim.ns.cloudflare.com",
+          "zara.ns.cloudflare.com"
+        ]
+      },
+      "sources": [
+        "rdap.org:linear.app"
+      ]
+    },
+    "doh_dns": {
+      "ok": true,
+      "data": {
+        "A": [
+          "104.18.40.45",
+          "172.64.147.211"
+        ],
+        "MX": [
+          "1 aspmx.l.google.com.",
+          "5 alt2.aspmx.l.google.com.",
+          "5 alt1.aspmx.l.google.com.",
+          "10 alt3.aspmx.l.google.com."
+        ],
+        "NS": [
+          "zara.ns.cloudflare.com.",
+          "tim.ns.cloudflare.com."
+        ],
+        "TXT": [
+          "cursor-domain-verification-jkgerh=fYGswH2He0dJj0DekVjoNvFKi",
+          "rippling-domain-verification=806196fd264819a7",
+          "stripe-verification=6EC2FC42DC487CF290EEEE12F5DEE9914E0186EF7BF33C1B6AEB7DD8B643CE80",
+          "anthropic-domain-verification-7emk8z=c8SuvlXPqgxzVcvjsiQ00cLfO",
+          "google-site-verification=-TwiLtawzz8QlL_LZlkuGibc6klzAuD0DfgytD0TM0g",
+          "mongodb-site-verification=DkQRVTZWWUX0i14d4YZddicK0SF4Qc1L",
+          "linear-domain-verification=391958",
+          "launchdarkly-domain-verification=f702791b-ddb9-496f-80f1-df7499632973",
+          "domain-verification=0b7a143e64a100eeb18d7e29c53d3bcf83746f87607ac1f1b6aef8802ad5439d",
+          "openai-domain-verification=dv-cF94uxiJMGTKa374p6jJD0zU",
+          "slack-domain-verification=n9BI0EJf0vSJO9ugqYmWNJ5xbOOVQnnTirCGbRZK",
+          "apple-domain-verification=zVdJnsxkD6nX5XCL",
+          "notion-domain-verification=YflTDyf5nncjFK4D85Nsh38ufawi0ExsoOTUzXu9NpT",
+          "docusign=9bc6c7a7-fde1-48af-bcc3-11f14e980549",
+          "v=spf1 include:_spf.google.com include:spf.mtasv.net include:44092442.spf10.hubspotemail.net include:amazonses.com ~all",
+          "notion-domain-verification=WyZnKX70mlPP1r1HchqL7re1MjaYo5c2F2Cy2R2z3XD",
+          "google-site-verification=mFdMlamOogHV4U7WGNYRd55OvljoEx7M_wgpb7zHzfo",
+          "google-site-verification=4am7F1KUGPoMFePO3xuz4Eek80WH7im3c9UeedE10pA",
+          "ZOOM_verify_rSExBwd4QT2vT9dfq9-UrA",
+          "v=MCPv1; k=ed25519; p=kK/pbugEO5TjSy0dXhqbUMJ0v+5eCO8osDkDeccICp4=",
+          "_qcd9zztuukbep051izx2pjssdl6yae2",
+          "MS=ms43041516"
+        ],
+        "CNAME": [],
+        "DMARC": [
+          "v=DMARC1; p=reject; rua=mailto:re+1790296a475d@inbound.dmarcdigests.com; aspf=r; pct=100"
+        ],
+        "domain": "linear.app",
+        "statuses": {
+          "A": 0,
+          "MX": 0,
+          "NS": 0,
+          "TXT": 0,
+          "CNAME": 0,
+          "DMARC": 0
+        },
+        "_doh": true
+      },
+      "sources": [
+        "dns.google:linear.app"
+      ]
+    },
+    "tls_inspect": {
+      "ok": true,
+      "data": {
+        "issuer": "Google Trust Services",
+        "subject_cn": "linear.app",
+        "not_after": "2027-01-07T06:55:37+00:00",
+        "days_left": 87,
+        "self_signed": false
+      },
+      "sources": [
+        "tls:linear.app:443"
+      ]
+    },
+    "ct_logs": {
+      "ok": true,
+      "data": {
+        "cert_count": 0,
+        "subdomain_count": 0
+      },
+      "sources": [
+        "crt.sh:linear.app"
+      ]
+    },
+    "urlscan_reputation": {
+      "ok": true,
+      "data": {
+        "total_scans": 25,
+        "malicious_scans": 0,
+        "worst_score": 0,
+        "categories": [],
+        "first_seen": "2026-09-12T01:53:37.040Z",
+        "last_seen": "2026-10-09T05:28:07.923Z"
+      },
+      "sources": [
+        "urlscan.io:linear.app"
+      ]
+    },
+    "fetch_homepage": {
+      "ok": true,
+      "data": {
+        "url": "https://linear.app/",
+        "final_url": "https://linear.app/",
+        "title": "Linear \u2013 The system for product development",
+        "text": "The product development system for teams and agents\nPurpose-built for planning and building products. Designed for the AI era.\nFaster app launch\nRender UI before vehicle_state sync when minimum required state is present, instead of blocking on full refresh during iOS startup.\nActivity\nPowering the companies building the future\nA new species of product tool. Purpose-built for modern teams with AI workflows at its core, Linear sets a new standard for planning and building products.\nIntake\nand integrations\nAutomatically turn conversations and customer feedback into actionable issues that are instantly routed, labeled, and prioritized for the right team.\nPlanning\nand monitoring\nPlan and navigate from idea to launch. Align your team with product initiatives, strategic roadmaps, and clear, up-to-date PRDs.\nAI and\nautomations\nBuild and deploy AI agents that work alongside you as teammates. Work on complex tasks together or delegate entire issues end-to-end.\nBuild, review,\nand ship\nStreamline code reviews with clear diffs, better context, and fewer back-and-forth comments. Keep PRs moving without sacrificing quality.",
+        "status_code": 200,
+        "headers": [
+          "strict-transport-security",
+          "content-security-policy",
+          "x-content-type-options",
+          "referrer-policy"
+        ],
+        "policy_pages": [
+          "privacy",
+          "security",
+          "terms"
+        ],
+        "security_txt": {
+          "found": true,
+          "contact": [
+            "mailto:security@linear.app"
+          ]
+        }
+      },
+      "sources": [
+        "https://linear.app/"
+      ]
+    },
+    "web_search_reports": {
+      "ok": true,
+      "data": {
+        "query": "linear.app scam reviews complaints",
+        "results": []
+      },
+      "sources": []
+    },
+    "crustdata_enrich": {
+      "ok": true,
+      "data": {
+        "found": true,
+        "company_name": "Linear",
+        "location": "San Francisco, California, United States",
+        "headcount": "51-200",
+        "founded": 2019,
+        "linkedin_url": "https://www.linkedin.com/company/linearapp",
+        "description": "At Linear, we are on a mission to bring magic back to software. To empower product teams to do their best work, we are building an issue tracking and project management tool that combines UI elegance with world-class performance. Founded in 2019, Linear has become the tool of choice for thousands of high-impact companies to build their products better.Linear was set up as a fully remote company from the start. Today, our small but mighty team is distributed across North America and Europe. What ",
+        "confidence": 1.0
+      },
+      "sources": [
+        "https://api.crustdata.com/company/enrich"
+      ]
+    }
+  },
+  "step_results": [
+    {
+      "id": "s1",
+      "tool": "rdap_lookup",
+      "ok": true,
+      "attempts": 1,
+      "error": null,
+      "injected": false,
+      "latency_ms": 843.0
+    },
+    {
+      "id": "s2",
+      "tool": "doh_dns",
+      "ok": true,
+      "attempts": 1,
+      "error": null,
+      "injected": false,
+      "latency_ms": 1475.4
+    },
+    {
+      "id": "s3",
+      "tool": "tls_inspect",
+      "ok": true,
+      "attempts": 1,
+      "error": null,
+      "injected": false,
+      "latency_ms": 403.4
+    },
+    {
+      "id": "s4",
+      "tool": "ct_logs",
+      "ok": true,
+      "attempts": 1,
+      "error": null,
+      "injected": false,
+      "latency_ms": 3222.0
+    },
+    {
+      "id": "s5",
+      "tool": "urlscan_reputation",
+      "ok": true,
+      "attempts": 1,
+      "error": null,
+      "injected": false,
+      "latency_ms": 748.4
+    },
+    {
+      "id": "s6",
+      "tool": "fetch_homepage",
+      "ok": true,
+      "attempts": 1,
+      "error": null,
+      "injected": false,
+      "latency_ms": 2057.2
+    },
+    {
+      "id": "s7",
+      "tool": "web_search_reports",
+      "ok": true,
+      "attempts": 1,
+      "error": null,
+      "injected": false,
+      "latency_ms": 812.1
+    },
+    {
+      "id": "s8",
+      "tool": "crustdata_enrich",
+      "ok": true,
+      "attempts": 1,
+      "error": null,
+      "injected": false,
+      "latency_ms": 1413.2
+    }
+  ],
+  "retries": {},
+  "plan_history": [
+    {
+      "id": "s1",
+      "tool": "rdap_lookup",
+      "args": {
+        "domain": "linear.app"
+      },
+      "why": "Registration age is the cheapest strong signal."
+    },
+    {
+      "id": "s2",
+      "tool": "doh_dns",
+      "args": {
+        "domain": "linear.app"
+      },
+      "why": "Does the domain resolve, and does it take mail?"
+    },
+    {
+      "id": "s3",
+      "tool": "tls_inspect",
+      "args": {
+        "domain": "linear.app"
+      },
+      "why": "Certificate hygiene check."
+    },
+    {
+      "id": "s4",
+      "tool": "ct_logs",
+      "args": {
+        "domain": "linear.app"
+      },
+      "why": "Certificate history and subdomains show an established org."
+    },
+    {
+      "id": "s5",
+      "tool": "urlscan_reputation",
+      "args": {
+        "domain": "linear.app"
+      },
+      "why": "Independent web-scan verdicts for the domain."
+    },
+    {
+      "id": "s6",
+      "tool": "fetch_homepage",
+      "args": {
+        "domain": "linear.app"
+      },
+      "why": "Homepage scam-copy + security-posture analysis."
+    },
+    {
+      "id": "s7",
+      "tool": "web_search_reports",
+      "args": {
+        "domain": "linear.app"
+      },
+      "why": "Independent reports and reviews."
+    },
+    {
+      "id": "s8",
+      "tool": "crustdata_enrich",
+      "args": {
+        "domain": "linear.app"
+      },
+      "why": "Firmographic confirmation of a real company."
+    }
+  ],
+  "replans": {
+    "llm": 0,
+    "rule": 0
+  },
+  "assessment": {
+    "domain": "linear.app",
+    "score": 0,
+    "band": "LOW",
+    "signals": [
+      {
+        "signal": "domain_well_established",
+        "weight": -12,
+        "detail": "Domain registered 3076 days ago (over 4 years of history).",
+        "sources": [
+          "rdap.org:linear.app"
+        ],
+        "tool": "rdap_lookup",
+        "layer": "real & established",
+        "verification": "single_source",
+        "tools": [
+          "rdap_lookup"
+        ]
+      },
+      {
+        "signal": "spf_record_present",
+        "weight": -3,
+        "detail": "Domain publishes an SPF record authorising its mail senders.",
+        "sources": [
+          "dns.google:linear.app"
+        ],
+        "tool": "doh_dns",
+        "layer": "security posture",
+        "verification": "single_source",
+        "tools": [
+          "doh_dns"
+        ]
+      },
+      {
+        "signal": "dmarc_enforced",
+        "weight": -3,
+        "detail": "DMARC enforcement is on (p=reject).",
+        "sources": [
+          "dns.google:linear.app"
+        ],
+        "tool": "doh_dns",
+        "layer": "security posture",
+        "verification": "single_source",
+        "tools": [
+          "doh_dns"
+        ]
+      },
+      {
+        "signal": "no_certificate_history",
+        "weight": 12,
+        "detail": "No public certificate history. Real services leave a certificate-transparency trail; an absence is weak evidence of an operating business.",
+        "sources": [
+          "crt.sh:linear.app"
+        ],
+        "tool": "ct_logs",
+        "layer": "real & established",
+        "verification": "single_source",
+        "tools": [
+          "ct_logs"
+        ]
+      },
+      {
+        "signal": "urlscan_scan_history_clean",
+        "weight": -8,
+        "detail": "25 urlscan.io scans on record with no malicious verdicts.",
+        "sources": [
+          "urlscan.io:linear.app"
+        ],
+        "tool": "urlscan_reputation",
+        "layer": "threat & reputation",
+        "verification": "single_source",
+        "tools": [
+          "urlscan_reputation"
+        ]
+      },
+      {
+        "signal": "hsts_enabled",
+        "weight": -3,
+        "detail": "Homepage sends HSTS, binding browsers to HTTPS.",
+        "sources": [
+          "https://linear.app/"
+        ],
+        "tool": "fetch_homepage",
+        "layer": "security posture",
+        "verification": "single_source",
+        "tools": [
+          "fetch_homepage"
+        ]
+      },
+      {
+        "signal": "csp_enabled",
+        "weight": -2,
+        "detail": "Homepage sends a Content-Security-Policy header.",
+        "sources": [
+          "https://linear.app/"
+        ],
+        "tool": "fetch_homepage",
+        "layer": "security posture",
+        "verification": "single_source",
+        "tools": [
+          "fetch_homepage"
+        ]
+      },
+      {
+        "signal": "privacy_and_terms_pages",
+        "weight": -3,
+        "detail": "Homepage links to both a privacy policy and terms of service.",
+        "sources": [
+          "https://linear.app/"
+        ],
+        "tool": "fetch_homepage",
+        "layer": "real & established",
+        "verification": "single_source",
+        "tools": [
+          "fetch_homepage"
+        ]
+      },
+      {
+        "signal": "trust_page",
+        "weight": -2,
+        "detail": "Homepage links to a trust/security page.",
+        "sources": [
+          "https://linear.app/"
+        ],
+        "tool": "fetch_homepage",
+        "layer": "security posture",
+        "verification": "single_source",
+        "tools": [
+          "fetch_homepage"
+        ]
+      },
+      {
+        "signal": "security_txt_present",
+        "weight": -4,
+        "detail": "Publishes a security.txt contact (mailto:security@linear.app).",
+        "sources": [
+          "https://linear.app/"
+        ],
+        "tool": "fetch_homepage",
+        "layer": "security posture",
+        "verification": "single_source",
+        "tools": [
+          "fetch_homepage"
+        ]
+      },
+      {
+        "signal": "established_company",
+        "weight": -20,
+        "detail": "Company found in business data: Linear (San Francisco, California, United States, 51-200 employees).",
+        "sources": [
+          "https://api.crustdata.com/company/enrich"
+        ],
+        "tool": "crustdata_enrich",
+        "layer": "real & established",
+        "verification": "single_source",
+        "tools": [
+          "crustdata_enrich"
+        ]
+      },
+      {
+        "signal": "company_name_on_site",
+        "weight": -6,
+        "detail": "The registered company name appears on the fetched homepage, cross-checking the business record.",
+        "sources": [
+          "https://api.crustdata.com/company/enrich",
+          "https://linear.app/"
+        ],
+        "tool": "crustdata_enrich",
+        "layer": "real & established",
+        "verification": "single_source",
+        "tools": [
+          "crustdata_enrich"
+        ]
+      }
+    ],
+    "sources": [
+      "crt.sh:linear.app",
+      "dns.google:linear.app",
+      "https://api.crustdata.com/company/enrich",
+      "https://linear.app/",
+      "rdap.org:linear.app",
+      "urlscan.io:linear.app"
+    ],
+    "re_registered": false,
+    "could_not_verify": [
+      {
+        "item": "tls_inspect",
+        "reason": "ran, no signal produced"
+      },
+      {
+        "item": "web_search_reports",
+        "reason": "ran, no signal produced"
+      }
+    ],
+    "notes": []
+  }
+}

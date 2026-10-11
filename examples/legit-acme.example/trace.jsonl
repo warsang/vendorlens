@@ -1,0 +1,86 @@
+{"ts": "2026-10-11T22:57:13.993123+00:00", "run_id": "legit-ac", "kind": "example_regen", "name": "legit-acme.example", "payload": {"domain": "acme-cloud-services.example", "kwargs": ["demo", "scenario"]}}
+{"ts": "2026-10-11T22:57:13.996951+00:00", "run_id": "legit-ac", "kind": "run_start", "name": "investigation", "payload": {"domain": "acme-cloud-services.example", "mode": "demo", "scenario": "legit", "tag": null, "inject": {}}}
+{"ts": "2026-10-11T22:57:13.997960+00:00", "run_id": "legit-ac", "kind": "step_start", "name": "s1", "payload": {"tool": "rdap_lookup", "why": "Registration age is the cheapest strong signal.", "n": 1}}
+{"ts": "2026-10-11T22:57:13.997960+00:00", "run_id": "legit-ac", "kind": "tool_start", "name": "rdap_lookup", "payload": {"args": {"domain": "github.com"}}}
+{"ts": "2026-10-11T22:57:13.997960+00:00", "run_id": "legit-ac", "kind": "tool_end", "name": "rdap_lookup", "payload": {"latency_ms": 0.3}}
+{"ts": "2026-10-11T22:57:13.997960+00:00", "run_id": "legit-ac", "kind": "step_end", "name": "s1", "payload": {"ok": true, "attempts": null}}
+{"ts": "2026-10-11T22:57:13.999468+00:00", "run_id": "legit-ac", "kind": "replan", "name": "s1", "payload": {"kind": "rule", "reason": "rule after rdap_lookup (ok=True): no change", "added": [], "queue_depth": 7}}
+{"ts": "2026-10-11T22:57:13.999468+00:00", "run_id": "legit-ac", "kind": "step_start", "name": "s2", "payload": {"tool": "doh_dns", "why": "Does the domain resolve, and does it take mail?", "n": 2}}
+{"ts": "2026-10-11T22:57:13.999468+00:00", "run_id": "legit-ac", "kind": "tool_start", "name": "doh_dns", "payload": {"args": {"domain": "github.com"}}}
+{"ts": "2026-10-11T22:57:14.000476+00:00", "run_id": "legit-ac", "kind": "tool_end", "name": "doh_dns", "payload": {"latency_ms": 0.3}}
+{"ts": "2026-10-11T22:57:14.000476+00:00", "run_id": "legit-ac", "kind": "step_end", "name": "s2", "payload": {"ok": true, "attempts": null}}
+{"ts": "2026-10-11T22:57:14.000476+00:00", "run_id": "legit-ac", "kind": "replan", "name": "s2", "payload": {"kind": "rule", "reason": "rule after doh_dns (ok=True): no change", "added": [], "queue_depth": 6}}
+{"ts": "2026-10-11T22:57:14.001477+00:00", "run_id": "legit-ac", "kind": "step_start", "name": "s3", "payload": {"tool": "tls_inspect", "why": "Certificate hygiene check.", "n": 3}}
+{"ts": "2026-10-11T22:57:14.001477+00:00", "run_id": "legit-ac", "kind": "tool_start", "name": "tls_inspect", "payload": {"args": {"domain": "github.com"}}}
+{"ts": "2026-10-11T22:57:14.002477+00:00", "run_id": "legit-ac", "kind": "tool_end", "name": "tls_inspect", "payload": {"latency_ms": 0.4}}
+{"ts": "2026-10-11T22:57:14.002477+00:00", "run_id": "legit-ac", "kind": "step_end", "name": "s3", "payload": {"ok": true, "attempts": null}}
+{"ts": "2026-10-11T22:57:14.002984+00:00", "run_id": "legit-ac", "kind": "replan", "name": "s3", "payload": {"kind": "rule", "reason": "rule after tls_inspect (ok=True): no change", "added": [], "queue_depth": 5}}
+{"ts": "2026-10-11T22:57:14.002984+00:00", "run_id": "legit-ac", "kind": "step_start", "name": "s4", "payload": {"tool": "ct_logs", "why": "Certificate history and subdomains show an established org.", "n": 4}}
+{"ts": "2026-10-11T22:57:14.002984+00:00", "run_id": "legit-ac", "kind": "tool_start", "name": "ct_logs", "payload": {"args": {"domain": "github.com"}}}
+{"ts": "2026-10-11T22:57:14.003993+00:00", "run_id": "legit-ac", "kind": "tool_end", "name": "ct_logs", "payload": {"latency_ms": 0.3}}
+{"ts": "2026-10-11T22:57:14.004498+00:00", "run_id": "legit-ac", "kind": "step_end", "name": "s4", "payload": {"ok": true, "attempts": null}}
+{"ts": "2026-10-11T22:57:14.004498+00:00", "run_id": "legit-ac", "kind": "replan", "name": "s4", "payload": {"kind": "rule", "reason": "rule after ct_logs (ok=True): no change", "added": [], "queue_depth": 4}}
+{"ts": "2026-10-11T22:57:14.004498+00:00", "run_id": "legit-ac", "kind": "step_start", "name": "s5", "payload": {"tool": "urlscan_reputation", "why": "Independent web-scan verdicts for the domain.", "n": 5}}
+{"ts": "2026-10-11T22:57:14.004498+00:00", "run_id": "legit-ac", "kind": "tool_start", "name": "urlscan_reputation", "payload": {"args": {"domain": "github.com"}}}
+{"ts": "2026-10-11T22:57:14.005505+00:00", "run_id": "legit-ac", "kind": "tool_end", "name": "urlscan_reputation", "payload": {"latency_ms": 0.3}}
+{"ts": "2026-10-11T22:57:14.005505+00:00", "run_id": "legit-ac", "kind": "step_end", "name": "s5", "payload": {"ok": true, "attempts": null}}
+{"ts": "2026-10-11T22:57:14.006506+00:00", "run_id": "legit-ac", "kind": "replan", "name": "s5", "payload": {"kind": "rule", "reason": "rule after urlscan_reputation (ok=True): no change", "added": [], "queue_depth": 3}}
+{"ts": "2026-10-11T22:57:14.006506+00:00", "run_id": "legit-ac", "kind": "step_start", "name": "s6", "payload": {"tool": "fetch_homepage", "why": "Homepage scam-copy + security-posture analysis.", "n": 6}}
+{"ts": "2026-10-11T22:57:14.006506+00:00", "run_id": "legit-ac", "kind": "tool_start", "name": "fetch_homepage", "payload": {"args": {"domain": "github.com"}}}
+{"ts": "2026-10-11T22:57:14.007507+00:00", "run_id": "legit-ac", "kind": "tool_end", "name": "fetch_homepage", "payload": {"latency_ms": 0.4}}
+{"ts": "2026-10-11T22:57:14.007507+00:00", "run_id": "legit-ac", "kind": "step_end", "name": "s6", "payload": {"ok": true, "attempts": null}}
+{"ts": "2026-10-11T22:57:14.007507+00:00", "run_id": "legit-ac", "kind": "replan", "name": "s6", "payload": {"kind": "rule", "reason": "rule after fetch_homepage (ok=True): no change", "added": [], "queue_depth": 2}}
+{"ts": "2026-10-11T22:57:14.008506+00:00", "run_id": "legit-ac", "kind": "step_start", "name": "s7", "payload": {"tool": "web_search_reports", "why": "Independent reports and reviews.", "n": 7}}
+{"ts": "2026-10-11T22:57:14.009012+00:00", "run_id": "legit-ac", "kind": "tool_start", "name": "web_search_reports", "payload": {"args": {"domain": "github.com"}}}
+{"ts": "2026-10-11T22:57:14.009012+00:00", "run_id": "legit-ac", "kind": "tool_end", "name": "web_search_reports", "payload": {"latency_ms": 0.4}}
+{"ts": "2026-10-11T22:57:14.010019+00:00", "run_id": "legit-ac", "kind": "step_end", "name": "s7", "payload": {"ok": true, "attempts": null}}
+{"ts": "2026-10-11T22:57:14.010019+00:00", "run_id": "legit-ac", "kind": "replan", "name": "s7", "payload": {"kind": "rule", "reason": "rule after web_search_reports (ok=True): no change", "added": [], "queue_depth": 1}}
+{"ts": "2026-10-11T22:57:14.011022+00:00", "run_id": "legit-ac", "kind": "step_start", "name": "s8", "payload": {"tool": "crustdata_enrich", "why": "Firmographic confirmation of a real company.", "n": 8}}
+{"ts": "2026-10-11T22:57:14.011022+00:00", "run_id": "legit-ac", "kind": "tool_start", "name": "crustdata_enrich", "payload": {"args": {"domain": "github.com"}}}
+{"ts": "2026-10-11T22:57:14.012024+00:00", "run_id": "legit-ac", "kind": "tool_end", "name": "crustdata_enrich", "payload": {"latency_ms": 0.5}}
+{"ts": "2026-10-11T22:57:14.012024+00:00", "run_id": "legit-ac", "kind": "step_end", "name": "s8", "payload": {"ok": true, "attempts": null}}
+{"ts": "2026-10-11T22:57:14.012958+00:00", "run_id": "legit-ac", "kind": "replan", "name": "s8", "payload": {"kind": "rule", "reason": "rule after crustdata_enrich (ok=True): no change", "added": [], "queue_depth": 0}}
+{"ts": "2026-10-11T22:57:14.012958+00:00", "run_id": "legit-ac", "kind": "run_end", "name": "investigation", "payload": {"score": 0, "band": "LOW", "steps": 8}}
+{"ts": "2026-10-11T23:04:03.673999+00:00", "run_id": "legit-ac", "kind": "example_regen", "name": "legit-acme.example", "payload": {"domain": "acme-cloud-services.example", "kwargs": ["demo", "scenario"]}}
+{"ts": "2026-10-11T23:04:03.679752+00:00", "run_id": "legit-ac", "kind": "run_start", "name": "investigation", "payload": {"domain": "acme-cloud-services.example", "mode": "demo", "scenario": "legit", "tag": null, "inject": {}}}
+{"ts": "2026-10-11T23:04:03.680300+00:00", "run_id": "legit-ac", "kind": "step_start", "name": "s1", "payload": {"tool": "rdap_lookup", "why": "Registration age is the cheapest strong signal.", "n": 1}}
+{"ts": "2026-10-11T23:04:03.680842+00:00", "run_id": "legit-ac", "kind": "tool_start", "name": "rdap_lookup", "payload": {"args": {"domain": "acme-cloud-services.example"}}}
+{"ts": "2026-10-11T23:04:03.680842+00:00", "run_id": "legit-ac", "kind": "tool_end", "name": "rdap_lookup", "payload": {"latency_ms": 0.4}}
+{"ts": "2026-10-11T23:04:03.681374+00:00", "run_id": "legit-ac", "kind": "step_end", "name": "s1", "payload": {"ok": true, "attempts": null}}
+{"ts": "2026-10-11T23:04:03.681909+00:00", "run_id": "legit-ac", "kind": "replan", "name": "s1", "payload": {"kind": "rule", "reason": "rule after rdap_lookup (ok=True): no change", "added": [], "queue_depth": 7}}
+{"ts": "2026-10-11T23:04:03.681909+00:00", "run_id": "legit-ac", "kind": "step_start", "name": "s2", "payload": {"tool": "doh_dns", "why": "Does the domain resolve, and does it take mail?", "n": 2}}
+{"ts": "2026-10-11T23:04:03.682423+00:00", "run_id": "legit-ac", "kind": "tool_start", "name": "doh_dns", "payload": {"args": {"domain": "acme-cloud-services.example"}}}
+{"ts": "2026-10-11T23:04:03.682423+00:00", "run_id": "legit-ac", "kind": "tool_end", "name": "doh_dns", "payload": {"latency_ms": 0.3}}
+{"ts": "2026-10-11T23:04:03.682958+00:00", "run_id": "legit-ac", "kind": "step_end", "name": "s2", "payload": {"ok": true, "attempts": null}}
+{"ts": "2026-10-11T23:04:03.683498+00:00", "run_id": "legit-ac", "kind": "replan", "name": "s2", "payload": {"kind": "rule", "reason": "rule after doh_dns (ok=True): no change", "added": [], "queue_depth": 6}}
+{"ts": "2026-10-11T23:04:03.683498+00:00", "run_id": "legit-ac", "kind": "step_start", "name": "s3", "payload": {"tool": "tls_inspect", "why": "Certificate hygiene check.", "n": 3}}
+{"ts": "2026-10-11T23:04:03.684034+00:00", "run_id": "legit-ac", "kind": "tool_start", "name": "tls_inspect", "payload": {"args": {"domain": "acme-cloud-services.example"}}}
+{"ts": "2026-10-11T23:04:03.684571+00:00", "run_id": "legit-ac", "kind": "tool_end", "name": "tls_inspect", "payload": {"latency_ms": 0.4}}
+{"ts": "2026-10-11T23:04:03.684571+00:00", "run_id": "legit-ac", "kind": "step_end", "name": "s3", "payload": {"ok": true, "attempts": null}}
+{"ts": "2026-10-11T23:04:03.684571+00:00", "run_id": "legit-ac", "kind": "replan", "name": "s3", "payload": {"kind": "rule", "reason": "rule after tls_inspect (ok=True): no change", "added": [], "queue_depth": 5}}
+{"ts": "2026-10-11T23:04:03.685579+00:00", "run_id": "legit-ac", "kind": "step_start", "name": "s4", "payload": {"tool": "ct_logs", "why": "Certificate history and subdomains show an established org.", "n": 4}}
+{"ts": "2026-10-11T23:04:03.685579+00:00", "run_id": "legit-ac", "kind": "tool_start", "name": "ct_logs", "payload": {"args": {"domain": "acme-cloud-services.example"}}}
+{"ts": "2026-10-11T23:04:03.686582+00:00", "run_id": "legit-ac", "kind": "tool_end", "name": "ct_logs", "payload": {"latency_ms": 0.5}}
+{"ts": "2026-10-11T23:04:03.687095+00:00", "run_id": "legit-ac", "kind": "step_end", "name": "s4", "payload": {"ok": true, "attempts": null}}
+{"ts": "2026-10-11T23:04:03.687095+00:00", "run_id": "legit-ac", "kind": "replan", "name": "s4", "payload": {"kind": "rule", "reason": "rule after ct_logs (ok=True): no change", "added": [], "queue_depth": 4}}
+{"ts": "2026-10-11T23:04:03.688105+00:00", "run_id": "legit-ac", "kind": "step_start", "name": "s5", "payload": {"tool": "urlscan_reputation", "why": "Independent web-scan verdicts for the domain.", "n": 5}}
+{"ts": "2026-10-11T23:04:03.688105+00:00", "run_id": "legit-ac", "kind": "tool_start", "name": "urlscan_reputation", "payload": {"args": {"domain": "acme-cloud-services.example"}}}
+{"ts": "2026-10-11T23:04:03.689150+00:00", "run_id": "legit-ac", "kind": "tool_end", "name": "urlscan_reputation", "payload": {"latency_ms": 0.7}}
+{"ts": "2026-10-11T23:04:03.690105+00:00", "run_id": "legit-ac", "kind": "step_end", "name": "s5", "payload": {"ok": true, "attempts": null}}
+{"ts": "2026-10-11T23:04:03.691106+00:00", "run_id": "legit-ac", "kind": "replan", "name": "s5", "payload": {"kind": "rule", "reason": "rule after urlscan_reputation (ok=True): no change", "added": [], "queue_depth": 3}}
+{"ts": "2026-10-11T23:04:03.691106+00:00", "run_id": "legit-ac", "kind": "step_start", "name": "s6", "payload": {"tool": "fetch_homepage", "why": "Homepage scam-copy + security-posture analysis.", "n": 6}}
+{"ts": "2026-10-11T23:04:03.691106+00:00", "run_id": "legit-ac", "kind": "tool_start", "name": "fetch_homepage", "payload": {"args": {"domain": "acme-cloud-services.example"}}}
+{"ts": "2026-10-11T23:04:03.691106+00:00", "run_id": "legit-ac", "kind": "tool_end", "name": "fetch_homepage", "payload": {"latency_ms": 0.5}}
+{"ts": "2026-10-11T23:04:03.692928+00:00", "run_id": "legit-ac", "kind": "step_end", "name": "s6", "payload": {"ok": true, "attempts": null}}
+{"ts": "2026-10-11T23:04:03.693449+00:00", "run_id": "legit-ac", "kind": "replan", "name": "s6", "payload": {"kind": "rule", "reason": "rule after fetch_homepage (ok=True): no change", "added": [], "queue_depth": 2}}
+{"ts": "2026-10-11T23:04:03.693449+00:00", "run_id": "legit-ac", "kind": "step_start", "name": "s7", "payload": {"tool": "web_search_reports", "why": "Independent reports and reviews.", "n": 7}}
+{"ts": "2026-10-11T23:04:03.694460+00:00", "run_id": "legit-ac", "kind": "tool_start", "name": "web_search_reports", "payload": {"args": {"domain": "acme-cloud-services.example"}}}
+{"ts": "2026-10-11T23:04:03.694460+00:00", "run_id": "legit-ac", "kind": "tool_end", "name": "web_search_reports", "payload": {"latency_ms": 0.5}}
+{"ts": "2026-10-11T23:04:03.695557+00:00", "run_id": "legit-ac", "kind": "step_end", "name": "s7", "payload": {"ok": true, "attempts": null}}
+{"ts": "2026-10-11T23:04:03.695557+00:00", "run_id": "legit-ac", "kind": "replan", "name": "s7", "payload": {"kind": "rule", "reason": "rule after web_search_reports (ok=True): no change", "added": [], "queue_depth": 1}}
+{"ts": "2026-10-11T23:04:03.695557+00:00", "run_id": "legit-ac", "kind": "step_start", "name": "s8", "payload": {"tool": "crustdata_enrich", "why": "Firmographic confirmation of a real company.", "n": 8}}
+{"ts": "2026-10-11T23:04:03.696567+00:00", "run_id": "legit-ac", "kind": "tool_start", "name": "crustdata_enrich", "payload": {"args": {"domain": "acme-cloud-services.example"}}}
+{"ts": "2026-10-11T23:04:03.696567+00:00", "run_id": "legit-ac", "kind": "tool_end", "name": "crustdata_enrich", "payload": {"latency_ms": 0.3}}
+{"ts": "2026-10-11T23:04:03.696567+00:00", "run_id": "legit-ac", "kind": "step_end", "name": "s8", "payload": {"ok": true, "attempts": null}}
+{"ts": "2026-10-11T23:04:03.697570+00:00", "run_id": "legit-ac", "kind": "replan", "name": "s8", "payload": {"kind": "rule", "reason": "rule after crustdata_enrich (ok=True): no change", "added": [], "queue_depth": 0}}
+{"ts": "2026-10-11T23:04:03.697570+00:00", "run_id": "legit-ac", "kind": "run_end", "name": "investigation", "payload": {"score": 0, "band": "LOW", "steps": 8}}

@@ -1,0 +1,86 @@
+{"ts": "2026-10-11T22:57:06.877193+00:00", "run_id": "linear.a", "kind": "example_regen", "name": "linear.app", "payload": {"domain": "linear.app", "kwargs": ["no_llm"]}}
+{"ts": "2026-10-11T22:57:06.882234+00:00", "run_id": "linear.a", "kind": "run_start", "name": "investigation", "payload": {"domain": "linear.app", "mode": "no-llm", "scenario": null, "tag": null, "inject": {}}}
+{"ts": "2026-10-11T22:57:06.883256+00:00", "run_id": "linear.a", "kind": "step_start", "name": "s1", "payload": {"tool": "rdap_lookup", "why": "Registration age is the cheapest strong signal.", "n": 1}}
+{"ts": "2026-10-11T22:57:06.884251+00:00", "run_id": "linear.a", "kind": "tool_start", "name": "rdap_lookup", "payload": {"args": {"domain": "github.com"}}}
+{"ts": "2026-10-11T22:57:07.500811+00:00", "run_id": "linear.a", "kind": "tool_end", "name": "rdap_lookup", "payload": {"latency_ms": 616.3}}
+{"ts": "2026-10-11T22:57:07.501805+00:00", "run_id": "linear.a", "kind": "step_end", "name": "s1", "payload": {"ok": true, "attempts": null}}
+{"ts": "2026-10-11T22:57:07.502808+00:00", "run_id": "linear.a", "kind": "replan", "name": "s1", "payload": {"kind": "rule", "reason": "rule after rdap_lookup (ok=True): no change", "added": [], "queue_depth": 7}}
+{"ts": "2026-10-11T22:57:07.503318+00:00", "run_id": "linear.a", "kind": "step_start", "name": "s2", "payload": {"tool": "doh_dns", "why": "Does the domain resolve, and does it take mail?", "n": 2}}
+{"ts": "2026-10-11T22:57:07.503318+00:00", "run_id": "linear.a", "kind": "tool_start", "name": "doh_dns", "payload": {"args": {"domain": "github.com"}}}
+{"ts": "2026-10-11T22:57:08.199499+00:00", "run_id": "linear.a", "kind": "tool_end", "name": "doh_dns", "payload": {"latency_ms": 695.7}}
+{"ts": "2026-10-11T22:57:08.200033+00:00", "run_id": "linear.a", "kind": "step_end", "name": "s2", "payload": {"ok": true, "attempts": null}}
+{"ts": "2026-10-11T22:57:08.200564+00:00", "run_id": "linear.a", "kind": "replan", "name": "s2", "payload": {"kind": "rule", "reason": "rule after doh_dns (ok=True): no change", "added": [], "queue_depth": 6}}
+{"ts": "2026-10-11T22:57:08.200564+00:00", "run_id": "linear.a", "kind": "step_start", "name": "s3", "payload": {"tool": "tls_inspect", "why": "Certificate hygiene check.", "n": 3}}
+{"ts": "2026-10-11T22:57:08.201569+00:00", "run_id": "linear.a", "kind": "tool_start", "name": "tls_inspect", "payload": {"args": {"domain": "github.com"}}}
+{"ts": "2026-10-11T22:57:08.462522+00:00", "run_id": "linear.a", "kind": "tool_end", "name": "tls_inspect", "payload": {"latency_ms": 261.7}}
+{"ts": "2026-10-11T22:57:08.463525+00:00", "run_id": "linear.a", "kind": "step_end", "name": "s3", "payload": {"ok": true, "attempts": null}}
+{"ts": "2026-10-11T22:57:08.463525+00:00", "run_id": "linear.a", "kind": "replan", "name": "s3", "payload": {"kind": "rule", "reason": "rule after tls_inspect (ok=True): no change", "added": [], "queue_depth": 5}}
+{"ts": "2026-10-11T22:57:08.463525+00:00", "run_id": "linear.a", "kind": "step_start", "name": "s4", "payload": {"tool": "ct_logs", "why": "Certificate history and subdomains show an established org.", "n": 4}}
+{"ts": "2026-10-11T22:57:08.465033+00:00", "run_id": "linear.a", "kind": "tool_start", "name": "ct_logs", "payload": {"args": {"domain": "github.com"}}}
+{"ts": "2026-10-11T22:57:09.912655+00:00", "run_id": "linear.a", "kind": "tool_end", "name": "ct_logs", "payload": {"latency_ms": 1448.6}}
+{"ts": "2026-10-11T22:57:09.914173+00:00", "run_id": "linear.a", "kind": "step_end", "name": "s4", "payload": {"ok": true, "attempts": null}}
+{"ts": "2026-10-11T22:57:09.914173+00:00", "run_id": "linear.a", "kind": "replan", "name": "s4", "payload": {"kind": "rule", "reason": "rule after ct_logs (ok=True): no change", "added": [], "queue_depth": 4}}
+{"ts": "2026-10-11T22:57:09.915179+00:00", "run_id": "linear.a", "kind": "step_start", "name": "s5", "payload": {"tool": "urlscan_reputation", "why": "Independent web-scan verdicts for the domain.", "n": 5}}
+{"ts": "2026-10-11T22:57:09.915179+00:00", "run_id": "linear.a", "kind": "tool_start", "name": "urlscan_reputation", "payload": {"args": {"domain": "github.com"}}}
+{"ts": "2026-10-11T22:57:10.580971+00:00", "run_id": "linear.a", "kind": "tool_end", "name": "urlscan_reputation", "payload": {"latency_ms": 665.2}}
+{"ts": "2026-10-11T22:57:10.580971+00:00", "run_id": "linear.a", "kind": "step_end", "name": "s5", "payload": {"ok": true, "attempts": null}}
+{"ts": "2026-10-11T22:57:10.580971+00:00", "run_id": "linear.a", "kind": "replan", "name": "s5", "payload": {"kind": "rule", "reason": "rule after urlscan_reputation (ok=True): no change", "added": [], "queue_depth": 3}}
+{"ts": "2026-10-11T22:57:10.581977+00:00", "run_id": "linear.a", "kind": "step_start", "name": "s6", "payload": {"tool": "fetch_homepage", "why": "Homepage scam-copy + security-posture analysis.", "n": 6}}
+{"ts": "2026-10-11T22:57:10.581977+00:00", "run_id": "linear.a", "kind": "tool_start", "name": "fetch_homepage", "payload": {"args": {"domain": "github.com"}}}
+{"ts": "2026-10-11T22:57:11.581522+00:00", "run_id": "linear.a", "kind": "tool_end", "name": "fetch_homepage", "payload": {"latency_ms": 999.5}}
+{"ts": "2026-10-11T22:57:11.582529+00:00", "run_id": "linear.a", "kind": "step_end", "name": "s6", "payload": {"ok": true, "attempts": null}}
+{"ts": "2026-10-11T22:57:11.582529+00:00", "run_id": "linear.a", "kind": "replan", "name": "s6", "payload": {"kind": "rule", "reason": "rule after fetch_homepage (ok=True): no change", "added": [], "queue_depth": 2}}
+{"ts": "2026-10-11T22:57:11.582529+00:00", "run_id": "linear.a", "kind": "step_start", "name": "s7", "payload": {"tool": "web_search_reports", "why": "Independent reports and reviews.", "n": 7}}
+{"ts": "2026-10-11T22:57:11.583532+00:00", "run_id": "linear.a", "kind": "tool_start", "name": "web_search_reports", "payload": {"args": {"domain": "github.com"}}}
+{"ts": "2026-10-11T22:57:12.645196+00:00", "run_id": "linear.a", "kind": "tool_end", "name": "web_search_reports", "payload": {"latency_ms": 1062.1}}
+{"ts": "2026-10-11T22:57:12.645742+00:00", "run_id": "linear.a", "kind": "step_end", "name": "s7", "payload": {"ok": true, "attempts": null}}
+{"ts": "2026-10-11T22:57:12.646285+00:00", "run_id": "linear.a", "kind": "replan", "name": "s7", "payload": {"kind": "rule", "reason": "rule after web_search_reports (ok=True): no change", "added": [], "queue_depth": 1}}
+{"ts": "2026-10-11T22:57:12.646285+00:00", "run_id": "linear.a", "kind": "step_start", "name": "s8", "payload": {"tool": "crustdata_enrich", "why": "Firmographic confirmation of a real company.", "n": 8}}
+{"ts": "2026-10-11T22:57:12.646805+00:00", "run_id": "linear.a", "kind": "tool_start", "name": "crustdata_enrich", "payload": {"args": {"domain": "github.com"}}}
+{"ts": "2026-10-11T22:57:13.925912+00:00", "run_id": "linear.a", "kind": "tool_end", "name": "crustdata_enrich", "payload": {"latency_ms": 1279.8}}
+{"ts": "2026-10-11T22:57:13.927061+00:00", "run_id": "linear.a", "kind": "step_end", "name": "s8", "payload": {"ok": true, "attempts": null}}
+{"ts": "2026-10-11T22:57:13.927061+00:00", "run_id": "linear.a", "kind": "replan", "name": "s8", "payload": {"kind": "rule", "reason": "rule after crustdata_enrich (ok=True): no change", "added": [], "queue_depth": 0}}
+{"ts": "2026-10-11T22:57:13.928026+00:00", "run_id": "linear.a", "kind": "run_end", "name": "investigation", "payload": {"score": 0, "band": "LOW", "steps": 8}}
+{"ts": "2026-10-11T23:03:52.612371+00:00", "run_id": "linear.a", "kind": "example_regen", "name": "linear.app", "payload": {"domain": "linear.app", "kwargs": ["no_llm"]}}
+{"ts": "2026-10-11T23:03:52.616889+00:00", "run_id": "linear.a", "kind": "run_start", "name": "investigation", "payload": {"domain": "linear.app", "mode": "no-llm", "scenario": null, "tag": null, "inject": {}}}
+{"ts": "2026-10-11T23:03:52.617899+00:00", "run_id": "linear.a", "kind": "step_start", "name": "s1", "payload": {"tool": "rdap_lookup", "why": "Registration age is the cheapest strong signal.", "n": 1}}
+{"ts": "2026-10-11T23:03:52.617899+00:00", "run_id": "linear.a", "kind": "tool_start", "name": "rdap_lookup", "payload": {"args": {"domain": "linear.app"}}}
+{"ts": "2026-10-11T23:03:53.460738+00:00", "run_id": "linear.a", "kind": "tool_end", "name": "rdap_lookup", "payload": {"latency_ms": 842.5}}
+{"ts": "2026-10-11T23:03:53.460738+00:00", "run_id": "linear.a", "kind": "step_end", "name": "s1", "payload": {"ok": true, "attempts": null}}
+{"ts": "2026-10-11T23:03:53.460738+00:00", "run_id": "linear.a", "kind": "replan", "name": "s1", "payload": {"kind": "rule", "reason": "rule after rdap_lookup (ok=True): no change", "added": [], "queue_depth": 7}}
+{"ts": "2026-10-11T23:03:53.462244+00:00", "run_id": "linear.a", "kind": "step_start", "name": "s2", "payload": {"tool": "doh_dns", "why": "Does the domain resolve, and does it take mail?", "n": 2}}
+{"ts": "2026-10-11T23:03:53.462244+00:00", "run_id": "linear.a", "kind": "tool_start", "name": "doh_dns", "payload": {"args": {"domain": "linear.app"}}}
+{"ts": "2026-10-11T23:03:54.937655+00:00", "run_id": "linear.a", "kind": "tool_end", "name": "doh_dns", "payload": {"latency_ms": 1474.7}}
+{"ts": "2026-10-11T23:03:54.938217+00:00", "run_id": "linear.a", "kind": "step_end", "name": "s2", "payload": {"ok": true, "attempts": null}}
+{"ts": "2026-10-11T23:03:54.938217+00:00", "run_id": "linear.a", "kind": "replan", "name": "s2", "payload": {"kind": "rule", "reason": "rule after doh_dns (ok=True): no change", "added": [], "queue_depth": 6}}
+{"ts": "2026-10-11T23:03:54.938217+00:00", "run_id": "linear.a", "kind": "step_start", "name": "s3", "payload": {"tool": "tls_inspect", "why": "Certificate hygiene check.", "n": 3}}
+{"ts": "2026-10-11T23:03:54.939224+00:00", "run_id": "linear.a", "kind": "tool_start", "name": "tls_inspect", "payload": {"args": {"domain": "linear.app"}}}
+{"ts": "2026-10-11T23:03:55.342046+00:00", "run_id": "linear.a", "kind": "tool_end", "name": "tls_inspect", "payload": {"latency_ms": 402.8}}
+{"ts": "2026-10-11T23:03:55.342046+00:00", "run_id": "linear.a", "kind": "step_end", "name": "s3", "payload": {"ok": true, "attempts": null}}
+{"ts": "2026-10-11T23:03:55.343006+00:00", "run_id": "linear.a", "kind": "replan", "name": "s3", "payload": {"kind": "rule", "reason": "rule after tls_inspect (ok=True): no change", "added": [], "queue_depth": 5}}
+{"ts": "2026-10-11T23:03:55.343006+00:00", "run_id": "linear.a", "kind": "step_start", "name": "s4", "payload": {"tool": "ct_logs", "why": "Certificate history and subdomains show an established org.", "n": 4}}
+{"ts": "2026-10-11T23:03:55.344006+00:00", "run_id": "linear.a", "kind": "tool_start", "name": "ct_logs", "payload": {"args": {"domain": "linear.app"}}}
+{"ts": "2026-10-11T23:03:58.565161+00:00", "run_id": "linear.a", "kind": "tool_end", "name": "ct_logs", "payload": {"latency_ms": 3221.5}}
+{"ts": "2026-10-11T23:03:58.566160+00:00", "run_id": "linear.a", "kind": "step_end", "name": "s4", "payload": {"ok": true, "attempts": null}}
+{"ts": "2026-10-11T23:03:58.566160+00:00", "run_id": "linear.a", "kind": "replan", "name": "s4", "payload": {"kind": "rule", "reason": "rule after ct_logs (ok=True): no change", "added": [], "queue_depth": 4}}
+{"ts": "2026-10-11T23:03:58.566160+00:00", "run_id": "linear.a", "kind": "step_start", "name": "s5", "payload": {"tool": "urlscan_reputation", "why": "Independent web-scan verdicts for the domain.", "n": 5}}
+{"ts": "2026-10-11T23:03:58.566160+00:00", "run_id": "linear.a", "kind": "tool_start", "name": "urlscan_reputation", "payload": {"args": {"domain": "linear.app"}}}
+{"ts": "2026-10-11T23:03:59.314982+00:00", "run_id": "linear.a", "kind": "tool_end", "name": "urlscan_reputation", "payload": {"latency_ms": 747.8}}
+{"ts": "2026-10-11T23:03:59.314982+00:00", "run_id": "linear.a", "kind": "step_end", "name": "s5", "payload": {"ok": true, "attempts": null}}
+{"ts": "2026-10-11T23:03:59.315982+00:00", "run_id": "linear.a", "kind": "replan", "name": "s5", "payload": {"kind": "rule", "reason": "rule after urlscan_reputation (ok=True): no change", "added": [], "queue_depth": 3}}
+{"ts": "2026-10-11T23:03:59.315982+00:00", "run_id": "linear.a", "kind": "step_start", "name": "s6", "payload": {"tool": "fetch_homepage", "why": "Homepage scam-copy + security-posture analysis.", "n": 6}}
+{"ts": "2026-10-11T23:03:59.315982+00:00", "run_id": "linear.a", "kind": "tool_start", "name": "fetch_homepage", "payload": {"args": {"domain": "linear.app"}}}
+{"ts": "2026-10-11T23:04:01.372516+00:00", "run_id": "linear.a", "kind": "tool_end", "name": "fetch_homepage", "payload": {"latency_ms": 2056.6}}
+{"ts": "2026-10-11T23:04:01.373517+00:00", "run_id": "linear.a", "kind": "step_end", "name": "s6", "payload": {"ok": true, "attempts": null}}
+{"ts": "2026-10-11T23:04:01.373517+00:00", "run_id": "linear.a", "kind": "replan", "name": "s6", "payload": {"kind": "rule", "reason": "rule after fetch_homepage (ok=True): no change", "added": [], "queue_depth": 2}}
+{"ts": "2026-10-11T23:04:01.374517+00:00", "run_id": "linear.a", "kind": "step_start", "name": "s7", "payload": {"tool": "web_search_reports", "why": "Independent reports and reviews.", "n": 7}}
+{"ts": "2026-10-11T23:04:01.374517+00:00", "run_id": "linear.a", "kind": "tool_start", "name": "web_search_reports", "payload": {"args": {"domain": "linear.app"}}}
+{"ts": "2026-10-11T23:04:02.184933+00:00", "run_id": "linear.a", "kind": "tool_end", "name": "web_search_reports", "payload": {"latency_ms": 811.4}}
+{"ts": "2026-10-11T23:04:02.186457+00:00", "run_id": "linear.a", "kind": "step_end", "name": "s7", "payload": {"ok": true, "attempts": null}}
+{"ts": "2026-10-11T23:04:02.187472+00:00", "run_id": "linear.a", "kind": "replan", "name": "s7", "payload": {"kind": "rule", "reason": "rule after web_search_reports (ok=True): no change", "added": [], "queue_depth": 1}}
+{"ts": "2026-10-11T23:04:02.187472+00:00", "run_id": "linear.a", "kind": "step_start", "name": "s8", "payload": {"tool": "crustdata_enrich", "why": "Firmographic confirmation of a real company.", "n": 8}}
+{"ts": "2026-10-11T23:04:02.187472+00:00", "run_id": "linear.a", "kind": "tool_start", "name": "crustdata_enrich", "payload": {"args": {"domain": "linear.app"}}}
+{"ts": "2026-10-11T23:04:03.600421+00:00", "run_id": "linear.a", "kind": "tool_end", "name": "crustdata_enrich", "payload": {"latency_ms": 1412.7}}
+{"ts": "2026-10-11T23:04:03.601424+00:00", "run_id": "linear.a", "kind": "step_end", "name": "s8", "payload": {"ok": true, "attempts": null}}
+{"ts": "2026-10-11T23:04:03.601424+00:00", "run_id": "linear.a", "kind": "replan", "name": "s8", "payload": {"kind": "rule", "reason": "rule after crustdata_enrich (ok=True): no change", "added": [], "queue_depth": 0}}
+{"ts": "2026-10-11T23:04:03.601424+00:00", "run_id": "linear.a", "kind": "run_end", "name": "investigation", "payload": {"score": 0, "band": "LOW", "steps": 8}}

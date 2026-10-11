@@ -1,0 +1,470 @@
+{
+  "domain": "acme-cloud-services.example",
+  "run_id": "f265b6e1",
+  "mode": "demo",
+  "tag": null,
+  "started": "2026-10-11T23:04:03.645197+00:00",
+  "findings": {
+    "rdap_lookup": {
+      "ok": true,
+      "data": {
+        "found": true,
+        "created": "2026-06-13T00:00:00+00:00",
+        "expires": "2027-06-13T00:00:00+00:00",
+        "age_days": 120,
+        "registrar": "Name Silos LLC",
+        "status": [
+          "client transfer prohibited"
+        ],
+        "nameservers": [
+          "ns1.newly.example",
+          "ns2.newly.example"
+        ],
+        "_demo": true,
+        "domain": "acme-cloud-services.example"
+      },
+      "sources": [
+        "demo: canned RDAP response"
+      ]
+    },
+    "doh_dns": {
+      "ok": true,
+      "data": {
+        "A": [
+          "198.51.100.7"
+        ],
+        "MX": [],
+        "NS": [
+          "ns1.newly.example",
+          "ns2.newly.example"
+        ],
+        "TXT": [
+          "v=spf1 include:_spf.newly.example ~all"
+        ],
+        "CNAME": [],
+        "DMARC": [],
+        "domain": "acme-cloud-services.example",
+        "statuses": {
+          "A": 0,
+          "MX": 0,
+          "NS": 0,
+          "TXT": 0,
+          "CNAME": 0,
+          "DMARC": 0
+        },
+        "_doh": true
+      },
+      "sources": [
+        "demo: canned DoH response"
+      ]
+    },
+    "tls_inspect": {
+      "ok": true,
+      "data": {
+        "issuer": "Let's Encrypt",
+        "subject_cn": "newly.example",
+        "not_after": "2026-11-02T00:00:00+00:00",
+        "days_left": 22,
+        "self_signed": false,
+        "_demo": true,
+        "domain": "acme-cloud-services.example"
+      },
+      "sources": [
+        "demo: canned TLS response"
+      ]
+    },
+    "ct_logs": {
+      "ok": true,
+      "data": {
+        "cert_count": 6,
+        "earliest_cert": "2026-06-15T00:00:00+00:00",
+        "latest_cert": "2026-10-01T00:00:00+00:00",
+        "subdomain_count": 3,
+        "issuers": [
+          "Let's Encrypt"
+        ],
+        "_demo": true,
+        "domain": "acme-cloud-services.example"
+      },
+      "sources": [
+        "demo: canned crt.sh response"
+      ]
+    },
+    "urlscan_reputation": {
+      "ok": true,
+      "data": {
+        "total_scans": 4,
+        "malicious_scans": 0,
+        "worst_score": 0,
+        "categories": [],
+        "first_seen": "2026-07-01T00:00:00+00:00",
+        "last_seen": "2026-10-02T00:00:00+00:00",
+        "_demo": true,
+        "domain": "acme-cloud-services.example"
+      },
+      "sources": [
+        "demo: canned urlscan response"
+      ]
+    },
+    "fetch_homepage": {
+      "ok": true,
+      "data": {
+        "url": "https://newly.example/",
+        "final_url": "https://newly.example/",
+        "title": "Newly - join the waitlist",
+        "text": "Newly is building developer tooling. Our privacy policy explains what we collect. Newly, pre-launch. No public compliance or trust page yet.",
+        "status_code": 200,
+        "policy_pages": [
+          "privacy"
+        ],
+        "security_txt": {
+          "found": false,
+          "contact": []
+        },
+        "headers": [],
+        "_demo": true,
+        "domain": "acme-cloud-services.example"
+      },
+      "sources": [
+        "demo: canned homepage"
+      ]
+    },
+    "web_search_reports": {
+      "ok": true,
+      "data": {
+        "query": "acme-cloud-services.example scam reviews complaints",
+        "results": [
+          {
+            "title": "Newly - new devtool startup",
+            "url": "https://example-launch.example/newly",
+            "snippet": "Newly launched on a product board this month."
+          }
+        ],
+        "_demo": true,
+        "domain": "acme-cloud-services.example"
+      },
+      "sources": [
+        "demo: canned search results"
+      ]
+    },
+    "crustdata_enrich": {
+      "ok": true,
+      "data": {
+        "found": false,
+        "_demo": true,
+        "domain": "acme-cloud-services.example"
+      },
+      "sources": [
+        "demo: canned Crustdata response"
+      ]
+    },
+    "phishtank_check": {
+      "ok": true,
+      "data": {
+        "listed": false,
+        "matching_entries": 0,
+        "sample_urls": [],
+        "feed_entries": 0,
+        "_demo": true,
+        "domain": "acme-cloud-services.example"
+      },
+      "sources": [
+        "demo: canned PhishTank"
+      ]
+    }
+  },
+  "step_results": [
+    {
+      "id": "s1",
+      "tool": "rdap_lookup",
+      "ok": true,
+      "attempts": 1,
+      "error": null,
+      "injected": false,
+      "latency_ms": 0.9
+    },
+    {
+      "id": "s2",
+      "tool": "doh_dns",
+      "ok": true,
+      "attempts": 1,
+      "error": null,
+      "injected": false,
+      "latency_ms": 0.8
+    },
+    {
+      "id": "s3",
+      "tool": "tls_inspect",
+      "ok": true,
+      "attempts": 1,
+      "error": null,
+      "injected": false,
+      "latency_ms": 0.8
+    },
+    {
+      "id": "s4",
+      "tool": "ct_logs",
+      "ok": true,
+      "attempts": 1,
+      "error": null,
+      "injected": false,
+      "latency_ms": 0.8
+    },
+    {
+      "id": "s5",
+      "tool": "urlscan_reputation",
+      "ok": true,
+      "attempts": 1,
+      "error": null,
+      "injected": false,
+      "latency_ms": 0.9
+    },
+    {
+      "id": "s6",
+      "tool": "fetch_homepage",
+      "ok": true,
+      "attempts": 1,
+      "error": null,
+      "injected": false,
+      "latency_ms": 0.9
+    },
+    {
+      "id": "s7",
+      "tool": "web_search_reports",
+      "ok": true,
+      "attempts": 1,
+      "error": null,
+      "injected": false,
+      "latency_ms": 0.9
+    },
+    {
+      "id": "s8",
+      "tool": "crustdata_enrich",
+      "ok": true,
+      "attempts": 1,
+      "error": null,
+      "injected": false,
+      "latency_ms": 0.9
+    },
+    {
+      "id": "rule-phish",
+      "tool": "phishtank_check",
+      "ok": true,
+      "attempts": 1,
+      "error": null,
+      "injected": false,
+      "latency_ms": 0.7
+    }
+  ],
+  "retries": {},
+  "plan_history": [
+    {
+      "id": "s1",
+      "tool": "rdap_lookup",
+      "args": {
+        "domain": "acme-cloud-services.example"
+      },
+      "why": "Registration age is the cheapest strong signal."
+    },
+    {
+      "id": "s2",
+      "tool": "doh_dns",
+      "args": {
+        "domain": "acme-cloud-services.example"
+      },
+      "why": "Does the domain resolve, and does it take mail?"
+    },
+    {
+      "id": "s3",
+      "tool": "tls_inspect",
+      "args": {
+        "domain": "acme-cloud-services.example"
+      },
+      "why": "Certificate hygiene check."
+    },
+    {
+      "id": "s4",
+      "tool": "ct_logs",
+      "args": {
+        "domain": "acme-cloud-services.example"
+      },
+      "why": "Certificate history and subdomains show an established org."
+    },
+    {
+      "id": "s5",
+      "tool": "urlscan_reputation",
+      "args": {
+        "domain": "acme-cloud-services.example"
+      },
+      "why": "Independent web-scan verdicts for the domain."
+    },
+    {
+      "id": "s6",
+      "tool": "fetch_homepage",
+      "args": {
+        "domain": "acme-cloud-services.example"
+      },
+      "why": "Homepage scam-copy + security-posture analysis."
+    },
+    {
+      "id": "s7",
+      "tool": "web_search_reports",
+      "args": {
+        "domain": "acme-cloud-services.example"
+      },
+      "why": "Independent reports and reviews."
+    },
+    {
+      "id": "s8",
+      "tool": "crustdata_enrich",
+      "args": {
+        "domain": "acme-cloud-services.example"
+      },
+      "why": "Firmographic confirmation of a real company."
+    },
+    {
+      "id": "rule-phish",
+      "tool": "phishtank_check",
+      "args": {
+        "domain": "acme-cloud-services.example"
+      },
+      "why": "young domain: verify against the phishing feed"
+    }
+  ],
+  "replans": {
+    "llm": 0,
+    "rule": 1
+  },
+  "assessment": {
+    "domain": "acme-cloud-services.example",
+    "score": 29,
+    "band": "MEDIUM",
+    "signals": [
+      {
+        "signal": "domain_young",
+        "weight": 12,
+        "detail": "Domain registered 120 days ago (< 1 year).",
+        "sources": [
+          "demo: canned RDAP response"
+        ],
+        "tool": "rdap_lookup",
+        "layer": "real & established",
+        "verification": "single_source",
+        "tools": [
+          "rdap_lookup"
+        ]
+      },
+      {
+        "signal": "no_mx_records",
+        "weight": 10,
+        "detail": "No MX records: the domain cannot receive email; unusual for a real business.",
+        "sources": [
+          "demo: canned DoH response"
+        ],
+        "tool": "doh_dns",
+        "layer": "real & established",
+        "verification": "single_source",
+        "tools": [
+          "doh_dns"
+        ]
+      },
+      {
+        "signal": "spf_record_present",
+        "weight": -3,
+        "detail": "Domain publishes an SPF record authorising its mail senders.",
+        "sources": [
+          "demo: canned DoH response"
+        ],
+        "tool": "doh_dns",
+        "layer": "security posture",
+        "verification": "single_source",
+        "tools": [
+          "doh_dns"
+        ]
+      },
+      {
+        "signal": "no_dmarc_record",
+        "weight": 4,
+        "detail": "No DMARC policy published: the domain does not declare how unauthenticated mail is handled.",
+        "sources": [
+          "demo: canned DoH response"
+        ],
+        "tool": "doh_dns",
+        "layer": "security posture",
+        "verification": "single_source",
+        "tools": [
+          "doh_dns"
+        ]
+      },
+      {
+        "signal": "certificate_history",
+        "weight": -6,
+        "detail": "6 certificate(s) in transparency logs covering 3 name(s).",
+        "sources": [
+          "demo: canned crt.sh response"
+        ],
+        "tool": "ct_logs",
+        "layer": "real & established",
+        "verification": "single_source",
+        "tools": [
+          "ct_logs"
+        ]
+      },
+      {
+        "signal": "cert_expiring",
+        "weight": 10,
+        "detail": "TLS certificate expires in 22 days.",
+        "sources": [
+          "demo: canned TLS response"
+        ],
+        "tool": "tls_inspect",
+        "layer": "security posture",
+        "verification": "single_source",
+        "tools": [
+          "tls_inspect"
+        ]
+      },
+      {
+        "signal": "no_hsts",
+        "weight": 2,
+        "detail": "No HSTS header on the homepage; traffic can be downgraded.",
+        "sources": [
+          "demo: canned homepage"
+        ],
+        "tool": "fetch_homepage",
+        "layer": "security posture",
+        "verification": "single_source",
+        "tools": [
+          "fetch_homepage"
+        ]
+      }
+    ],
+    "sources": [
+      "demo: canned DoH response",
+      "demo: canned RDAP response",
+      "demo: canned TLS response",
+      "demo: canned crt.sh response",
+      "demo: canned homepage"
+    ],
+    "re_registered": false,
+    "could_not_verify": [
+      {
+        "item": "urlscan_reputation",
+        "reason": "ran, no signal produced"
+      },
+      {
+        "item": "web_search_reports",
+        "reason": "ran, no signal produced"
+      },
+      {
+        "item": "crustdata_enrich",
+        "reason": "ran, no signal produced"
+      },
+      {
+        "item": "phishtank_check",
+        "reason": "ran, no signal produced"
+      }
+    ],
+    "notes": []
+  }
+}

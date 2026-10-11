@@ -1,0 +1,86 @@
+{"ts": "2026-10-11T22:56:22.663097+00:00", "run_id": "github.c", "kind": "example_regen", "name": "github.com", "payload": {"domain": "github.com", "kwargs": ["no_llm"]}}
+{"ts": "2026-10-11T22:56:22.668885+00:00", "run_id": "github.c", "kind": "run_start", "name": "investigation", "payload": {"domain": "github.com", "mode": "no-llm", "scenario": null, "tag": null, "inject": {}}}
+{"ts": "2026-10-11T22:56:22.669306+00:00", "run_id": "github.c", "kind": "step_start", "name": "s1", "payload": {"tool": "rdap_lookup", "why": "Registration age is the cheapest strong signal.", "n": 1}}
+{"ts": "2026-10-11T22:56:22.669812+00:00", "run_id": "github.c", "kind": "tool_start", "name": "rdap_lookup", "payload": {"args": {"domain": "github.com"}}}
+{"ts": "2026-10-11T22:56:23.656152+00:00", "run_id": "github.c", "kind": "tool_end", "name": "rdap_lookup", "payload": {"latency_ms": 986.8}}
+{"ts": "2026-10-11T22:56:23.657163+00:00", "run_id": "github.c", "kind": "step_end", "name": "s1", "payload": {"ok": true, "attempts": null}}
+{"ts": "2026-10-11T22:56:23.657163+00:00", "run_id": "github.c", "kind": "replan", "name": "s1", "payload": {"kind": "rule", "reason": "rule after rdap_lookup (ok=True): no change", "added": [], "queue_depth": 7}}
+{"ts": "2026-10-11T22:56:23.658163+00:00", "run_id": "github.c", "kind": "step_start", "name": "s2", "payload": {"tool": "doh_dns", "why": "Does the domain resolve, and does it take mail?", "n": 2}}
+{"ts": "2026-10-11T22:56:23.658163+00:00", "run_id": "github.c", "kind": "tool_start", "name": "doh_dns", "payload": {"args": {"domain": "github.com"}}}
+{"ts": "2026-10-11T22:56:24.427018+00:00", "run_id": "github.c", "kind": "tool_end", "name": "doh_dns", "payload": {"latency_ms": 768.5}}
+{"ts": "2026-10-11T22:56:24.427018+00:00", "run_id": "github.c", "kind": "step_end", "name": "s2", "payload": {"ok": true, "attempts": null}}
+{"ts": "2026-10-11T22:56:24.427981+00:00", "run_id": "github.c", "kind": "replan", "name": "s2", "payload": {"kind": "rule", "reason": "rule after doh_dns (ok=True): no change", "added": [], "queue_depth": 6}}
+{"ts": "2026-10-11T22:56:24.427981+00:00", "run_id": "github.c", "kind": "step_start", "name": "s3", "payload": {"tool": "tls_inspect", "why": "Certificate hygiene check.", "n": 3}}
+{"ts": "2026-10-11T22:56:24.427981+00:00", "run_id": "github.c", "kind": "tool_start", "name": "tls_inspect", "payload": {"args": {"domain": "github.com"}}}
+{"ts": "2026-10-11T22:56:24.690220+00:00", "run_id": "github.c", "kind": "tool_end", "name": "tls_inspect", "payload": {"latency_ms": 261.7}}
+{"ts": "2026-10-11T22:56:24.690788+00:00", "run_id": "github.c", "kind": "step_end", "name": "s3", "payload": {"ok": true, "attempts": null}}
+{"ts": "2026-10-11T22:56:24.691330+00:00", "run_id": "github.c", "kind": "replan", "name": "s3", "payload": {"kind": "rule", "reason": "rule after tls_inspect (ok=True): no change", "added": [], "queue_depth": 5}}
+{"ts": "2026-10-11T22:56:24.691865+00:00", "run_id": "github.c", "kind": "step_start", "name": "s4", "payload": {"tool": "ct_logs", "why": "Certificate history and subdomains show an established org.", "n": 4}}
+{"ts": "2026-10-11T22:56:24.692403+00:00", "run_id": "github.c", "kind": "tool_start", "name": "ct_logs", "payload": {"args": {"domain": "github.com"}}}
+{"ts": "2026-10-11T22:56:55.984794+00:00", "run_id": "github.c", "kind": "tool_end", "name": "ct_logs", "payload": {"latency_ms": 31293.6}}
+{"ts": "2026-10-11T22:56:55.985813+00:00", "run_id": "github.c", "kind": "step_end", "name": "s4", "payload": {"ok": true, "attempts": null}}
+{"ts": "2026-10-11T22:56:55.985813+00:00", "run_id": "github.c", "kind": "replan", "name": "s4", "payload": {"kind": "rule", "reason": "rule after ct_logs (ok=True): no change", "added": [], "queue_depth": 4}}
+{"ts": "2026-10-11T22:56:55.985813+00:00", "run_id": "github.c", "kind": "step_start", "name": "s5", "payload": {"tool": "urlscan_reputation", "why": "Independent web-scan verdicts for the domain.", "n": 5}}
+{"ts": "2026-10-11T22:56:55.985813+00:00", "run_id": "github.c", "kind": "tool_start", "name": "urlscan_reputation", "payload": {"args": {"domain": "github.com"}}}
+{"ts": "2026-10-11T22:56:56.672226+00:00", "run_id": "github.c", "kind": "tool_end", "name": "urlscan_reputation", "payload": {"latency_ms": 685.7}}
+{"ts": "2026-10-11T22:56:56.672801+00:00", "run_id": "github.c", "kind": "step_end", "name": "s5", "payload": {"ok": true, "attempts": null}}
+{"ts": "2026-10-11T22:56:56.673374+00:00", "run_id": "github.c", "kind": "replan", "name": "s5", "payload": {"kind": "rule", "reason": "rule after urlscan_reputation (ok=True): no change", "added": [], "queue_depth": 3}}
+{"ts": "2026-10-11T22:56:56.673933+00:00", "run_id": "github.c", "kind": "step_start", "name": "s6", "payload": {"tool": "fetch_homepage", "why": "Homepage scam-copy + security-posture analysis.", "n": 6}}
+{"ts": "2026-10-11T22:56:56.674513+00:00", "run_id": "github.c", "kind": "tool_start", "name": "fetch_homepage", "payload": {"args": {"domain": "github.com"}}}
+{"ts": "2026-10-11T22:56:57.952610+00:00", "run_id": "github.c", "kind": "tool_end", "name": "fetch_homepage", "payload": {"latency_ms": 1278.7}}
+{"ts": "2026-10-11T22:56:57.953611+00:00", "run_id": "github.c", "kind": "step_end", "name": "s6", "payload": {"ok": true, "attempts": null}}
+{"ts": "2026-10-11T22:56:57.953611+00:00", "run_id": "github.c", "kind": "replan", "name": "s6", "payload": {"kind": "rule", "reason": "rule after fetch_homepage (ok=True): no change", "added": [], "queue_depth": 2}}
+{"ts": "2026-10-11T22:56:57.953611+00:00", "run_id": "github.c", "kind": "step_start", "name": "s7", "payload": {"tool": "web_search_reports", "why": "Independent reports and reviews.", "n": 7}}
+{"ts": "2026-10-11T22:56:57.954613+00:00", "run_id": "github.c", "kind": "tool_start", "name": "web_search_reports", "payload": {"args": {"domain": "github.com"}}}
+{"ts": "2026-10-11T22:56:59.099723+00:00", "run_id": "github.c", "kind": "tool_end", "name": "web_search_reports", "payload": {"latency_ms": 1145.1}}
+{"ts": "2026-10-11T22:56:59.100293+00:00", "run_id": "github.c", "kind": "step_end", "name": "s7", "payload": {"ok": true, "attempts": null}}
+{"ts": "2026-10-11T22:56:59.100293+00:00", "run_id": "github.c", "kind": "replan", "name": "s7", "payload": {"kind": "rule", "reason": "rule after web_search_reports (ok=True): no change", "added": [], "queue_depth": 1}}
+{"ts": "2026-10-11T22:56:59.100877+00:00", "run_id": "github.c", "kind": "step_start", "name": "s8", "payload": {"tool": "crustdata_enrich", "why": "Firmographic confirmation of a real company.", "n": 8}}
+{"ts": "2026-10-11T22:56:59.100877+00:00", "run_id": "github.c", "kind": "tool_start", "name": "crustdata_enrich", "payload": {"args": {"domain": "github.com"}}}
+{"ts": "2026-10-11T22:57:00.539478+00:00", "run_id": "github.c", "kind": "tool_end", "name": "crustdata_enrich", "payload": {"latency_ms": 1438.1}}
+{"ts": "2026-10-11T22:57:00.539478+00:00", "run_id": "github.c", "kind": "step_end", "name": "s8", "payload": {"ok": true, "attempts": null}}
+{"ts": "2026-10-11T22:57:00.539478+00:00", "run_id": "github.c", "kind": "replan", "name": "s8", "payload": {"kind": "rule", "reason": "rule after crustdata_enrich (ok=True): no change", "added": [], "queue_depth": 0}}
+{"ts": "2026-10-11T22:57:00.540473+00:00", "run_id": "github.c", "kind": "run_end", "name": "investigation", "payload": {"score": 0, "band": "LOW", "steps": 8}}
+{"ts": "2026-10-11T23:03:11.181494+00:00", "run_id": "github.c", "kind": "example_regen", "name": "github.com", "payload": {"domain": "github.com", "kwargs": ["no_llm"]}}
+{"ts": "2026-10-11T23:03:11.185883+00:00", "run_id": "github.c", "kind": "run_start", "name": "investigation", "payload": {"domain": "github.com", "mode": "no-llm", "scenario": null, "tag": null, "inject": {}}}
+{"ts": "2026-10-11T23:03:11.186401+00:00", "run_id": "github.c", "kind": "step_start", "name": "s1", "payload": {"tool": "rdap_lookup", "why": "Registration age is the cheapest strong signal.", "n": 1}}
+{"ts": "2026-10-11T23:03:11.186940+00:00", "run_id": "github.c", "kind": "tool_start", "name": "rdap_lookup", "payload": {"args": {"domain": "github.com"}}}
+{"ts": "2026-10-11T23:03:11.870326+00:00", "run_id": "github.c", "kind": "tool_end", "name": "rdap_lookup", "payload": {"latency_ms": 683.4}}
+{"ts": "2026-10-11T23:03:11.870839+00:00", "run_id": "github.c", "kind": "step_end", "name": "s1", "payload": {"ok": true, "attempts": null}}
+{"ts": "2026-10-11T23:03:11.870839+00:00", "run_id": "github.c", "kind": "replan", "name": "s1", "payload": {"kind": "rule", "reason": "rule after rdap_lookup (ok=True): no change", "added": [], "queue_depth": 7}}
+{"ts": "2026-10-11T23:03:11.871367+00:00", "run_id": "github.c", "kind": "step_start", "name": "s2", "payload": {"tool": "doh_dns", "why": "Does the domain resolve, and does it take mail?", "n": 2}}
+{"ts": "2026-10-11T23:03:11.871367+00:00", "run_id": "github.c", "kind": "tool_start", "name": "doh_dns", "payload": {"args": {"domain": "github.com"}}}
+{"ts": "2026-10-11T23:03:12.550899+00:00", "run_id": "github.c", "kind": "tool_end", "name": "doh_dns", "payload": {"latency_ms": 679.3}}
+{"ts": "2026-10-11T23:03:12.551515+00:00", "run_id": "github.c", "kind": "step_end", "name": "s2", "payload": {"ok": true, "attempts": null}}
+{"ts": "2026-10-11T23:03:12.551515+00:00", "run_id": "github.c", "kind": "replan", "name": "s2", "payload": {"kind": "rule", "reason": "rule after doh_dns (ok=True): no change", "added": [], "queue_depth": 6}}
+{"ts": "2026-10-11T23:03:12.552068+00:00", "run_id": "github.c", "kind": "step_start", "name": "s3", "payload": {"tool": "tls_inspect", "why": "Certificate hygiene check.", "n": 3}}
+{"ts": "2026-10-11T23:03:12.552594+00:00", "run_id": "github.c", "kind": "tool_start", "name": "tls_inspect", "payload": {"args": {"domain": "github.com"}}}
+{"ts": "2026-10-11T23:03:12.834567+00:00", "run_id": "github.c", "kind": "tool_end", "name": "tls_inspect", "payload": {"latency_ms": 282.5}}
+{"ts": "2026-10-11T23:03:12.834567+00:00", "run_id": "github.c", "kind": "step_end", "name": "s3", "payload": {"ok": true, "attempts": null}}
+{"ts": "2026-10-11T23:03:12.835606+00:00", "run_id": "github.c", "kind": "replan", "name": "s3", "payload": {"kind": "rule", "reason": "rule after tls_inspect (ok=True): no change", "added": [], "queue_depth": 5}}
+{"ts": "2026-10-11T23:03:12.835606+00:00", "run_id": "github.c", "kind": "step_start", "name": "s4", "payload": {"tool": "ct_logs", "why": "Certificate history and subdomains show an established org.", "n": 4}}
+{"ts": "2026-10-11T23:03:12.836565+00:00", "run_id": "github.c", "kind": "tool_start", "name": "ct_logs", "payload": {"args": {"domain": "github.com"}}}
+{"ts": "2026-10-11T23:03:15.309999+00:00", "run_id": "github.c", "kind": "tool_end", "name": "ct_logs", "payload": {"latency_ms": 2473.8}}
+{"ts": "2026-10-11T23:03:15.310995+00:00", "run_id": "github.c", "kind": "step_end", "name": "s4", "payload": {"ok": true, "attempts": null}}
+{"ts": "2026-10-11T23:03:15.310995+00:00", "run_id": "github.c", "kind": "replan", "name": "s4", "payload": {"kind": "rule", "reason": "rule after ct_logs (ok=True): no change", "added": [], "queue_depth": 4}}
+{"ts": "2026-10-11T23:03:15.312506+00:00", "run_id": "github.c", "kind": "step_start", "name": "s5", "payload": {"tool": "urlscan_reputation", "why": "Independent web-scan verdicts for the domain.", "n": 5}}
+{"ts": "2026-10-11T23:03:15.313518+00:00", "run_id": "github.c", "kind": "tool_start", "name": "urlscan_reputation", "payload": {"args": {"domain": "github.com"}}}
+{"ts": "2026-10-11T23:03:16.177729+00:00", "run_id": "github.c", "kind": "tool_end", "name": "urlscan_reputation", "payload": {"latency_ms": 864.3}}
+{"ts": "2026-10-11T23:03:16.178326+00:00", "run_id": "github.c", "kind": "step_end", "name": "s5", "payload": {"ok": true, "attempts": null}}
+{"ts": "2026-10-11T23:03:16.178893+00:00", "run_id": "github.c", "kind": "replan", "name": "s5", "payload": {"kind": "rule", "reason": "rule after urlscan_reputation (ok=True): no change", "added": [], "queue_depth": 3}}
+{"ts": "2026-10-11T23:03:16.178893+00:00", "run_id": "github.c", "kind": "step_start", "name": "s6", "payload": {"tool": "fetch_homepage", "why": "Homepage scam-copy + security-posture analysis.", "n": 6}}
+{"ts": "2026-10-11T23:03:16.179436+00:00", "run_id": "github.c", "kind": "tool_start", "name": "fetch_homepage", "payload": {"args": {"domain": "github.com"}}}
+{"ts": "2026-10-11T23:03:17.512735+00:00", "run_id": "github.c", "kind": "tool_end", "name": "fetch_homepage", "payload": {"latency_ms": 1333.9}}
+{"ts": "2026-10-11T23:03:17.513735+00:00", "run_id": "github.c", "kind": "step_end", "name": "s6", "payload": {"ok": true, "attempts": null}}
+{"ts": "2026-10-11T23:03:17.513735+00:00", "run_id": "github.c", "kind": "replan", "name": "s6", "payload": {"kind": "rule", "reason": "rule after fetch_homepage (ok=True): no change", "added": [], "queue_depth": 2}}
+{"ts": "2026-10-11T23:03:17.513735+00:00", "run_id": "github.c", "kind": "step_start", "name": "s7", "payload": {"tool": "web_search_reports", "why": "Independent reports and reviews.", "n": 7}}
+{"ts": "2026-10-11T23:03:17.513735+00:00", "run_id": "github.c", "kind": "tool_start", "name": "web_search_reports", "payload": {"args": {"domain": "github.com"}}}
+{"ts": "2026-10-11T23:03:18.629101+00:00", "run_id": "github.c", "kind": "tool_end", "name": "web_search_reports", "payload": {"latency_ms": 1114.4}}
+{"ts": "2026-10-11T23:03:18.629654+00:00", "run_id": "github.c", "kind": "step_end", "name": "s7", "payload": {"ok": true, "attempts": null}}
+{"ts": "2026-10-11T23:03:18.630174+00:00", "run_id": "github.c", "kind": "replan", "name": "s7", "payload": {"kind": "rule", "reason": "rule after web_search_reports (ok=True): no change", "added": [], "queue_depth": 1}}
+{"ts": "2026-10-11T23:03:18.630174+00:00", "run_id": "github.c", "kind": "step_start", "name": "s8", "payload": {"tool": "crustdata_enrich", "why": "Firmographic confirmation of a real company.", "n": 8}}
+{"ts": "2026-10-11T23:03:18.630174+00:00", "run_id": "github.c", "kind": "tool_start", "name": "crustdata_enrich", "payload": {"args": {"domain": "github.com"}}}
+{"ts": "2026-10-11T23:03:19.966877+00:00", "run_id": "github.c", "kind": "tool_end", "name": "crustdata_enrich", "payload": {"latency_ms": 1337.4}}
+{"ts": "2026-10-11T23:03:19.968421+00:00", "run_id": "github.c", "kind": "step_end", "name": "s8", "payload": {"ok": true, "attempts": null}}
+{"ts": "2026-10-11T23:03:19.968421+00:00", "run_id": "github.c", "kind": "replan", "name": "s8", "payload": {"kind": "rule", "reason": "rule after crustdata_enrich (ok=True): no change", "added": [], "queue_depth": 0}}
+{"ts": "2026-10-11T23:03:19.969467+00:00", "run_id": "github.c", "kind": "run_end", "name": "investigation", "payload": {"score": 0, "band": "LOW", "steps": 8}}

@@ -1,0 +1,96 @@
+{"ts": "2026-10-11T22:57:13.966530+00:00", "run_id": "young-st", "kind": "example_regen", "name": "young-startup.example", "payload": {"domain": "acme-cloud-services.example", "kwargs": ["demo", "scenario"]}}
+{"ts": "2026-10-11T22:57:13.969041+00:00", "run_id": "young-st", "kind": "run_start", "name": "investigation", "payload": {"domain": "acme-cloud-services.example", "mode": "demo", "scenario": "young_startup", "tag": null, "inject": {}}}
+{"ts": "2026-10-11T22:57:13.970050+00:00", "run_id": "young-st", "kind": "step_start", "name": "s1", "payload": {"tool": "rdap_lookup", "why": "Registration age is the cheapest strong signal.", "n": 1}}
+{"ts": "2026-10-11T22:57:13.971182+00:00", "run_id": "young-st", "kind": "tool_start", "name": "rdap_lookup", "payload": {"args": {"domain": "github.com"}}}
+{"ts": "2026-10-11T22:57:13.971182+00:00", "run_id": "young-st", "kind": "tool_end", "name": "rdap_lookup", "payload": {"latency_ms": 0.3}}
+{"ts": "2026-10-11T22:57:13.971182+00:00", "run_id": "young-st", "kind": "step_end", "name": "s1", "payload": {"ok": true, "attempts": null}}
+{"ts": "2026-10-11T22:57:13.971182+00:00", "run_id": "young-st", "kind": "replan", "name": "s1", "payload": {"kind": "rule", "reason": "rule after rdap_lookup (ok=True)", "added": ["rule-phish"], "queue_depth": 8}}
+{"ts": "2026-10-11T22:57:13.972181+00:00", "run_id": "young-st", "kind": "step_start", "name": "s2", "payload": {"tool": "doh_dns", "why": "Does the domain resolve, and does it take mail?", "n": 2}}
+{"ts": "2026-10-11T22:57:13.972181+00:00", "run_id": "young-st", "kind": "tool_start", "name": "doh_dns", "payload": {"args": {"domain": "github.com"}}}
+{"ts": "2026-10-11T22:57:13.972181+00:00", "run_id": "young-st", "kind": "tool_end", "name": "doh_dns", "payload": {"latency_ms": 0.3}}
+{"ts": "2026-10-11T22:57:13.972181+00:00", "run_id": "young-st", "kind": "step_end", "name": "s2", "payload": {"ok": true, "attempts": null}}
+{"ts": "2026-10-11T22:57:13.973182+00:00", "run_id": "young-st", "kind": "replan", "name": "s2", "payload": {"kind": "rule", "reason": "rule after doh_dns (ok=True): no change", "added": [], "queue_depth": 7}}
+{"ts": "2026-10-11T22:57:13.973688+00:00", "run_id": "young-st", "kind": "step_start", "name": "s3", "payload": {"tool": "tls_inspect", "why": "Certificate hygiene check.", "n": 3}}
+{"ts": "2026-10-11T22:57:13.973688+00:00", "run_id": "young-st", "kind": "tool_start", "name": "tls_inspect", "payload": {"args": {"domain": "github.com"}}}
+{"ts": "2026-10-11T22:57:13.974193+00:00", "run_id": "young-st", "kind": "tool_end", "name": "tls_inspect", "payload": {"latency_ms": 0.5}}
+{"ts": "2026-10-11T22:57:13.974193+00:00", "run_id": "young-st", "kind": "step_end", "name": "s3", "payload": {"ok": true, "attempts": null}}
+{"ts": "2026-10-11T22:57:13.975202+00:00", "run_id": "young-st", "kind": "replan", "name": "s3", "payload": {"kind": "rule", "reason": "rule after tls_inspect (ok=True): no change", "added": [], "queue_depth": 6}}
+{"ts": "2026-10-11T22:57:13.975202+00:00", "run_id": "young-st", "kind": "step_start", "name": "s4", "payload": {"tool": "ct_logs", "why": "Certificate history and subdomains show an established org.", "n": 4}}
+{"ts": "2026-10-11T22:57:13.975202+00:00", "run_id": "young-st", "kind": "tool_start", "name": "ct_logs", "payload": {"args": {"domain": "github.com"}}}
+{"ts": "2026-10-11T22:57:13.976202+00:00", "run_id": "young-st", "kind": "tool_end", "name": "ct_logs", "payload": {"latency_ms": 0.4}}
+{"ts": "2026-10-11T22:57:13.976202+00:00", "run_id": "young-st", "kind": "step_end", "name": "s4", "payload": {"ok": true, "attempts": null}}
+{"ts": "2026-10-11T22:57:13.976202+00:00", "run_id": "young-st", "kind": "replan", "name": "s4", "payload": {"kind": "rule", "reason": "rule after ct_logs (ok=True): no change", "added": [], "queue_depth": 5}}
+{"ts": "2026-10-11T22:57:13.976202+00:00", "run_id": "young-st", "kind": "step_start", "name": "s5", "payload": {"tool": "urlscan_reputation", "why": "Independent web-scan verdicts for the domain.", "n": 5}}
+{"ts": "2026-10-11T22:57:13.977710+00:00", "run_id": "young-st", "kind": "tool_start", "name": "urlscan_reputation", "payload": {"args": {"domain": "github.com"}}}
+{"ts": "2026-10-11T22:57:13.977710+00:00", "run_id": "young-st", "kind": "tool_end", "name": "urlscan_reputation", "payload": {"latency_ms": 0.4}}
+{"ts": "2026-10-11T22:57:13.977710+00:00", "run_id": "young-st", "kind": "step_end", "name": "s5", "payload": {"ok": true, "attempts": null}}
+{"ts": "2026-10-11T22:57:13.978716+00:00", "run_id": "young-st", "kind": "replan", "name": "s5", "payload": {"kind": "rule", "reason": "rule after urlscan_reputation (ok=True): no change", "added": [], "queue_depth": 4}}
+{"ts": "2026-10-11T22:57:13.978716+00:00", "run_id": "young-st", "kind": "step_start", "name": "s6", "payload": {"tool": "fetch_homepage", "why": "Homepage scam-copy + security-posture analysis.", "n": 6}}
+{"ts": "2026-10-11T22:57:13.978716+00:00", "run_id": "young-st", "kind": "tool_start", "name": "fetch_homepage", "payload": {"args": {"domain": "github.com"}}}
+{"ts": "2026-10-11T22:57:13.979717+00:00", "run_id": "young-st", "kind": "tool_end", "name": "fetch_homepage", "payload": {"latency_ms": 0.4}}
+{"ts": "2026-10-11T22:57:13.979717+00:00", "run_id": "young-st", "kind": "step_end", "name": "s6", "payload": {"ok": true, "attempts": null}}
+{"ts": "2026-10-11T22:57:13.979717+00:00", "run_id": "young-st", "kind": "replan", "name": "s6", "payload": {"kind": "rule", "reason": "rule after fetch_homepage (ok=True): no change", "added": [], "queue_depth": 3}}
+{"ts": "2026-10-11T22:57:13.980717+00:00", "run_id": "young-st", "kind": "step_start", "name": "s7", "payload": {"tool": "web_search_reports", "why": "Independent reports and reviews.", "n": 7}}
+{"ts": "2026-10-11T22:57:13.980717+00:00", "run_id": "young-st", "kind": "tool_start", "name": "web_search_reports", "payload": {"args": {"domain": "github.com"}}}
+{"ts": "2026-10-11T22:57:13.980717+00:00", "run_id": "young-st", "kind": "tool_end", "name": "web_search_reports", "payload": {"latency_ms": 0.4}}
+{"ts": "2026-10-11T22:57:13.980717+00:00", "run_id": "young-st", "kind": "step_end", "name": "s7", "payload": {"ok": true, "attempts": null}}
+{"ts": "2026-10-11T22:57:13.980717+00:00", "run_id": "young-st", "kind": "replan", "name": "s7", "payload": {"kind": "rule", "reason": "rule after web_search_reports (ok=True): no change", "added": [], "queue_depth": 2}}
+{"ts": "2026-10-11T22:57:13.982225+00:00", "run_id": "young-st", "kind": "step_start", "name": "s8", "payload": {"tool": "crustdata_enrich", "why": "Firmographic confirmation of a real company.", "n": 8}}
+{"ts": "2026-10-11T22:57:13.982225+00:00", "run_id": "young-st", "kind": "tool_start", "name": "crustdata_enrich", "payload": {"args": {"domain": "github.com"}}}
+{"ts": "2026-10-11T22:57:13.982225+00:00", "run_id": "young-st", "kind": "tool_end", "name": "crustdata_enrich", "payload": {"latency_ms": 0.3}}
+{"ts": "2026-10-11T22:57:13.983233+00:00", "run_id": "young-st", "kind": "step_end", "name": "s8", "payload": {"ok": true, "attempts": null}}
+{"ts": "2026-10-11T22:57:13.983233+00:00", "run_id": "young-st", "kind": "replan", "name": "s8", "payload": {"kind": "rule", "reason": "rule after crustdata_enrich (ok=True): no change", "added": [], "queue_depth": 1}}
+{"ts": "2026-10-11T22:57:13.983233+00:00", "run_id": "young-st", "kind": "step_start", "name": "rule-phish", "payload": {"tool": "phishtank_check", "why": "young domain: verify against the phishing feed", "n": 9}}
+{"ts": "2026-10-11T22:57:13.984233+00:00", "run_id": "young-st", "kind": "tool_start", "name": "phishtank_check", "payload": {"args": {"domain": "acme-cloud-services.example"}}}
+{"ts": "2026-10-11T22:57:13.984233+00:00", "run_id": "young-st", "kind": "tool_end", "name": "phishtank_check", "payload": {"latency_ms": 0.3}}
+{"ts": "2026-10-11T22:57:13.984233+00:00", "run_id": "young-st", "kind": "step_end", "name": "rule-phish", "payload": {"ok": true, "attempts": null}}
+{"ts": "2026-10-11T22:57:13.985233+00:00", "run_id": "young-st", "kind": "replan", "name": "rule-phish", "payload": {"kind": "rule", "reason": "rule after phishtank_check (ok=True): no change", "added": [], "queue_depth": 0}}
+{"ts": "2026-10-11T22:57:13.985233+00:00", "run_id": "young-st", "kind": "run_end", "name": "investigation", "payload": {"score": 29, "band": "MEDIUM", "steps": 9}}
+{"ts": "2026-10-11T23:04:03.639012+00:00", "run_id": "young-st", "kind": "example_regen", "name": "young-startup.example", "payload": {"domain": "acme-cloud-services.example", "kwargs": ["demo", "scenario"]}}
+{"ts": "2026-10-11T23:04:03.645197+00:00", "run_id": "young-st", "kind": "run_start", "name": "investigation", "payload": {"domain": "acme-cloud-services.example", "mode": "demo", "scenario": "young_startup", "tag": null, "inject": {}}}
+{"ts": "2026-10-11T23:04:03.646210+00:00", "run_id": "young-st", "kind": "step_start", "name": "s1", "payload": {"tool": "rdap_lookup", "why": "Registration age is the cheapest strong signal.", "n": 1}}
+{"ts": "2026-10-11T23:04:03.646210+00:00", "run_id": "young-st", "kind": "tool_start", "name": "rdap_lookup", "payload": {"args": {"domain": "acme-cloud-services.example"}}}
+{"ts": "2026-10-11T23:04:03.647210+00:00", "run_id": "young-st", "kind": "tool_end", "name": "rdap_lookup", "payload": {"latency_ms": 0.4}}
+{"ts": "2026-10-11T23:04:03.647210+00:00", "run_id": "young-st", "kind": "step_end", "name": "s1", "payload": {"ok": true, "attempts": null}}
+{"ts": "2026-10-11T23:04:03.648208+00:00", "run_id": "young-st", "kind": "replan", "name": "s1", "payload": {"kind": "rule", "reason": "rule after rdap_lookup (ok=True)", "added": ["rule-phish"], "queue_depth": 8}}
+{"ts": "2026-10-11T23:04:03.648208+00:00", "run_id": "young-st", "kind": "step_start", "name": "s2", "payload": {"tool": "doh_dns", "why": "Does the domain resolve, and does it take mail?", "n": 2}}
+{"ts": "2026-10-11T23:04:03.648208+00:00", "run_id": "young-st", "kind": "tool_start", "name": "doh_dns", "payload": {"args": {"domain": "acme-cloud-services.example"}}}
+{"ts": "2026-10-11T23:04:03.648208+00:00", "run_id": "young-st", "kind": "tool_end", "name": "doh_dns", "payload": {"latency_ms": 0.4}}
+{"ts": "2026-10-11T23:04:03.649718+00:00", "run_id": "young-st", "kind": "step_end", "name": "s2", "payload": {"ok": true, "attempts": null}}
+{"ts": "2026-10-11T23:04:03.649718+00:00", "run_id": "young-st", "kind": "replan", "name": "s2", "payload": {"kind": "rule", "reason": "rule after doh_dns (ok=True): no change", "added": [], "queue_depth": 7}}
+{"ts": "2026-10-11T23:04:03.650731+00:00", "run_id": "young-st", "kind": "step_start", "name": "s3", "payload": {"tool": "tls_inspect", "why": "Certificate hygiene check.", "n": 3}}
+{"ts": "2026-10-11T23:04:03.650731+00:00", "run_id": "young-st", "kind": "tool_start", "name": "tls_inspect", "payload": {"args": {"domain": "acme-cloud-services.example"}}}
+{"ts": "2026-10-11T23:04:03.650731+00:00", "run_id": "young-st", "kind": "tool_end", "name": "tls_inspect", "payload": {"latency_ms": 0.4}}
+{"ts": "2026-10-11T23:04:03.650731+00:00", "run_id": "young-st", "kind": "step_end", "name": "s3", "payload": {"ok": true, "attempts": null}}
+{"ts": "2026-10-11T23:04:03.652240+00:00", "run_id": "young-st", "kind": "replan", "name": "s3", "payload": {"kind": "rule", "reason": "rule after tls_inspect (ok=True): no change", "added": [], "queue_depth": 6}}
+{"ts": "2026-10-11T23:04:03.652240+00:00", "run_id": "young-st", "kind": "step_start", "name": "s4", "payload": {"tool": "ct_logs", "why": "Certificate history and subdomains show an established org.", "n": 4}}
+{"ts": "2026-10-11T23:04:03.652240+00:00", "run_id": "young-st", "kind": "tool_start", "name": "ct_logs", "payload": {"args": {"domain": "acme-cloud-services.example"}}}
+{"ts": "2026-10-11T23:04:03.653247+00:00", "run_id": "young-st", "kind": "tool_end", "name": "ct_logs", "payload": {"latency_ms": 0.4}}
+{"ts": "2026-10-11T23:04:03.653247+00:00", "run_id": "young-st", "kind": "step_end", "name": "s4", "payload": {"ok": true, "attempts": null}}
+{"ts": "2026-10-11T23:04:03.654249+00:00", "run_id": "young-st", "kind": "replan", "name": "s4", "payload": {"kind": "rule", "reason": "rule after ct_logs (ok=True): no change", "added": [], "queue_depth": 5}}
+{"ts": "2026-10-11T23:04:03.654756+00:00", "run_id": "young-st", "kind": "step_start", "name": "s5", "payload": {"tool": "urlscan_reputation", "why": "Independent web-scan verdicts for the domain.", "n": 5}}
+{"ts": "2026-10-11T23:04:03.654756+00:00", "run_id": "young-st", "kind": "tool_start", "name": "urlscan_reputation", "payload": {"args": {"domain": "acme-cloud-services.example"}}}
+{"ts": "2026-10-11T23:04:03.655767+00:00", "run_id": "young-st", "kind": "tool_end", "name": "urlscan_reputation", "payload": {"latency_ms": 0.5}}
+{"ts": "2026-10-11T23:04:03.655767+00:00", "run_id": "young-st", "kind": "step_end", "name": "s5", "payload": {"ok": true, "attempts": null}}
+{"ts": "2026-10-11T23:04:03.655767+00:00", "run_id": "young-st", "kind": "replan", "name": "s5", "payload": {"kind": "rule", "reason": "rule after urlscan_reputation (ok=True): no change", "added": [], "queue_depth": 4}}
+{"ts": "2026-10-11T23:04:03.656765+00:00", "run_id": "young-st", "kind": "step_start", "name": "s6", "payload": {"tool": "fetch_homepage", "why": "Homepage scam-copy + security-posture analysis.", "n": 6}}
+{"ts": "2026-10-11T23:04:03.656765+00:00", "run_id": "young-st", "kind": "tool_start", "name": "fetch_homepage", "payload": {"args": {"domain": "acme-cloud-services.example"}}}
+{"ts": "2026-10-11T23:04:03.657763+00:00", "run_id": "young-st", "kind": "tool_end", "name": "fetch_homepage", "payload": {"latency_ms": 0.5}}
+{"ts": "2026-10-11T23:04:03.657763+00:00", "run_id": "young-st", "kind": "step_end", "name": "s6", "payload": {"ok": true, "attempts": null}}
+{"ts": "2026-10-11T23:04:03.657763+00:00", "run_id": "young-st", "kind": "replan", "name": "s6", "payload": {"kind": "rule", "reason": "rule after fetch_homepage (ok=True): no change", "added": [], "queue_depth": 3}}
+{"ts": "2026-10-11T23:04:03.658765+00:00", "run_id": "young-st", "kind": "step_start", "name": "s7", "payload": {"tool": "web_search_reports", "why": "Independent reports and reviews.", "n": 7}}
+{"ts": "2026-10-11T23:04:03.659271+00:00", "run_id": "young-st", "kind": "tool_start", "name": "web_search_reports", "payload": {"args": {"domain": "acme-cloud-services.example"}}}
+{"ts": "2026-10-11T23:04:03.659271+00:00", "run_id": "young-st", "kind": "tool_end", "name": "web_search_reports", "payload": {"latency_ms": 0.4}}
+{"ts": "2026-10-11T23:04:03.659271+00:00", "run_id": "young-st", "kind": "step_end", "name": "s7", "payload": {"ok": true, "attempts": null}}
+{"ts": "2026-10-11T23:04:03.659271+00:00", "run_id": "young-st", "kind": "replan", "name": "s7", "payload": {"kind": "rule", "reason": "rule after web_search_reports (ok=True): no change", "added": [], "queue_depth": 2}}
+{"ts": "2026-10-11T23:04:03.660781+00:00", "run_id": "young-st", "kind": "step_start", "name": "s8", "payload": {"tool": "crustdata_enrich", "why": "Firmographic confirmation of a real company.", "n": 8}}
+{"ts": "2026-10-11T23:04:03.660781+00:00", "run_id": "young-st", "kind": "tool_start", "name": "crustdata_enrich", "payload": {"args": {"domain": "acme-cloud-services.example"}}}
+{"ts": "2026-10-11T23:04:03.661790+00:00", "run_id": "young-st", "kind": "tool_end", "name": "crustdata_enrich", "payload": {"latency_ms": 0.4}}
+{"ts": "2026-10-11T23:04:03.661790+00:00", "run_id": "young-st", "kind": "step_end", "name": "s8", "payload": {"ok": true, "attempts": null}}
+{"ts": "2026-10-11T23:04:03.662790+00:00", "run_id": "young-st", "kind": "replan", "name": "s8", "payload": {"kind": "rule", "reason": "rule after crustdata_enrich (ok=True): no change", "added": [], "queue_depth": 1}}
+{"ts": "2026-10-11T23:04:03.662790+00:00", "run_id": "young-st", "kind": "step_start", "name": "rule-phish", "payload": {"tool": "phishtank_check", "why": "young domain: verify against the phishing feed", "n": 9}}
+{"ts": "2026-10-11T23:04:03.662790+00:00", "run_id": "young-st", "kind": "tool_start", "name": "phishtank_check", "payload": {"args": {"domain": "acme-cloud-services.example"}}}
+{"ts": "2026-10-11T23:04:03.663874+00:00", "run_id": "young-st", "kind": "tool_end", "name": "phishtank_check", "payload": {"latency_ms": 0.3}}
+{"ts": "2026-10-11T23:04:03.663874+00:00", "run_id": "young-st", "kind": "step_end", "name": "rule-phish", "payload": {"ok": true, "attempts": null}}
+{"ts": "2026-10-11T23:04:03.663874+00:00", "run_id": "young-st", "kind": "replan", "name": "rule-phish", "payload": {"kind": "rule", "reason": "rule after phishtank_check (ok=True): no change", "added": [], "queue_depth": 0}}
+{"ts": "2026-10-11T23:04:03.664874+00:00", "run_id": "young-st", "kind": "run_end", "name": "investigation", "payload": {"score": 29, "band": "MEDIUM", "steps": 9}}

@@ -1,0 +1,556 @@
+{
+  "domain": "acme-cloud-services.example",
+  "run_id": "4ed94e4b",
+  "mode": "demo",
+  "tag": null,
+  "started": "2026-10-11T23:04:03.713557+00:00",
+  "findings": {
+    "rdap_lookup": {
+      "ok": true,
+      "data": {
+        "found": true,
+        "created": "2026-09-03T00:00:00+00:00",
+        "last_changed": "2026-09-03T00:00:00+00:00",
+        "expires": "2027-09-03T00:00:00+00:00",
+        "age_days": 38,
+        "registrar": "Cheap Registrar LLC",
+        "status": [],
+        "nameservers": [
+          "ns1.cheapregistrar.example",
+          "ns2.cheapregistrar.example"
+        ],
+        "_demo": true,
+        "domain": "acme-cloud-services.example"
+      },
+      "sources": [
+        "demo: canned RDAP response"
+      ]
+    },
+    "doh_dns": {
+      "ok": true,
+      "data": {
+        "A": [
+          "203.0.113.10"
+        ],
+        "MX": [],
+        "NS": [
+          "ns1.cheapregistrar.example",
+          "ns2.cheapregistrar.example"
+        ],
+        "TXT": [
+          "_verify=9f3c1a"
+        ],
+        "CNAME": [],
+        "DMARC": [],
+        "domain": "acme-cloud-services.example",
+        "statuses": {
+          "A": 0,
+          "MX": 0,
+          "NS": 0,
+          "TXT": 0,
+          "CNAME": 0,
+          "DMARC": 0
+        },
+        "_doh": true
+      },
+      "sources": [
+        "demo: canned DoH response"
+      ]
+    },
+    "tls_inspect": {
+      "ok": true,
+      "data": {
+        "issuer": "Acme Self-Signed",
+        "subject_cn": "acme-cloud-services.example",
+        "not_after": "2026-11-01T00:00:00+00:00",
+        "days_left": 21,
+        "self_signed": true,
+        "_demo": true,
+        "domain": "acme-cloud-services.example"
+      },
+      "sources": [
+        "demo: canned TLS response"
+      ]
+    },
+    "ct_logs": {
+      "ok": true,
+      "data": {
+        "cert_count": 1,
+        "earliest_cert": "2026-09-05T00:00:00+00:00",
+        "latest_cert": "2026-09-05T00:00:00+00:00",
+        "subdomain_count": 1,
+        "issuers": [
+          "Acme Self-Signed"
+        ],
+        "_demo": true,
+        "domain": "acme-cloud-services.example"
+      },
+      "sources": [
+        "demo: canned crt.sh response"
+      ]
+    },
+    "urlscan_reputation": {
+      "ok": true,
+      "data": {
+        "total_scans": 5,
+        "malicious_scans": 3,
+        "worst_score": 88,
+        "categories": [
+          "phishing"
+        ],
+        "first_seen": "2026-09-20T00:00:00+00:00",
+        "last_seen": "2026-10-06T00:00:00+00:00",
+        "_demo": true,
+        "domain": "acme-cloud-services.example"
+      },
+      "sources": [
+        "demo: canned urlscan response"
+      ]
+    },
+    "fetch_homepage": {
+      "ok": true,
+      "data": {
+        "url": "https://acme-cloud-services.example/",
+        "final_url": "https://acme-cloud-services.example/",
+        "title": "Acme Cloud Services - Cut your cloud bill by 90%",
+        "text": "Acme Cloud Services - Cut your cloud bill by 90% overnight! Limited offer ends tonight. Wire transfer only. Contact us on Telegram @acmeclouddeals. No company registration number listed.",
+        "status_code": 200,
+        "policy_pages": [],
+        "security_txt": {
+          "found": false,
+          "contact": []
+        },
+        "headers": [],
+        "_demo": true,
+        "domain": "acme-cloud-services.example"
+      },
+      "sources": [
+        "demo: canned homepage"
+      ]
+    },
+    "web_search_reports": {
+      "ok": true,
+      "data": {
+        "query": "acme-cloud-services.example scam reviews complaints",
+        "results": [
+          {
+            "title": "Is acme-cloud-services.example a scam?",
+            "url": "https://example-watch.example/acme-cloud-services",
+            "snippet": "Acme-cloud-services.example took a wire transfer and never delivered. Avoid."
+          },
+          {
+            "title": "acme-cloud-services.example complaints",
+            "url": "https://example-bureau.example/t/acme-cloud-services",
+            "snippet": "Multiple complaints of fraud involving acme-cloud-services.example."
+          }
+        ],
+        "_demo": true,
+        "domain": "acme-cloud-services.example"
+      },
+      "sources": [
+        "demo: canned search results"
+      ]
+    },
+    "crustdata_enrich": {
+      "ok": true,
+      "data": {
+        "found": false,
+        "_demo": true,
+        "domain": "acme-cloud-services.example"
+      },
+      "sources": [
+        "demo: canned Crustdata response"
+      ]
+    },
+    "phishtank_check": {
+      "ok": true,
+      "data": {
+        "listed": true,
+        "matching_entries": 2,
+        "sample_urls": [
+          "acme-cloud-services.example (phishtank.com listing)",
+          "login.acme-cloud-services.example (phishtank.com listing)"
+        ],
+        "feed_entries": 0,
+        "_demo": true,
+        "domain": "acme-cloud-services.example"
+      },
+      "sources": [
+        "demo: canned PhishTank"
+      ]
+    }
+  },
+  "step_results": [
+    {
+      "id": "s1",
+      "tool": "rdap_lookup",
+      "ok": true,
+      "attempts": 1,
+      "error": null,
+      "injected": false,
+      "latency_ms": 1.1
+    },
+    {
+      "id": "s2",
+      "tool": "doh_dns",
+      "ok": true,
+      "attempts": 1,
+      "error": null,
+      "injected": false,
+      "latency_ms": 2.8
+    },
+    {
+      "id": "s3",
+      "tool": "tls_inspect",
+      "ok": true,
+      "attempts": 1,
+      "error": null,
+      "injected": false,
+      "latency_ms": 1.1
+    },
+    {
+      "id": "s4",
+      "tool": "ct_logs",
+      "ok": true,
+      "attempts": 3,
+      "error": null,
+      "injected": false,
+      "latency_ms": 2355.1
+    },
+    {
+      "id": "s5",
+      "tool": "urlscan_reputation",
+      "ok": true,
+      "attempts": 1,
+      "error": null,
+      "injected": false,
+      "latency_ms": 0.9
+    },
+    {
+      "id": "s6",
+      "tool": "fetch_homepage",
+      "ok": true,
+      "attempts": 1,
+      "error": null,
+      "injected": false,
+      "latency_ms": 0.8
+    },
+    {
+      "id": "s7",
+      "tool": "web_search_reports",
+      "ok": true,
+      "attempts": 1,
+      "error": null,
+      "injected": false,
+      "latency_ms": 0.7
+    },
+    {
+      "id": "s8",
+      "tool": "crustdata_enrich",
+      "ok": true,
+      "attempts": 1,
+      "error": null,
+      "injected": false,
+      "latency_ms": 0.7
+    },
+    {
+      "id": "rule-phish",
+      "tool": "phishtank_check",
+      "ok": true,
+      "attempts": 1,
+      "error": null,
+      "injected": false,
+      "latency_ms": 0.8
+    }
+  ],
+  "retries": {
+    "s4": 3
+  },
+  "plan_history": [
+    {
+      "id": "s1",
+      "tool": "rdap_lookup",
+      "args": {
+        "domain": "acme-cloud-services.example"
+      },
+      "why": "Registration age is the cheapest strong signal."
+    },
+    {
+      "id": "s2",
+      "tool": "doh_dns",
+      "args": {
+        "domain": "acme-cloud-services.example"
+      },
+      "why": "Does the domain resolve, and does it take mail?"
+    },
+    {
+      "id": "s3",
+      "tool": "tls_inspect",
+      "args": {
+        "domain": "acme-cloud-services.example"
+      },
+      "why": "Certificate hygiene check."
+    },
+    {
+      "id": "s4",
+      "tool": "ct_logs",
+      "args": {
+        "domain": "acme-cloud-services.example"
+      },
+      "why": "Certificate history and subdomains show an established org."
+    },
+    {
+      "id": "s5",
+      "tool": "urlscan_reputation",
+      "args": {
+        "domain": "acme-cloud-services.example"
+      },
+      "why": "Independent web-scan verdicts for the domain."
+    },
+    {
+      "id": "s6",
+      "tool": "fetch_homepage",
+      "args": {
+        "domain": "acme-cloud-services.example"
+      },
+      "why": "Homepage scam-copy + security-posture analysis."
+    },
+    {
+      "id": "s7",
+      "tool": "web_search_reports",
+      "args": {
+        "domain": "acme-cloud-services.example"
+      },
+      "why": "Independent reports and reviews."
+    },
+    {
+      "id": "s8",
+      "tool": "crustdata_enrich",
+      "args": {
+        "domain": "acme-cloud-services.example"
+      },
+      "why": "Firmographic confirmation of a real company."
+    },
+    {
+      "id": "rule-phish",
+      "tool": "phishtank_check",
+      "args": {
+        "domain": "acme-cloud-services.example"
+      },
+      "why": "young domain: verify against the phishing feed"
+    }
+  ],
+  "replans": {
+    "llm": 0,
+    "rule": 1
+  },
+  "assessment": {
+    "domain": "acme-cloud-services.example",
+    "score": 100,
+    "band": "CRITICAL",
+    "signals": [
+      {
+        "signal": "domain_very_young",
+        "weight": 30,
+        "detail": "Domain registered 38 days ago (< 90 days).",
+        "sources": [
+          "demo: canned RDAP response"
+        ],
+        "tool": "rdap_lookup",
+        "layer": "real & established",
+        "verification": "single_source",
+        "tools": [
+          "rdap_lookup"
+        ]
+      },
+      {
+        "signal": "domain_status_unlocked",
+        "weight": 4,
+        "detail": "Domain status (none) does not include a client transfer lock at Cheap Registrar LLC.",
+        "sources": [
+          "demo: canned RDAP response"
+        ],
+        "tool": "rdap_lookup",
+        "layer": "real & established",
+        "verification": "single_source",
+        "tools": [
+          "rdap_lookup"
+        ]
+      },
+      {
+        "signal": "no_mx_records",
+        "weight": 10,
+        "detail": "No MX records: the domain cannot receive email; unusual for a real business.",
+        "sources": [
+          "demo: canned DoH response"
+        ],
+        "tool": "doh_dns",
+        "layer": "real & established",
+        "verification": "single_source",
+        "tools": [
+          "doh_dns"
+        ]
+      },
+      {
+        "signal": "no_spf_record",
+        "weight": 6,
+        "detail": "No SPF record published for the domain.",
+        "sources": [
+          "demo: canned DoH response"
+        ],
+        "tool": "doh_dns",
+        "layer": "security posture",
+        "verification": "single_source",
+        "tools": [
+          "doh_dns"
+        ]
+      },
+      {
+        "signal": "no_dmarc_record",
+        "weight": 4,
+        "detail": "No DMARC policy published: the domain does not declare how unauthenticated mail is handled.",
+        "sources": [
+          "demo: canned DoH response"
+        ],
+        "tool": "doh_dns",
+        "layer": "security posture",
+        "verification": "single_source",
+        "tools": [
+          "doh_dns"
+        ]
+      },
+      {
+        "signal": "certificate_history",
+        "weight": -6,
+        "detail": "1 certificate(s) in transparency logs covering 1 name(s).",
+        "sources": [
+          "demo: canned crt.sh response"
+        ],
+        "tool": "ct_logs",
+        "layer": "real & established",
+        "verification": "single_source",
+        "tools": [
+          "ct_logs"
+        ]
+      },
+      {
+        "signal": "single_certificate_only",
+        "weight": 18,
+        "detail": "Only one certificate has ever been issued for the domain, covering a single name: it looks like a scratch or short-lived site, not an established service.",
+        "sources": [
+          "demo: canned crt.sh response"
+        ],
+        "tool": "ct_logs",
+        "layer": "real & established",
+        "verification": "single_source",
+        "tools": [
+          "ct_logs"
+        ]
+      },
+      {
+        "signal": "urlscan_malicious",
+        "weight": 40,
+        "detail": "urlscan.io holds 3 of 5 scan verdict(s) marked malicious (phishing).",
+        "sources": [
+          "demo: canned urlscan response"
+        ],
+        "tool": "urlscan_reputation",
+        "layer": "threat & reputation",
+        "verification": "single_source",
+        "tools": [
+          "urlscan_reputation"
+        ]
+      },
+      {
+        "signal": "listed_in_phishtank",
+        "weight": 55,
+        "detail": "The domain is listed in the PhishTank feed of verified phishing sites (2 entries).",
+        "sources": [
+          "demo: canned PhishTank"
+        ],
+        "tool": "phishtank_check",
+        "layer": "threat & reputation",
+        "verification": "single_source",
+        "tools": [
+          "phishtank_check"
+        ]
+      },
+      {
+        "signal": "self_signed_cert",
+        "weight": 25,
+        "detail": "TLS certificate is self-signed.",
+        "sources": [
+          "demo: canned TLS response"
+        ],
+        "tool": "tls_inspect",
+        "layer": "security posture",
+        "verification": "single_source",
+        "tools": [
+          "tls_inspect"
+        ]
+      },
+      {
+        "signal": "scam_phrases",
+        "weight": 20,
+        "detail": "Homepage contains high-risk phrases: wire transfer, ends tonight, limited offer, telegram @, no company registration.",
+        "sources": [
+          "demo: canned homepage"
+        ],
+        "tool": "fetch_homepage",
+        "layer": "threat & reputation",
+        "verification": "single_source",
+        "tools": [
+          "fetch_homepage"
+        ]
+      },
+      {
+        "signal": "no_hsts",
+        "weight": 2,
+        "detail": "No HSTS header on the homepage; traffic can be downgraded.",
+        "sources": [
+          "demo: canned homepage"
+        ],
+        "tool": "fetch_homepage",
+        "layer": "security posture",
+        "verification": "single_source",
+        "tools": [
+          "fetch_homepage"
+        ]
+      },
+      {
+        "signal": "negative_reports",
+        "weight": 25,
+        "detail": "2 independent negative report(s); e.g. example-watch.example: Acme-cloud-services.example took a wire transfer and never delivered. Avoid.; example-bureau.example: Multiple complaints of fraud involving acme-cloud-services.example..",
+        "sources": [
+          "https://example-watch.example/acme-cloud-services",
+          "https://example-bureau.example/t/acme-cloud-services"
+        ],
+        "tool": "web_search_reports",
+        "layer": "threat & reputation",
+        "verification": "single_source",
+        "tools": [
+          "web_search_reports"
+        ]
+      }
+    ],
+    "sources": [
+      "demo: canned DoH response",
+      "demo: canned PhishTank",
+      "demo: canned RDAP response",
+      "demo: canned TLS response",
+      "demo: canned crt.sh response",
+      "demo: canned homepage",
+      "demo: canned urlscan response",
+      "https://example-bureau.example/t/acme-cloud-services",
+      "https://example-watch.example/acme-cloud-services"
+    ],
+    "re_registered": false,
+    "could_not_verify": [
+      {
+        "item": "crustdata_enrich",
+        "reason": "ran, no signal produced"
+      }
+    ],
+    "notes": []
+  }
+}

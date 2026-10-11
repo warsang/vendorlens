@@ -1,0 +1,622 @@
+{
+  "domain": "github.com",
+  "run_id": "88a3682b",
+  "mode": "no-llm",
+  "tag": null,
+  "started": "2026-10-11T23:03:11.185883+00:00",
+  "findings": {
+    "rdap_lookup": {
+      "ok": true,
+      "data": {
+        "found": true,
+        "created": "2007-10-09T18:20:50Z",
+        "last_changed": "2026-09-07T09:22:52Z",
+        "expires": "2028-10-09T18:20:50Z",
+        "age_days": 6942,
+        "registrar": "MarkMonitor Inc.",
+        "status": [
+          "client delete prohibited",
+          "client transfer prohibited",
+          "client update prohibited"
+        ],
+        "nameservers": [
+          "DNS1.P08.NSONE.NET",
+          "DNS2.P08.NSONE.NET",
+          "DNS3.P08.NSONE.NET",
+          "DNS4.P08.NSONE.NET",
+          "NS-1283.AWSDNS-32.ORG",
+          "NS-1707.AWSDNS-21.CO.UK",
+          "NS-421.AWSDNS-52.COM",
+          "NS-520.AWSDNS-01.NET"
+        ]
+      },
+      "sources": [
+        "rdap.org:github.com"
+      ]
+    },
+    "doh_dns": {
+      "ok": true,
+      "data": {
+        "A": [
+          "140.82.121.4"
+        ],
+        "MX": [
+          "0 github-com.mail.protection.outlook.com."
+        ],
+        "NS": [
+          "ns-421.awsdns-52.com.",
+          "dns1.p08.nsone.net.",
+          "dns4.p08.nsone.net.",
+          "dns2.p08.nsone.net.",
+          "ns-520.awsdns-01.net.",
+          "dns3.p08.nsone.net.",
+          "ns-1283.awsdns-32.org.",
+          "ns-1707.awsdns-21.co.uk."
+        ],
+        "TXT": [
+          "00Dd0000000hHE0=1TBKg000000TN2r",
+          "anthropic-domain-verification-4az7qn=if8YWuRRqwLycGJDooumzHtxm",
+          "adobe-idp-site-verification=b92c9e999aef825edc36e0a3d847d2dbad5b2fc0e05c79ddd7a16139b48ecf4b",
+          "TAILSCALE-xOzoDvFUzZr5YYVCQFuD",
+          "MS=ms44452932",
+          "serval-domain-verification-ydryhj=qbkiEakpwEpTvHh5fIiCqtaue",
+          "google-site-verification=UTM-3akMgubp6tQtgEuAkYNYLyYAvpTnnSrDMWoDR3o",
+          "google-site-verification=82Le34Flgtd15ojYhHlGF_6g72muSjamlMVThBOJpks",
+          "jamf-site-verification=XtaPNIYghF_e_xRDI8CjgQ",
+          "stripe-verification=f88ef17321660a01bab1660454192e014defa29ba7b8de9633c69d6b4912217f",
+          "apple-domain-verification=RyQhdzTl6Z6x8ZP4",
+          "MS=6BF03E6AF5CB689E315FB6199603BABF2C88D805",
+          "MS=ms58704441",
+          "cursor-domain-verification-gtfwmt=1rfLOtiTngX5QSxD5HvNKTvm3",
+          "openai-domain-verification=dv-3nh33eQwdkotMIAzLrIDVZo1",
+          "loom-site-verification=f3787154f1154b7880e720a511ea664d",
+          "krisp-domain-verification=ZlyiK7XLhnaoUQb2hpak1PLY7dFkl1WE",
+          "shopify-verification-code=t1YPwcmvnxZyBycaCpk1MPyWoFs72o",
+          "v=spf1 ip4:192.30.252.0/22 include:spf.protection.outlook.com include:_netblocks.google.com include:_netblocks2.google.com include:mail.zendesk.com include:_spf.salesforce.com include:servers.mcsv.net include:mktomail.com include:sendgrid.net ip4:62.253.227.114 ip4:166.78.69.169 ip4:166.78.69.170 ip4:166.78.71.131 ~all",
+          "calendly-site-verification=at0DQARi7IZvJtXQAWhMqpmIzpvoBNF7aam5VKKxP",
+          "docusign=087098e3-3d46-47b7-9b4e-8a23028154cd",
+          "atlassian-domain-verification=jjgw98AKv2aeoYFxiL/VFaoyPkn3undEssTRuMg6C/3Fp/iqhkV4HVV7WjYlVeF8",
+          "miro-verification=d2e174fdb00c71e0bcf58f8e58c3da2dd80dcfa9",
+          "facebook-domain-verification=39xu4jzl7roi7x0n93ldkxjiaarx50"
+        ],
+        "CNAME": [],
+        "DMARC": [
+          "v=DMARC1; p=quarantine; sp=reject; pct=100; rua=mailto:dmarc@github.com; ruf=mailto:dmarc@github.com; fo=1"
+        ],
+        "domain": "github.com",
+        "statuses": {
+          "A": 0,
+          "MX": 0,
+          "NS": 0,
+          "TXT": 0,
+          "CNAME": 0,
+          "DMARC": 0
+        },
+        "_doh": true
+      },
+      "sources": [
+        "dns.google:github.com"
+      ]
+    },
+    "tls_inspect": {
+      "ok": true,
+      "data": {
+        "issuer": "Sectigo Limited",
+        "subject_cn": "github.com",
+        "not_after": "2026-11-29T23:59:59+00:00",
+        "days_left": 49,
+        "self_signed": false
+      },
+      "sources": [
+        "tls:github.com:443"
+      ]
+    },
+    "ct_logs": {
+      "ok": true,
+      "data": {
+        "cert_count": 1223,
+        "earliest_cert": "2008-12-11T03:48:09",
+        "latest_cert": "2027-03-31T20:05:16",
+        "subdomain_count": 128,
+        "issuers": [
+          "\"DigiCert",
+          "\"GoDaddy.com",
+          "=Amazon RSA 2048 M04",
+          "=DigiCert ECC Secure Server CA",
+          "=DigiCert Global G2 TLS RSA SHA256 2020 CA1",
+          "=DigiCert High Assurance CA-3"
+        ]
+      },
+      "sources": [
+        "crt.sh:github.com"
+      ]
+    },
+    "urlscan_reputation": {
+      "ok": true,
+      "data": {
+        "total_scans": 100,
+        "malicious_scans": 0,
+        "worst_score": 0,
+        "categories": [],
+        "first_seen": "2026-10-11T19:43:26.226Z",
+        "last_seen": "2026-10-11T22:57:35.357Z"
+      },
+      "sources": [
+        "urlscan.io:github.com"
+      ]
+    },
+    "fetch_homepage": {
+      "ok": true,
+      "data": {
+        "url": "https://github.com/",
+        "final_url": "https://github.com/",
+        "title": "GitHub \u00b7 Change is constant. GitHub keeps you ahead. \u00b7 GitHub \u00b7 GitHub",
+        "text": "The future of building happens together\nTools and trends evolve, but collaboration endures. With GitHub, developers, agents, and code come together on one platform.\nGitHub features\nWrite, test, and fix code quickly with GitHub Copilot, from simple boilerplate to complex features.\nGitHub customers\nAccelerate your entire workflow\nFrom your first line of code to final deployment, GitHub provides AI and automation tools to help you build and ship better software faster.\nYour AI partner everywhere. Copilot is ready to work with you at each step of the software development lifecycle.\nDuolingo boosts developer speed by 25% with GitHub Copilot\nRead customer story\n2025 Gartner\u00ae Magic Quadrant\u2122 for AI Code Assistants\nRead industry report\nBuilt-in application security where found means fixed\nUse AI to find and fix vulnerabilities so your team can ship more secure software faster.\nApply fixes in seconds. Spend less time debugging and more time building features with Copilot Autofix.\nSecurity debt, solved. Leverage security campaigns and Copilot Autofix to reduce application vulnerabilities.\nLearn about GitHub Code Security\nDependencies you can depend on. Update vulnerable dependencies with supported fixes for breaking changes.\nLearn about Dependabot\nYour secrets, your business. Detect, prevent, and remediate leaked secrets across your organization.\nLearn about GitHub Secret Protection\n70% MTTR reduction with Copilot Autofix\n8.3M secret leaks stopped in the past 12 months with push protection\nWork together, achieve more\nFrom planning and discussion to code review, GitHub keeps your team\u2019s conversation and context next to your code.\nPlan with clarity. Organize everything from high-level roadmaps to everyday tasks.\nFrom startups to enterprises, GitHub scales with teams of any size in any industry.\nMillions of developers and businesses call GitHub home\nWhether you\u2019re scaling your development process or just learning how to code, GitHub is where you belong. Join the world\u2019s most widely adopted developer platform to build the technologies that shape what\u2019s next.",
+        "status_code": 200,
+        "headers": [
+          "strict-transport-security",
+          "content-security-policy",
+          "x-content-type-options",
+          "referrer-policy"
+        ],
+        "policy_pages": [
+          "privacy",
+          "security",
+          "terms",
+          "trust"
+        ],
+        "security_txt": {
+          "found": true,
+          "contact": [
+            "https://hackerone.com/github"
+          ]
+        }
+      },
+      "sources": [
+        "https://github.com/"
+      ]
+    },
+    "web_search_reports": {
+      "ok": true,
+      "data": {
+        "query": "github.com scam reviews complaints",
+        "results": [
+          {
+            "title": "GitHub Reviews | Read Customer Service Reviews of github.com",
+            "url": "https://www.trustpilot.com/review/github.com",
+            "snippet": "GitHub Reviews 280 Software Company Write a review Visit website We use technology to protect platform integrity, but we don't fact-check reviews"
+          },
+          {
+            "title": "GitHub Reviews | Read Customer Service Reviews of github.com",
+            "url": "https://ca.trustpilot.com/review/github.com",
+            "snippet": "GitHub Reviews 279 Software Company Write a review Visit website We use technology to protect platform integrity, but we don't fact-check reviews"
+          },
+          {
+            "title": "github.com Reviews | check if the site is a scam or legit | Scamadviser",
+            "url": "https://www.scamadviser.com/check-website/github.com",
+            "snippet": "Check github.com with our free review tool and find out if github.com is legit and reliable. Need advice? Report scams Check Scamadviser!"
+          },
+          {
+            "title": "Phishing mail from legit looking github mail address",
+            "url": "https://github.com/orgs/community/discussions/109433",
+            "snippet": "GitHub's recruitment process would never mention its users via issues/PRs or other public content. GitHub recommends you periodically review your authorized OAuth apps. This spam activity targets and abuses GitHub's mention and notification functionality. This is a phishing campaign and is not the r"
+          },
+          {
+            "title": "Is this a fraudulent GitHub copy?",
+            "url": "https://github.com/orgs/community/discussions/110844",
+            "snippet": "Please report them. Authorizing an OAuth app can expose your GitHub account and data to a third party. GitHub recommends you periodically review your authorized OAuth apps. This spam activity targets and abuses GitHub's mention and notification functionality. This is a phishing campaign and is not t"
+          },
+          {
+            "title": "GitHub Reviews | Read Customer Service Reviews of github.com | 2 of 12",
+            "url": "https://www.trustpilot.com/review/github.com?page=2",
+            "snippet": "GitHub Reviews 280 Software Company Write a review Visit website We use technology to protect platform integrity, but we don't fact-check reviews"
+          },
+          {
+            "title": "GitHub Reviews 2026. Verified Reviews, Pros & Cons | Capterra",
+            "url": "https://www.capterra.com/p/129067/GitHub/reviews/",
+            "snippet": "GitHub felt more familiar and had better integration with the tools and workflows my team was already using. Non-incentivized review: any software user can leave a review for any product listed on our site. All submitted reviews are subject to our verification process prior to publication."
+          },
+          {
+            "title": "GitHub Scam Review: Is This Platform Safe? - fraudreviews.net",
+            "url": "https://fraudreviews.net/crypto-scam-reviews/github-scam-review/",
+            "snippet": "This GitHub review uncovers how its platform is used by crypto projects, potential scams, and key red flags. Is GitHub a scam or a safe place for crypto development?"
+          }
+        ]
+      },
+      "sources": [
+        "https://www.trustpilot.com/review/github.com",
+        "https://ca.trustpilot.com/review/github.com",
+        "https://www.scamadviser.com/check-website/github.com",
+        "https://github.com/orgs/community/discussions/109433",
+        "https://github.com/orgs/community/discussions/110844",
+        "https://www.trustpilot.com/review/github.com?page=2",
+        "https://www.capterra.com/p/129067/GitHub/reviews/",
+        "https://fraudreviews.net/crypto-scam-reviews/github-scam-review/"
+      ]
+    },
+    "crustdata_enrich": {
+      "ok": true,
+      "data": {
+        "found": true,
+        "company_name": "GitHub",
+        "location": "San Francisco, California, United States",
+        "headcount": "501-1000",
+        "founded": 2008,
+        "linkedin_url": "https://www.linkedin.com/company/github",
+        "description": "As the global home for all developers, GitHub is the complete AI-powered developer platform to build, scale, and deliver secure software. Over 100 million people, including developers from 90 of the Fortune 100 companies, use GitHub to build amazing things together across 330+ million repositories. With all the collaborative features of GitHub, it has never been easier for individuals and teams to write faster, better code.",
+        "confidence": 1.0
+      },
+      "sources": [
+        "https://api.crustdata.com/company/enrich"
+      ]
+    }
+  },
+  "step_results": [
+    {
+      "id": "s1",
+      "tool": "rdap_lookup",
+      "ok": true,
+      "attempts": 1,
+      "error": null,
+      "injected": false,
+      "latency_ms": 683.9
+    },
+    {
+      "id": "s2",
+      "tool": "doh_dns",
+      "ok": true,
+      "attempts": 1,
+      "error": null,
+      "injected": false,
+      "latency_ms": 679.8
+    },
+    {
+      "id": "s3",
+      "tool": "tls_inspect",
+      "ok": true,
+      "attempts": 1,
+      "error": null,
+      "injected": false,
+      "latency_ms": 283.0
+    },
+    {
+      "id": "s4",
+      "tool": "ct_logs",
+      "ok": true,
+      "attempts": 1,
+      "error": null,
+      "injected": false,
+      "latency_ms": 2474.7
+    },
+    {
+      "id": "s5",
+      "tool": "urlscan_reputation",
+      "ok": true,
+      "attempts": 1,
+      "error": null,
+      "injected": false,
+      "latency_ms": 864.9
+    },
+    {
+      "id": "s6",
+      "tool": "fetch_homepage",
+      "ok": true,
+      "attempts": 1,
+      "error": null,
+      "injected": false,
+      "latency_ms": 1334.5
+    },
+    {
+      "id": "s7",
+      "tool": "web_search_reports",
+      "ok": true,
+      "attempts": 1,
+      "error": null,
+      "injected": false,
+      "latency_ms": 1114.9
+    },
+    {
+      "id": "s8",
+      "tool": "crustdata_enrich",
+      "ok": true,
+      "attempts": 1,
+      "error": null,
+      "injected": false,
+      "latency_ms": 1337.9
+    }
+  ],
+  "retries": {},
+  "plan_history": [
+    {
+      "id": "s1",
+      "tool": "rdap_lookup",
+      "args": {
+        "domain": "github.com"
+      },
+      "why": "Registration age is the cheapest strong signal."
+    },
+    {
+      "id": "s2",
+      "tool": "doh_dns",
+      "args": {
+        "domain": "github.com"
+      },
+      "why": "Does the domain resolve, and does it take mail?"
+    },
+    {
+      "id": "s3",
+      "tool": "tls_inspect",
+      "args": {
+        "domain": "github.com"
+      },
+      "why": "Certificate hygiene check."
+    },
+    {
+      "id": "s4",
+      "tool": "ct_logs",
+      "args": {
+        "domain": "github.com"
+      },
+      "why": "Certificate history and subdomains show an established org."
+    },
+    {
+      "id": "s5",
+      "tool": "urlscan_reputation",
+      "args": {
+        "domain": "github.com"
+      },
+      "why": "Independent web-scan verdicts for the domain."
+    },
+    {
+      "id": "s6",
+      "tool": "fetch_homepage",
+      "args": {
+        "domain": "github.com"
+      },
+      "why": "Homepage scam-copy + security-posture analysis."
+    },
+    {
+      "id": "s7",
+      "tool": "web_search_reports",
+      "args": {
+        "domain": "github.com"
+      },
+      "why": "Independent reports and reviews."
+    },
+    {
+      "id": "s8",
+      "tool": "crustdata_enrich",
+      "args": {
+        "domain": "github.com"
+      },
+      "why": "Firmographic confirmation of a real company."
+    }
+  ],
+  "replans": {
+    "llm": 0,
+    "rule": 0
+  },
+  "assessment": {
+    "domain": "github.com",
+    "score": 0,
+    "band": "LOW",
+    "signals": [
+      {
+        "signal": "domain_well_established",
+        "weight": -12,
+        "detail": "Domain registered 6942 days ago (over 4 years of history).",
+        "sources": [
+          "rdap.org:github.com"
+        ],
+        "tool": "rdap_lookup",
+        "layer": "real & established",
+        "verification": "single_source",
+        "tools": [
+          "rdap_lookup"
+        ]
+      },
+      {
+        "signal": "spf_record_present",
+        "weight": -3,
+        "detail": "Domain publishes an SPF record authorising its mail senders.",
+        "sources": [
+          "dns.google:github.com"
+        ],
+        "tool": "doh_dns",
+        "layer": "security posture",
+        "verification": "single_source",
+        "tools": [
+          "doh_dns"
+        ]
+      },
+      {
+        "signal": "dmarc_enforced",
+        "weight": -3,
+        "detail": "DMARC enforcement is on (p=quarantine).",
+        "sources": [
+          "dns.google:github.com"
+        ],
+        "tool": "doh_dns",
+        "layer": "security posture",
+        "verification": "single_source",
+        "tools": [
+          "doh_dns"
+        ]
+      },
+      {
+        "signal": "certificate_history",
+        "weight": -6,
+        "detail": "1223 certificate(s) in transparency logs covering 128 name(s).",
+        "sources": [
+          "crt.sh:github.com"
+        ],
+        "tool": "ct_logs",
+        "layer": "real & established",
+        "verification": "single_source",
+        "tools": [
+          "ct_logs"
+        ]
+      },
+      {
+        "signal": "certificate_history_long",
+        "weight": -8,
+        "detail": "Certificates publicly logged since 2008 (more than three years of continuity).",
+        "sources": [
+          "crt.sh:github.com"
+        ],
+        "tool": "ct_logs",
+        "layer": "real & established",
+        "verification": "single_source",
+        "tools": [
+          "ct_logs"
+        ]
+      },
+      {
+        "signal": "urlscan_scan_history_clean",
+        "weight": -8,
+        "detail": "100 urlscan.io scans on record with no malicious verdicts.",
+        "sources": [
+          "urlscan.io:github.com"
+        ],
+        "tool": "urlscan_reputation",
+        "layer": "threat & reputation",
+        "verification": "single_source",
+        "tools": [
+          "urlscan_reputation"
+        ]
+      },
+      {
+        "signal": "hsts_enabled",
+        "weight": -3,
+        "detail": "Homepage sends HSTS, binding browsers to HTTPS.",
+        "sources": [
+          "https://github.com/"
+        ],
+        "tool": "fetch_homepage",
+        "layer": "security posture",
+        "verification": "single_source",
+        "tools": [
+          "fetch_homepage"
+        ]
+      },
+      {
+        "signal": "csp_enabled",
+        "weight": -2,
+        "detail": "Homepage sends a Content-Security-Policy header.",
+        "sources": [
+          "https://github.com/"
+        ],
+        "tool": "fetch_homepage",
+        "layer": "security posture",
+        "verification": "single_source",
+        "tools": [
+          "fetch_homepage"
+        ]
+      },
+      {
+        "signal": "privacy_and_terms_pages",
+        "weight": -3,
+        "detail": "Homepage links to both a privacy policy and terms of service.",
+        "sources": [
+          "https://github.com/"
+        ],
+        "tool": "fetch_homepage",
+        "layer": "real & established",
+        "verification": "single_source",
+        "tools": [
+          "fetch_homepage"
+        ]
+      },
+      {
+        "signal": "trust_page",
+        "weight": -2,
+        "detail": "Homepage links to a trust/security page.",
+        "sources": [
+          "https://github.com/"
+        ],
+        "tool": "fetch_homepage",
+        "layer": "security posture",
+        "verification": "single_source",
+        "tools": [
+          "fetch_homepage"
+        ]
+      },
+      {
+        "signal": "security_txt_present",
+        "weight": -4,
+        "detail": "Publishes a security.txt contact (https://hackerone.com/github).",
+        "sources": [
+          "https://github.com/"
+        ],
+        "tool": "fetch_homepage",
+        "layer": "security posture",
+        "verification": "single_source",
+        "tools": [
+          "fetch_homepage"
+        ]
+      },
+      {
+        "signal": "established_company",
+        "weight": -20,
+        "detail": "Company found in business data: GitHub (San Francisco, California, United States, 501-1000 employees).",
+        "sources": [
+          "https://api.crustdata.com/company/enrich"
+        ],
+        "tool": "crustdata_enrich",
+        "layer": "real & established",
+        "verification": "single_source",
+        "tools": [
+          "crustdata_enrich"
+        ]
+      },
+      {
+        "signal": "company_name_on_site",
+        "weight": -6,
+        "detail": "The registered company name appears on the fetched homepage, cross-checking the business record.",
+        "sources": [
+          "https://api.crustdata.com/company/enrich",
+          "https://github.com/"
+        ],
+        "tool": "crustdata_enrich",
+        "layer": "real & established",
+        "verification": "single_source",
+        "tools": [
+          "crustdata_enrich"
+        ]
+      },
+      {
+        "signal": "negative_reports",
+        "weight": 12,
+        "detail": "2 independent negative report(s); e.g. scamadviser.com: Check github.com with our free review tool and find out if github.com is legit a...; fraudreviews.net: This GitHub review uncovers how its platform is used by crypto projects, potenti.... (discounted: registration age, certificate history, a clean scan history, the company record corroborate a real business, outweigh a keyword search hit)",
+        "sources": [
+          "https://www.scamadviser.com/check-website/github.com",
+          "https://fraudreviews.net/crypto-scam-reviews/github-scam-review/"
+        ],
+        "tool": "web_search_reports",
+        "layer": "threat & reputation",
+        "verification": "single_source",
+        "tools": [
+          "web_search_reports"
+        ]
+      }
+    ],
+    "sources": [
+      "crt.sh:github.com",
+      "dns.google:github.com",
+      "https://api.crustdata.com/company/enrich",
+      "https://fraudreviews.net/crypto-scam-reviews/github-scam-review/",
+      "https://github.com/",
+      "https://www.scamadviser.com/check-website/github.com",
+      "rdap.org:github.com",
+      "urlscan.io:github.com"
+    ],
+    "re_registered": false,
+    "could_not_verify": [
+      {
+        "item": "tls_inspect",
+        "reason": "ran, no signal produced"
+      }
+    ],
+    "notes": []
+  }
+}

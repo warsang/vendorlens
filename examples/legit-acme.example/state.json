@@ -1,0 +1,545 @@
+{
+  "domain": "acme-cloud-services.example",
+  "run_id": "18f2ba13",
+  "mode": "demo",
+  "tag": null,
+  "started": "2026-10-11T23:04:03.679752+00:00",
+  "findings": {
+    "rdap_lookup": {
+      "ok": true,
+      "data": {
+        "found": true,
+        "created": "2011-03-08T00:00:00+00:00",
+        "expires": "2031-03-08T00:00:00+00:00",
+        "age_days": 5695,
+        "registrar": "MarkMonitor Inc.",
+        "status": [
+          "client transfer prohibited",
+          "client delete prohibited"
+        ],
+        "nameservers": [
+          "ns1.example-cloud-dns.com",
+          "ns2.example-cloud-dns.com"
+        ],
+        "_demo": true,
+        "domain": "acme-cloud-services.example"
+      },
+      "sources": [
+        "demo: canned RDAP response"
+      ]
+    },
+    "doh_dns": {
+      "ok": true,
+      "data": {
+        "A": [
+          "93.184.216.34"
+        ],
+        "MX": [
+          "mail.acme-cloud-services.example"
+        ],
+        "NS": [
+          "ns1.example-cloud-dns.com",
+          "ns2.example-cloud-dns.com"
+        ],
+        "TXT": [
+          "v=spf1 include:_spf.acme-cloud-services.example ~all",
+          "google-site-verification=abcd"
+        ],
+        "CNAME": [],
+        "DMARC": [
+          "v=DMARC1; p=reject; rua=mailto:dmarc@acme-cloud-services.example"
+        ],
+        "domain": "acme-cloud-services.example",
+        "statuses": {
+          "A": 0,
+          "MX": 0,
+          "NS": 0,
+          "TXT": 0,
+          "CNAME": 0,
+          "DMARC": 0
+        },
+        "_doh": true
+      },
+      "sources": [
+        "demo: canned DoH response"
+      ]
+    },
+    "tls_inspect": {
+      "ok": true,
+      "data": {
+        "issuer": "Let's Encrypt",
+        "subject_cn": "acme-cloud-services.example",
+        "not_after": "2026-12-15T00:00:00+00:00",
+        "days_left": 65,
+        "self_signed": false,
+        "_demo": true,
+        "domain": "acme-cloud-services.example"
+      },
+      "sources": [
+        "demo: canned TLS response"
+      ]
+    },
+    "ct_logs": {
+      "ok": true,
+      "data": {
+        "cert_count": 62,
+        "earliest_cert": "2015-06-01T00:00:00+00:00",
+        "latest_cert": "2026-09-30T00:00:00+00:00",
+        "subdomain_count": 14,
+        "issuers": [
+          "Let's Encrypt",
+          "Amazon",
+          "DigiCert"
+        ],
+        "_demo": true,
+        "domain": "acme-cloud-services.example"
+      },
+      "sources": [
+        "demo: canned crt.sh response"
+      ]
+    },
+    "urlscan_reputation": {
+      "ok": true,
+      "data": {
+        "total_scans": 92,
+        "malicious_scans": 0,
+        "worst_score": 0,
+        "categories": [],
+        "first_seen": "2019-02-01T00:00:00+00:00",
+        "last_seen": "2026-10-05T00:00:00+00:00",
+        "_demo": true,
+        "domain": "acme-cloud-services.example"
+      },
+      "sources": [
+        "demo: canned urlscan response"
+      ]
+    },
+    "fetch_homepage": {
+      "ok": true,
+      "data": {
+        "url": "https://acme-cloud-services.example/",
+        "final_url": "https://acme-cloud-services.example/",
+        "title": "Acme Cloud Services - proven cloud cost optimization",
+        "text": "Acme Cloud Services Ltd is a cloud cost optimization platform trusted by engineering teams worldwide. See our privacy policy and security overview. Acme Cloud Services Ltd, Austin TX.",
+        "status_code": 200,
+        "policy_pages": [
+          "privacy",
+          "terms",
+          "trust",
+          "security"
+        ],
+        "security_txt": {
+          "found": true,
+          "contact": [
+            "mailto:security@acme-cloud-services.example"
+          ]
+        },
+        "headers": [
+          "strict-transport-security",
+          "content-security-policy"
+        ],
+        "_demo": true,
+        "domain": "acme-cloud-services.example"
+      },
+      "sources": [
+        "demo: canned homepage"
+      ]
+    },
+    "web_search_reports": {
+      "ok": true,
+      "data": {
+        "query": "acme-cloud-services.example scam reviews complaints",
+        "results": [
+          {
+            "title": "Acme Cloud Services - how to cut cloud spend",
+            "url": "https://example-tech-blog.example/acme-review",
+            "snippet": "A practical review of Acme Cloud Services cost tooling."
+          },
+          {
+            "title": "Acme Cloud Services pricing",
+            "url": "https://example-directory.example/acme-cloud-services",
+            "snippet": "Pricing tiers for Acme Cloud Services Ltd."
+          }
+        ],
+        "_demo": true,
+        "domain": "acme-cloud-services.example"
+      },
+      "sources": [
+        "demo: canned search results"
+      ]
+    },
+    "crustdata_enrich": {
+      "ok": true,
+      "data": {
+        "found": true,
+        "company_name": "Acme Cloud Services Ltd",
+        "domain": "acme-cloud-services.example",
+        "location": "Austin, TX, USA",
+        "headcount": "51-200",
+        "founded": 2011,
+        "linkedin_url": "https://www.linkedin.com/company/acme-cloud-services",
+        "description": "Cloud cost optimization platform for engineering teams.",
+        "confidence": 0.98,
+        "_demo": true
+      },
+      "sources": [
+        "demo: canned Crustdata response"
+      ]
+    }
+  },
+  "step_results": [
+    {
+      "id": "s1",
+      "tool": "rdap_lookup",
+      "ok": true,
+      "attempts": 1,
+      "error": null,
+      "injected": false,
+      "latency_ms": 0.8
+    },
+    {
+      "id": "s2",
+      "tool": "doh_dns",
+      "ok": true,
+      "attempts": 1,
+      "error": null,
+      "injected": false,
+      "latency_ms": 0.6
+    },
+    {
+      "id": "s3",
+      "tool": "tls_inspect",
+      "ok": true,
+      "attempts": 1,
+      "error": null,
+      "injected": false,
+      "latency_ms": 0.8
+    },
+    {
+      "id": "s4",
+      "tool": "ct_logs",
+      "ok": true,
+      "attempts": 1,
+      "error": null,
+      "injected": false,
+      "latency_ms": 1.0
+    },
+    {
+      "id": "s5",
+      "tool": "urlscan_reputation",
+      "ok": true,
+      "attempts": 1,
+      "error": null,
+      "injected": false,
+      "latency_ms": 1.8
+    },
+    {
+      "id": "s6",
+      "tool": "fetch_homepage",
+      "ok": true,
+      "attempts": 1,
+      "error": null,
+      "injected": false,
+      "latency_ms": 1.0
+    },
+    {
+      "id": "s7",
+      "tool": "web_search_reports",
+      "ok": true,
+      "attempts": 1,
+      "error": null,
+      "injected": false,
+      "latency_ms": 1.0
+    },
+    {
+      "id": "s8",
+      "tool": "crustdata_enrich",
+      "ok": true,
+      "attempts": 1,
+      "error": null,
+      "injected": false,
+      "latency_ms": 0.6
+    }
+  ],
+  "retries": {},
+  "plan_history": [
+    {
+      "id": "s1",
+      "tool": "rdap_lookup",
+      "args": {
+        "domain": "acme-cloud-services.example"
+      },
+      "why": "Registration age is the cheapest strong signal."
+    },
+    {
+      "id": "s2",
+      "tool": "doh_dns",
+      "args": {
+        "domain": "acme-cloud-services.example"
+      },
+      "why": "Does the domain resolve, and does it take mail?"
+    },
+    {
+      "id": "s3",
+      "tool": "tls_inspect",
+      "args": {
+        "domain": "acme-cloud-services.example"
+      },
+      "why": "Certificate hygiene check."
+    },
+    {
+      "id": "s4",
+      "tool": "ct_logs",
+      "args": {
+        "domain": "acme-cloud-services.example"
+      },
+      "why": "Certificate history and subdomains show an established org."
+    },
+    {
+      "id": "s5",
+      "tool": "urlscan_reputation",
+      "args": {
+        "domain": "acme-cloud-services.example"
+      },
+      "why": "Independent web-scan verdicts for the domain."
+    },
+    {
+      "id": "s6",
+      "tool": "fetch_homepage",
+      "args": {
+        "domain": "acme-cloud-services.example"
+      },
+      "why": "Homepage scam-copy + security-posture analysis."
+    },
+    {
+      "id": "s7",
+      "tool": "web_search_reports",
+      "args": {
+        "domain": "acme-cloud-services.example"
+      },
+      "why": "Independent reports and reviews."
+    },
+    {
+      "id": "s8",
+      "tool": "crustdata_enrich",
+      "args": {
+        "domain": "acme-cloud-services.example"
+      },
+      "why": "Firmographic confirmation of a real company."
+    }
+  ],
+  "replans": {
+    "llm": 0,
+    "rule": 0
+  },
+  "assessment": {
+    "domain": "acme-cloud-services.example",
+    "score": 0,
+    "band": "LOW",
+    "signals": [
+      {
+        "signal": "domain_well_established",
+        "weight": -12,
+        "detail": "Domain registered 5695 days ago (over 4 years of history).",
+        "sources": [
+          "demo: canned RDAP response"
+        ],
+        "tool": "rdap_lookup",
+        "layer": "real & established",
+        "verification": "single_source",
+        "tools": [
+          "rdap_lookup"
+        ]
+      },
+      {
+        "signal": "spf_record_present",
+        "weight": -3,
+        "detail": "Domain publishes an SPF record authorising its mail senders.",
+        "sources": [
+          "demo: canned DoH response"
+        ],
+        "tool": "doh_dns",
+        "layer": "security posture",
+        "verification": "single_source",
+        "tools": [
+          "doh_dns"
+        ]
+      },
+      {
+        "signal": "dmarc_enforced",
+        "weight": -3,
+        "detail": "DMARC enforcement is on (p=reject).",
+        "sources": [
+          "demo: canned DoH response"
+        ],
+        "tool": "doh_dns",
+        "layer": "security posture",
+        "verification": "single_source",
+        "tools": [
+          "doh_dns"
+        ]
+      },
+      {
+        "signal": "certificate_history",
+        "weight": -6,
+        "detail": "62 certificate(s) in transparency logs covering 14 name(s).",
+        "sources": [
+          "demo: canned crt.sh response"
+        ],
+        "tool": "ct_logs",
+        "layer": "real & established",
+        "verification": "single_source",
+        "tools": [
+          "ct_logs"
+        ]
+      },
+      {
+        "signal": "certificate_history_long",
+        "weight": -8,
+        "detail": "Certificates publicly logged since 2015 (more than three years of continuity).",
+        "sources": [
+          "demo: canned crt.sh response"
+        ],
+        "tool": "ct_logs",
+        "layer": "real & established",
+        "verification": "single_source",
+        "tools": [
+          "ct_logs"
+        ]
+      },
+      {
+        "signal": "urlscan_scan_history_clean",
+        "weight": -8,
+        "detail": "92 urlscan.io scans on record with no malicious verdicts.",
+        "sources": [
+          "demo: canned urlscan response"
+        ],
+        "tool": "urlscan_reputation",
+        "layer": "threat & reputation",
+        "verification": "single_source",
+        "tools": [
+          "urlscan_reputation"
+        ]
+      },
+      {
+        "signal": "hsts_enabled",
+        "weight": -3,
+        "detail": "Homepage sends HSTS, binding browsers to HTTPS.",
+        "sources": [
+          "demo: canned homepage"
+        ],
+        "tool": "fetch_homepage",
+        "layer": "security posture",
+        "verification": "single_source",
+        "tools": [
+          "fetch_homepage"
+        ]
+      },
+      {
+        "signal": "csp_enabled",
+        "weight": -2,
+        "detail": "Homepage sends a Content-Security-Policy header.",
+        "sources": [
+          "demo: canned homepage"
+        ],
+        "tool": "fetch_homepage",
+        "layer": "security posture",
+        "verification": "single_source",
+        "tools": [
+          "fetch_homepage"
+        ]
+      },
+      {
+        "signal": "privacy_and_terms_pages",
+        "weight": -3,
+        "detail": "Homepage links to both a privacy policy and terms of service.",
+        "sources": [
+          "demo: canned homepage"
+        ],
+        "tool": "fetch_homepage",
+        "layer": "real & established",
+        "verification": "single_source",
+        "tools": [
+          "fetch_homepage"
+        ]
+      },
+      {
+        "signal": "trust_page",
+        "weight": -2,
+        "detail": "Homepage links to a trust/security page.",
+        "sources": [
+          "demo: canned homepage"
+        ],
+        "tool": "fetch_homepage",
+        "layer": "security posture",
+        "verification": "single_source",
+        "tools": [
+          "fetch_homepage"
+        ]
+      },
+      {
+        "signal": "security_txt_present",
+        "weight": -4,
+        "detail": "Publishes a security.txt contact (mailto:security@acme-cloud-services.example).",
+        "sources": [
+          "demo: canned homepage"
+        ],
+        "tool": "fetch_homepage",
+        "layer": "security posture",
+        "verification": "single_source",
+        "tools": [
+          "fetch_homepage"
+        ]
+      },
+      {
+        "signal": "established_company",
+        "weight": -20,
+        "detail": "Company found in business data: Acme Cloud Services Ltd (Austin, TX, USA, 51-200 employees).",
+        "sources": [
+          "demo: canned Crustdata response"
+        ],
+        "tool": "crustdata_enrich",
+        "layer": "real & established",
+        "verification": "single_source",
+        "tools": [
+          "crustdata_enrich"
+        ]
+      },
+      {
+        "signal": "company_name_on_site",
+        "weight": -6,
+        "detail": "The registered company name appears on the fetched homepage, cross-checking the business record.",
+        "sources": [
+          "demo: canned Crustdata response",
+          "demo: canned homepage"
+        ],
+        "tool": "crustdata_enrich",
+        "layer": "real & established",
+        "verification": "single_source",
+        "tools": [
+          "crustdata_enrich"
+        ]
+      }
+    ],
+    "sources": [
+      "demo: canned Crustdata response",
+      "demo: canned DoH response",
+      "demo: canned RDAP response",
+      "demo: canned crt.sh response",
+      "demo: canned homepage",
+      "demo: canned urlscan response"
+    ],
+    "re_registered": false,
+    "could_not_verify": [
+      {
+        "item": "tls_inspect",
+        "reason": "ran, no signal produced"
+      },
+      {
+        "item": "web_search_reports",
+        "reason": "ran, no signal produced"
+      }
+    ],
+    "notes": []
+  }
+}

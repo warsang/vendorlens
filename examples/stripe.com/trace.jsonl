@@ -1,0 +1,86 @@
+{"ts": "2026-10-11T22:57:00.553742+00:00", "run_id": "stripe.c", "kind": "example_regen", "name": "stripe.com", "payload": {"domain": "stripe.com", "kwargs": ["no_llm"]}}
+{"ts": "2026-10-11T22:57:00.557893+00:00", "run_id": "stripe.c", "kind": "run_start", "name": "investigation", "payload": {"domain": "stripe.com", "mode": "no-llm", "scenario": null, "tag": null, "inject": {}}}
+{"ts": "2026-10-11T22:57:00.558407+00:00", "run_id": "stripe.c", "kind": "step_start", "name": "s1", "payload": {"tool": "rdap_lookup", "why": "Registration age is the cheapest strong signal.", "n": 1}}
+{"ts": "2026-10-11T22:57:00.558407+00:00", "run_id": "stripe.c", "kind": "tool_start", "name": "rdap_lookup", "payload": {"args": {"domain": "github.com"}}}
+{"ts": "2026-10-11T22:57:01.168711+00:00", "run_id": "stripe.c", "kind": "tool_end", "name": "rdap_lookup", "payload": {"latency_ms": 610.1}}
+{"ts": "2026-10-11T22:57:01.168711+00:00", "run_id": "stripe.c", "kind": "step_end", "name": "s1", "payload": {"ok": true, "attempts": null}}
+{"ts": "2026-10-11T22:57:01.168711+00:00", "run_id": "stripe.c", "kind": "replan", "name": "s1", "payload": {"kind": "rule", "reason": "rule after rdap_lookup (ok=True): no change", "added": [], "queue_depth": 7}}
+{"ts": "2026-10-11T22:57:01.170223+00:00", "run_id": "stripe.c", "kind": "step_start", "name": "s2", "payload": {"tool": "doh_dns", "why": "Does the domain resolve, and does it take mail?", "n": 2}}
+{"ts": "2026-10-11T22:57:01.170223+00:00", "run_id": "stripe.c", "kind": "tool_start", "name": "doh_dns", "payload": {"args": {"domain": "github.com"}}}
+{"ts": "2026-10-11T22:57:01.873820+00:00", "run_id": "stripe.c", "kind": "tool_end", "name": "doh_dns", "payload": {"latency_ms": 703.0}}
+{"ts": "2026-10-11T22:57:01.873820+00:00", "run_id": "stripe.c", "kind": "step_end", "name": "s2", "payload": {"ok": true, "attempts": null}}
+{"ts": "2026-10-11T22:57:01.874779+00:00", "run_id": "stripe.c", "kind": "replan", "name": "s2", "payload": {"kind": "rule", "reason": "rule after doh_dns (ok=True): no change", "added": [], "queue_depth": 6}}
+{"ts": "2026-10-11T22:57:01.874779+00:00", "run_id": "stripe.c", "kind": "step_start", "name": "s3", "payload": {"tool": "tls_inspect", "why": "Certificate hygiene check.", "n": 3}}
+{"ts": "2026-10-11T22:57:01.874779+00:00", "run_id": "stripe.c", "kind": "tool_start", "name": "tls_inspect", "payload": {"args": {"domain": "github.com"}}}
+{"ts": "2026-10-11T22:57:02.083614+00:00", "run_id": "stripe.c", "kind": "tool_end", "name": "tls_inspect", "payload": {"latency_ms": 208.7}}
+{"ts": "2026-10-11T22:57:02.084660+00:00", "run_id": "stripe.c", "kind": "step_end", "name": "s3", "payload": {"ok": true, "attempts": null}}
+{"ts": "2026-10-11T22:57:02.084660+00:00", "run_id": "stripe.c", "kind": "replan", "name": "s3", "payload": {"kind": "rule", "reason": "rule after tls_inspect (ok=True): no change", "added": [], "queue_depth": 5}}
+{"ts": "2026-10-11T22:57:02.084660+00:00", "run_id": "stripe.c", "kind": "step_start", "name": "s4", "payload": {"tool": "ct_logs", "why": "Certificate history and subdomains show an established org.", "n": 4}}
+{"ts": "2026-10-11T22:57:02.085622+00:00", "run_id": "stripe.c", "kind": "tool_start", "name": "ct_logs", "payload": {"args": {"domain": "github.com"}}}
+{"ts": "2026-10-11T22:57:02.991647+00:00", "run_id": "stripe.c", "kind": "tool_end", "name": "ct_logs", "payload": {"latency_ms": 906.2}}
+{"ts": "2026-10-11T22:57:02.991647+00:00", "run_id": "stripe.c", "kind": "step_end", "name": "s4", "payload": {"ok": true, "attempts": null}}
+{"ts": "2026-10-11T22:57:02.992660+00:00", "run_id": "stripe.c", "kind": "replan", "name": "s4", "payload": {"kind": "rule", "reason": "rule after ct_logs (ok=True): no change", "added": [], "queue_depth": 4}}
+{"ts": "2026-10-11T22:57:02.992660+00:00", "run_id": "stripe.c", "kind": "step_start", "name": "s5", "payload": {"tool": "urlscan_reputation", "why": "Independent web-scan verdicts for the domain.", "n": 5}}
+{"ts": "2026-10-11T22:57:02.992660+00:00", "run_id": "stripe.c", "kind": "tool_start", "name": "urlscan_reputation", "payload": {"args": {"domain": "github.com"}}}
+{"ts": "2026-10-11T22:57:03.555259+00:00", "run_id": "stripe.c", "kind": "tool_end", "name": "urlscan_reputation", "payload": {"latency_ms": 562.9}}
+{"ts": "2026-10-11T22:57:03.556764+00:00", "run_id": "stripe.c", "kind": "step_end", "name": "s5", "payload": {"ok": true, "attempts": null}}
+{"ts": "2026-10-11T22:57:03.556764+00:00", "run_id": "stripe.c", "kind": "replan", "name": "s5", "payload": {"kind": "rule", "reason": "rule after urlscan_reputation (ok=True): no change", "added": [], "queue_depth": 3}}
+{"ts": "2026-10-11T22:57:03.556764+00:00", "run_id": "stripe.c", "kind": "step_start", "name": "s6", "payload": {"tool": "fetch_homepage", "why": "Homepage scam-copy + security-posture analysis.", "n": 6}}
+{"ts": "2026-10-11T22:57:03.556764+00:00", "run_id": "stripe.c", "kind": "tool_start", "name": "fetch_homepage", "payload": {"args": {"domain": "github.com"}}}
+{"ts": "2026-10-11T22:57:04.559671+00:00", "run_id": "stripe.c", "kind": "tool_end", "name": "fetch_homepage", "payload": {"latency_ms": 1002.4}}
+{"ts": "2026-10-11T22:57:04.560679+00:00", "run_id": "stripe.c", "kind": "step_end", "name": "s6", "payload": {"ok": true, "attempts": null}}
+{"ts": "2026-10-11T22:57:04.560679+00:00", "run_id": "stripe.c", "kind": "replan", "name": "s6", "payload": {"kind": "rule", "reason": "rule after fetch_homepage (ok=True): no change", "added": [], "queue_depth": 2}}
+{"ts": "2026-10-11T22:57:04.561679+00:00", "run_id": "stripe.c", "kind": "step_start", "name": "s7", "payload": {"tool": "web_search_reports", "why": "Independent reports and reviews.", "n": 7}}
+{"ts": "2026-10-11T22:57:04.561679+00:00", "run_id": "stripe.c", "kind": "tool_start", "name": "web_search_reports", "payload": {"args": {"domain": "github.com"}}}
+{"ts": "2026-10-11T22:57:05.557900+00:00", "run_id": "stripe.c", "kind": "tool_end", "name": "web_search_reports", "payload": {"latency_ms": 995.7}}
+{"ts": "2026-10-11T22:57:05.557900+00:00", "run_id": "stripe.c", "kind": "step_end", "name": "s7", "payload": {"ok": true, "attempts": null}}
+{"ts": "2026-10-11T22:57:05.557900+00:00", "run_id": "stripe.c", "kind": "replan", "name": "s7", "payload": {"kind": "rule", "reason": "rule after web_search_reports (ok=True): no change", "added": [], "queue_depth": 1}}
+{"ts": "2026-10-11T22:57:05.557900+00:00", "run_id": "stripe.c", "kind": "step_start", "name": "s8", "payload": {"tool": "crustdata_enrich", "why": "Firmographic confirmation of a real company.", "n": 8}}
+{"ts": "2026-10-11T22:57:05.557900+00:00", "run_id": "stripe.c", "kind": "tool_start", "name": "crustdata_enrich", "payload": {"args": {"domain": "github.com"}}}
+{"ts": "2026-10-11T22:57:06.854220+00:00", "run_id": "stripe.c", "kind": "tool_end", "name": "crustdata_enrich", "payload": {"latency_ms": 1296.4}}
+{"ts": "2026-10-11T22:57:06.856426+00:00", "run_id": "stripe.c", "kind": "step_end", "name": "s8", "payload": {"ok": true, "attempts": null}}
+{"ts": "2026-10-11T22:57:06.856936+00:00", "run_id": "stripe.c", "kind": "replan", "name": "s8", "payload": {"kind": "rule", "reason": "rule after crustdata_enrich (ok=True): no change", "added": [], "queue_depth": 0}}
+{"ts": "2026-10-11T22:57:06.857805+00:00", "run_id": "stripe.c", "kind": "run_end", "name": "investigation", "payload": {"score": 0, "band": "LOW", "steps": 8}}
+{"ts": "2026-10-11T23:03:19.978606+00:00", "run_id": "stripe.c", "kind": "example_regen", "name": "stripe.com", "payload": {"domain": "stripe.com", "kwargs": ["no_llm"]}}
+{"ts": "2026-10-11T23:03:19.982664+00:00", "run_id": "stripe.c", "kind": "run_start", "name": "investigation", "payload": {"domain": "stripe.com", "mode": "no-llm", "scenario": null, "tag": null, "inject": {}}}
+{"ts": "2026-10-11T23:03:19.982664+00:00", "run_id": "stripe.c", "kind": "step_start", "name": "s1", "payload": {"tool": "rdap_lookup", "why": "Registration age is the cheapest strong signal.", "n": 1}}
+{"ts": "2026-10-11T23:03:19.983656+00:00", "run_id": "stripe.c", "kind": "tool_start", "name": "rdap_lookup", "payload": {"args": {"domain": "stripe.com"}}}
+{"ts": "2026-10-11T23:03:20.534346+00:00", "run_id": "stripe.c", "kind": "tool_end", "name": "rdap_lookup", "payload": {"latency_ms": 550.4}}
+{"ts": "2026-10-11T23:03:20.534876+00:00", "run_id": "stripe.c", "kind": "step_end", "name": "s1", "payload": {"ok": true, "attempts": null}}
+{"ts": "2026-10-11T23:03:20.535409+00:00", "run_id": "stripe.c", "kind": "replan", "name": "s1", "payload": {"kind": "rule", "reason": "rule after rdap_lookup (ok=True): no change", "added": [], "queue_depth": 7}}
+{"ts": "2026-10-11T23:03:20.535944+00:00", "run_id": "stripe.c", "kind": "step_start", "name": "s2", "payload": {"tool": "doh_dns", "why": "Does the domain resolve, and does it take mail?", "n": 2}}
+{"ts": "2026-10-11T23:03:20.535944+00:00", "run_id": "stripe.c", "kind": "tool_start", "name": "doh_dns", "payload": {"args": {"domain": "stripe.com"}}}
+{"ts": "2026-10-11T23:03:21.281926+00:00", "run_id": "stripe.c", "kind": "tool_end", "name": "doh_dns", "payload": {"latency_ms": 746.5}}
+{"ts": "2026-10-11T23:03:21.283433+00:00", "run_id": "stripe.c", "kind": "step_end", "name": "s2", "payload": {"ok": true, "attempts": null}}
+{"ts": "2026-10-11T23:03:21.283433+00:00", "run_id": "stripe.c", "kind": "replan", "name": "s2", "payload": {"kind": "rule", "reason": "rule after doh_dns (ok=True): no change", "added": [], "queue_depth": 6}}
+{"ts": "2026-10-11T23:03:21.283433+00:00", "run_id": "stripe.c", "kind": "step_start", "name": "s3", "payload": {"tool": "tls_inspect", "why": "Certificate hygiene check.", "n": 3}}
+{"ts": "2026-10-11T23:03:21.284442+00:00", "run_id": "stripe.c", "kind": "tool_start", "name": "tls_inspect", "payload": {"args": {"domain": "stripe.com"}}}
+{"ts": "2026-10-11T23:03:21.536426+00:00", "run_id": "stripe.c", "kind": "tool_end", "name": "tls_inspect", "payload": {"latency_ms": 252.2}}
+{"ts": "2026-10-11T23:03:21.537425+00:00", "run_id": "stripe.c", "kind": "step_end", "name": "s3", "payload": {"ok": true, "attempts": null}}
+{"ts": "2026-10-11T23:03:21.537425+00:00", "run_id": "stripe.c", "kind": "replan", "name": "s3", "payload": {"kind": "rule", "reason": "rule after tls_inspect (ok=True): no change", "added": [], "queue_depth": 5}}
+{"ts": "2026-10-11T23:03:21.537425+00:00", "run_id": "stripe.c", "kind": "step_start", "name": "s4", "payload": {"tool": "ct_logs", "why": "Certificate history and subdomains show an established org.", "n": 4}}
+{"ts": "2026-10-11T23:03:21.537425+00:00", "run_id": "stripe.c", "kind": "tool_start", "name": "ct_logs", "payload": {"args": {"domain": "stripe.com"}}}
+{"ts": "2026-10-11T23:03:48.120821+00:00", "run_id": "stripe.c", "kind": "tool_end", "name": "ct_logs", "payload": {"latency_ms": 26583.9}}
+{"ts": "2026-10-11T23:03:48.121831+00:00", "run_id": "stripe.c", "kind": "step_end", "name": "s4", "payload": {"ok": true, "attempts": null}}
+{"ts": "2026-10-11T23:03:48.121831+00:00", "run_id": "stripe.c", "kind": "replan", "name": "s4", "payload": {"kind": "rule", "reason": "rule after ct_logs (ok=True): no change", "added": [], "queue_depth": 4}}
+{"ts": "2026-10-11T23:03:48.122832+00:00", "run_id": "stripe.c", "kind": "step_start", "name": "s5", "payload": {"tool": "urlscan_reputation", "why": "Independent web-scan verdicts for the domain.", "n": 5}}
+{"ts": "2026-10-11T23:03:48.122832+00:00", "run_id": "stripe.c", "kind": "tool_start", "name": "urlscan_reputation", "payload": {"args": {"domain": "stripe.com"}}}
+{"ts": "2026-10-11T23:03:48.741096+00:00", "run_id": "stripe.c", "kind": "tool_end", "name": "urlscan_reputation", "payload": {"latency_ms": 617.6}}
+{"ts": "2026-10-11T23:03:48.741096+00:00", "run_id": "stripe.c", "kind": "step_end", "name": "s5", "payload": {"ok": true, "attempts": null}}
+{"ts": "2026-10-11T23:03:48.741096+00:00", "run_id": "stripe.c", "kind": "replan", "name": "s5", "payload": {"kind": "rule", "reason": "rule after urlscan_reputation (ok=True): no change", "added": [], "queue_depth": 3}}
+{"ts": "2026-10-11T23:03:48.742057+00:00", "run_id": "stripe.c", "kind": "step_start", "name": "s6", "payload": {"tool": "fetch_homepage", "why": "Homepage scam-copy + security-posture analysis.", "n": 6}}
+{"ts": "2026-10-11T23:03:48.742057+00:00", "run_id": "stripe.c", "kind": "tool_start", "name": "fetch_homepage", "payload": {"args": {"domain": "stripe.com"}}}
+{"ts": "2026-10-11T23:03:50.008636+00:00", "run_id": "stripe.c", "kind": "tool_end", "name": "fetch_homepage", "payload": {"latency_ms": 1266.5}}
+{"ts": "2026-10-11T23:03:50.008636+00:00", "run_id": "stripe.c", "kind": "step_end", "name": "s6", "payload": {"ok": true, "attempts": null}}
+{"ts": "2026-10-11T23:03:50.009786+00:00", "run_id": "stripe.c", "kind": "replan", "name": "s6", "payload": {"kind": "rule", "reason": "rule after fetch_homepage (ok=True): no change", "added": [], "queue_depth": 2}}
+{"ts": "2026-10-11T23:03:50.009786+00:00", "run_id": "stripe.c", "kind": "step_start", "name": "s7", "payload": {"tool": "web_search_reports", "why": "Independent reports and reviews.", "n": 7}}
+{"ts": "2026-10-11T23:03:50.009786+00:00", "run_id": "stripe.c", "kind": "tool_start", "name": "web_search_reports", "payload": {"args": {"domain": "stripe.com"}}}
+{"ts": "2026-10-11T23:03:51.148019+00:00", "run_id": "stripe.c", "kind": "tool_end", "name": "web_search_reports", "payload": {"latency_ms": 1137.6}}
+{"ts": "2026-10-11T23:03:51.148019+00:00", "run_id": "stripe.c", "kind": "step_end", "name": "s7", "payload": {"ok": true, "attempts": null}}
+{"ts": "2026-10-11T23:03:51.148019+00:00", "run_id": "stripe.c", "kind": "replan", "name": "s7", "payload": {"kind": "rule", "reason": "rule after web_search_reports (ok=True): no change", "added": [], "queue_depth": 1}}
+{"ts": "2026-10-11T23:03:51.149031+00:00", "run_id": "stripe.c", "kind": "step_start", "name": "s8", "payload": {"tool": "crustdata_enrich", "why": "Firmographic confirmation of a real company.", "n": 8}}
+{"ts": "2026-10-11T23:03:51.149031+00:00", "run_id": "stripe.c", "kind": "tool_start", "name": "crustdata_enrich", "payload": {"args": {"domain": "stripe.com"}}}
+{"ts": "2026-10-11T23:03:52.602669+00:00", "run_id": "stripe.c", "kind": "tool_end", "name": "crustdata_enrich", "payload": {"latency_ms": 1453.1}}
+{"ts": "2026-10-11T23:03:52.602669+00:00", "run_id": "stripe.c", "kind": "step_end", "name": "s8", "payload": {"ok": true, "attempts": null}}
+{"ts": "2026-10-11T23:03:52.602669+00:00", "run_id": "stripe.c", "kind": "replan", "name": "s8", "payload": {"kind": "rule", "reason": "rule after crustdata_enrich (ok=True): no change", "added": [], "queue_depth": 0}}
+{"ts": "2026-10-11T23:03:52.603667+00:00", "run_id": "stripe.c", "kind": "run_end", "name": "investigation", "payload": {"score": 0, "band": "LOW", "steps": 8}}

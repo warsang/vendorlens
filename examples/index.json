@@ -1,0 +1,58 @@
+[
+  {
+    "name": "github.com",
+    "domain": "github.com",
+    "band": "LOW",
+    "score": 0,
+    "signals": 14,
+    "mode": "no-llm"
+  },
+  {
+    "name": "stripe.com",
+    "domain": "stripe.com",
+    "band": "LOW",
+    "score": 0,
+    "signals": 12,
+    "mode": "no-llm"
+  },
+  {
+    "name": "linear.app",
+    "domain": "linear.app",
+    "band": "LOW",
+    "score": 0,
+    "signals": 12,
+    "mode": "no-llm"
+  },
+  {
+    "name": "suspicious-acme.example",
+    "domain": "acme-cloud-services.example",
+    "band": "CRITICAL",
+    "score": 100,
+    "signals": 13,
+    "mode": "demo"
+  },
+  {
+    "name": "young-startup.example",
+    "domain": "acme-cloud-services.example",
+    "band": "MEDIUM",
+    "score": 29,
+    "signals": 7,
+    "mode": "demo"
+  },
+  {
+    "name": "legit-acme.example",
+    "domain": "acme-cloud-services.example",
+    "band": "LOW",
+    "score": 0,
+    "signals": 13,
+    "mode": "demo"
+  },
+  {
+    "name": "injected-failure-acme.example",
+    "domain": "acme-cloud-services.example",
+    "band": "CRITICAL",
+    "score": 100,
+    "signals": 13,
+    "mode": "demo"
+  }
+]
