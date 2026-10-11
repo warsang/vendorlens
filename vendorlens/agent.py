@@ -34,6 +34,25 @@ DEMO_PLAN = [
 MAX_RETRIES = 3
 
 
+def _sanitize_steps(raw) -> list[dict]:
+    """Coerce LLM-produced plan/observer steps into the executor schema
+    (id, tool, args, why). Drops malformed steps or unknown tool names so a
+    field the model omitted can never crash the run."""
+    out: list[dict] = []
+    for i, step in enumerate(raw or [], 1):
+        if not isinstance(step, dict):
+            continue
+        tool = step.get("tool")
+        if tool not in TOOLS:
+            continue
+        args = step.get("args")
+        if not isinstance(args, dict):
+            args = {}
+        out.append({"id": str(step.get("id") or f"step{i}"),
+                    "tool": tool, "args": args, "why": step.get("why", "")})
+    return out
+
+
 async def execute_with_retry(step: dict, ctx: dict, state: dict) -> dict:
     tool = TOOLS[step["tool"]]
     args = dict(step["args"])
@@ -79,7 +98,12 @@ async def run_investigation(domain: str, demo: bool = False,
         client = model = None
     else:
         client, model = llm.get_client()
-        plan = llm.plan_with_llm(client, model, domain)
+        plan = _sanitize_steps(llm.plan_with_llm(client, model, domain))
+        if not plan:
+            # Model returned nothing usable; fall back to the fixed plan so the
+            # investigation still runs and produces a brief.
+            plan = [dict(s, args={**s["args"], "domain": domain})
+                    for s in DEMO_PLAN]
 
     queue = list(plan)
     while queue:
@@ -94,9 +118,10 @@ async def run_investigation(domain: str, demo: bool = False,
         # Observer: replan on surprising results (LLM live mode only).
         if not demo and not no_llm and client is not None:
             try:
-                extra = llm.replan_with_llm(client, model, domain, state,
-                                            {"step": step["id"],
-                                             "result_ok": result.get("ok")})
+                extra = _sanitize_steps(
+                    llm.replan_with_llm(client, model, domain, state,
+                                        {"step": step["id"],
+                                         "result_ok": result.get("ok")}))
                 for s in extra:
                     s.setdefault("args", {})["domain"] = domain
                 queue.extend(extra)

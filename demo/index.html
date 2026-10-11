@@ -1,125 +1,269 @@
-<!DOCTYPE html>
-<html lang="en">
+<!doctype html>
+<html lang="en" data-astryx-theme="neutral">
 <head>
-<meta charset="utf-8">
-<meta name="viewport" content="width=device-width, initial-scale=1">
-<title>VendorLens on-device verdict — jev-web demo</title>
-<style>
-  body { font-family: system-ui, sans-serif; max-width: 720px; margin: 2rem auto; padding: 0 1rem; }
-  textarea { width: 100%; height: 140px; font: inherit; }
-  button { font: inherit; padding: .5rem 1.2rem; margin-top: .5rem; cursor: pointer; }
-  button:disabled { opacity: .5; cursor: wait; }
-  .q { margin-top: 1.2rem; border-top: 1px solid #ddd; padding-top: .8rem; }
-  .bar-row { display: flex; align-items: center; gap: .5rem; margin: .25rem 0; }
-  .bar-row .lbl { width: 220px; text-align: right; font-size: .9rem; }
-  .bar { height: 14px; background: #2a7de1; border-radius: 3px; }
-  .meta { color: #555; font-size: .85rem; }
-  #status { margin-top: 1rem; }
-  .err { color: #b00020; }
-</style>
+<meta charset="utf-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1" />
+<title>VendorLens — vendor due-diligence</title>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Figtree:wght@400;500;600;700&display=swap" />
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@astryxdesign/core@0.4.1/src/reset.css" />
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@astryxdesign/core@0.4.1/dist/astryx.css" />
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@astryxdesign/theme-neutral@0.4.1/dist/theme.css" />
 <script type="importmap">
 {
   "imports": {
-    "jev-web": "./node_modules/jev-web/src/index.mjs",
+    "react": "https://esm.sh/react@19.2.0",
+    "react/jsx-runtime": "https://esm.sh/react@19.2.0/jsx-runtime",
+    "react-dom": "https://esm.sh/react-dom@19.2.0",
+    "react-dom/client": "https://esm.sh/react-dom@19.2.0/client",
+    "@astryxdesign/core": "https://esm.sh/@astryxdesign/core@0.4.1?external=react,react-dom",
+    "jev-web": "./jeveb/src/index.mjs",
     "@huggingface/transformers": "https://cdn.jsdelivr.net/npm/@huggingface/transformers@4.3.0/dist/transformers.min.js",
     "onnxruntime-web": "https://cdn.jsdelivr.net/npm/onnxruntime-web@1.22.0/dist/ort.min.mjs"
   }
 }
 </script>
+<style>
+  body { font-family: var(--font-family-body); background: var(--color-background-body, #f6f6f7); }
+  .vl-wrap { max-width: 880px; margin: 0 auto; padding: 2.5rem 1.25rem 4rem; }
+  .vl-brand { display: flex; align-items: center; gap: .6rem; font-weight: 700; font-size: 1.05rem; }
+  .vl-dot { width: 26px; height: 26px; border-radius: 8px; background: linear-gradient(135deg, var(--color-blue-vivid, #2a7de1), var(--color-violet-vivid, #7a4de1)); }
+  .vl-hero h1 { margin: .2rem 0 .4rem; }
+  .vl-search { display: flex; gap: .6rem; flex-wrap: wrap; align-items: center; margin-top: 1rem; }
+  .vl-input { flex: 1 1 320px; min-width: 260px; padding: .7rem .9rem; font: inherit;
+    border: 1px solid var(--color-border, #d7d7db); border-radius: var(--radius-container, 12px);
+    background: var(--color-background-surface, #fff); }
+  .vl-gauge { display:flex; align-items:baseline; gap:.5rem; }
+  .vl-score { font-size: 2.6rem; font-weight: 700; line-height: 1; }
+  .vl-bar-track { height: 12px; border-radius: 999px; background: var(--color-background-elevated, #ececed); overflow: hidden; }
+  .vl-bar-fill { height: 100%; border-radius: 999px; transition: width .5s ease; }
+  .vl-obar { height: 12px; border-radius: 4px; background: var(--color-blue-vivid, #2a7de1); }
+  .vl-obar-row { display: flex; align-items: center; gap: .5rem; margin: .3rem 0; }
+  .vl-obar-lbl { width: 200px; text-align: right; font-size: .85rem; color: var(--color-text-secondary, #555); }
+  .vl-obar-val { font-size: .8rem; color: var(--color-text-secondary, #555); width: 52px; }
+  .vl-cite { color: var(--color-blue-vivid, #2a7de1); font-size: .72rem; vertical-align: super; text-decoration: none; }
+  .vl-srcs a { color: var(--color-blue-vivid, #2a7de1); text-decoration: none; word-break: break-all; }
+  .vl-mono { font-variant-numeric: tabular-nums; }
+  .vl-row { display:flex; justify-content: space-between; gap:1rem; flex-wrap: wrap; }
+  .vl-tag { font-size: .75rem; color: var(--color-text-secondary, #666); }
+  .vl-divider { border-top: 1px solid var(--color-border, #e6e6e8); margin: .4rem 0; }
+  .vl-spin { display:inline-block; width:16px; height:16px; border:2px solid var(--color-border,#ccc); border-top-color: var(--color-blue-vivid,#2a7de1); border-radius:50%; animation: vlspin .8s linear infinite; vertical-align:-3px; margin-right:.5rem;}
+  @keyframes vlspin { to { transform: rotate(360deg); } }
+  .vl-btn { font: inherit; padding: .7rem 1.2rem; font-weight: 600; color: #fff; cursor: pointer;
+    background: var(--color-blue-vivid, #2a7de1); border: none; border-radius: var(--radius-inner, 10px); }
+  .vl-btn:disabled { opacity: .6; cursor: default; }
+  .vl-btn.ghost { background: transparent; color: var(--color-blue-vivid, #2a7de1); border: 1px solid var(--color-border, #d7d7db); }
+  .vl-foot { margin-top: 2rem; }
+</style>
 </head>
 <body>
-<h1>VendorLens: on-device risk verdict</h1>
-<p class="meta">Paste a vendor's homepage text. A typed-decision model
-(<code>jev-web</code>, Bekko 17m) scores it <b>entirely in your browser</b> —
-no text leaves this page. This is the client-side verdict layer of VendorLens.</p>
-
-<textarea id="state">Acme Cloud Services - Cut your cloud bill by 90% overnight!
-Limited offer ends tonight. No company registration number listed.
-Contact us on Telegram @acmeclouddeals. Wire transfer only.
-Our revolutionary AI does everything, trusted by thousands (reviews coming soon).</textarea>
-<br>
-<button id="assess">Assess</button>
-<div id="status" class="meta">Model not loaded yet. First run downloads ~29 MB of weights (cached afterwards).</div>
-<div id="out"></div>
-
+<div class="vl-wrap" id="root"></div>
 <script type="module">
-import { createBekkoDecider } from "jev-web";
+import * as React from 'react';
+import { createRoot } from 'react-dom/client';
+import { Card, Stack, Heading, Text, Badge } from '@astryxdesign/core';
 
-const status = document.getElementById("status");
-const out = document.getElementById("out");
-const btn = document.getElementById("assess");
-let decider = null;
+const AGENT_API = "__AGENT_API__";
+const AGENT_KEY = "__AGENT_KEY__";
 
+const e = React.createElement;
 const QUESTIONS = [
-  { type: "noul", instructions: "This text shows signs of a scam operation." },
-  { type: "score", instructions: "How trustworthy does this vendor appear?",
-    options: ["very untrustworthy", "untrustworthy", "neutral", "trustworthy", "very trustworthy"] },
-  { type: "choice", instructions: "What is the dominant risk signal in this text?",
-    options: ["none visible", "pressure tactics", "too-good-to-be-true pricing",
-              "vague company identity", "suspicious payment request"] },
+  { type: 'noul', instructions: 'This text shows signs of a scam operation.' },
+  { type: 'score', instructions: 'How trustworthy does this vendor appear?',
+    options: ['very untrustworthy', 'untrustworthy', 'neutral', 'trustworthy', 'very trustworthy'] },
+  { type: 'choice', instructions: 'What is the dominant risk signal in this text?',
+    options: ['none visible', 'pressure tactics', 'too-good-to-be-true pricing',
+              'vague company identity', 'suspicious payment request'] },
 ];
 
-function barRow(label, p) {
-  const row = document.createElement("div");
-  row.className = "bar-row";
-  const l = document.createElement("span");
-  l.className = "lbl"; l.textContent = label;
-  const b = document.createElement("div");
-  b.className = "bar"; b.style.width = Math.round(p * 320) + "px";
-  const v = document.createElement("span");
-  v.className = "meta"; v.textContent = (p * 100).toFixed(1) + "%";
-  row.append(l, b, v);
-  return row;
+const BAND_COLOR = { LOW: 'success', MEDIUM: 'warning', HIGH: 'error', CRITICAL: 'error' };
+const BAND_VAR = { LOW: 'var(--color-success, #2e9e5b)', MEDIUM: 'var(--color-warning, #d99a00)',
+  HIGH: 'var(--color-error, #d23a3a)', CRITICAL: 'var(--color-error, #a10f0f)' };
+
+let _decider = null, _loading = null;
+async function getDecider(onProgress) {
+  if (_decider) return _decider;
+  if (!_loading) {
+    const { createBekkoDecider } = await import('jev-web');
+    _loading = createBekkoDecider({
+      wasmPaths: 'https://cdn.jsdelivr.net/npm/onnxruntime-web@1.22.0/dist/',
+      onProgress,
+    }).then((d) => { _decider = d; return d; })
+        .catch((err) => { _loading = null; throw err; });
+  }
+  return _loading;
 }
 
-btn.addEventListener("click", async () => {
-  btn.disabled = true;
-  out.innerHTML = "";
-  const state = document.getElementById("state").value.trim();
-  if (!state) { status.textContent = "Paste some vendor text first."; btn.disabled = false; return; }
-  try {
-    if (!decider) {
-      status.textContent = "Loading model weights (first run only)...";
-      decider = await createBekkoDecider({
-        wasmPaths: "https://cdn.jsdelivr.net/npm/onnxruntime-web@1.22.0/dist/",
-        onProgress: (p) => { status.textContent = "Loading: " + (p.file || p.phase || ""); },
-      });
-      status.textContent = "Model ready (" + decider.info.model + ").";
-    }
-    status.textContent = "Scoring...";
-    const t0 = performance.now();
-    const { answers, timings } = await decider.decide(state, QUESTIONS);
-    const ms = Math.round(performance.now() - t0);
-    status.textContent = "Done in " + ms + " ms on-device (infer " +
-      Math.round(timings?.runMs ?? timings?.inferMs ?? 0) + " ms). Zero network requests for the decision itself.";
+function Bar({ p, color }) {
+  return e('div', { className: 'vl-obar-row' },
+    e('div', { style: { flex: '1' } },
+      e('div', { className: 'vl-bar-track' },
+        e('div', { className: 'vl-bar-fill', style: { width: Math.round(p * 100) + '%', background: color || 'var(--color-blue-vivid, #2a7de1)' } }))));
+}
 
-    answers.forEach((a, i) => {
-      const div = document.createElement("div");
-      div.className = "q";
-      const h = document.createElement("strong");
-      h.textContent = QUESTIONS[i].instructions;
-      div.appendChild(h);
-      const probs = a.probabilities || {};
-      Object.entries(probs).sort((x, y) => y[1] - x[1])
-        .forEach(([label, p]) => div.appendChild(barRow(label, p)));
-      const m = document.createElement("div");
-      m.className = "meta";
-      m.textContent = "answer: " + (a.choice ?? a.level ?? (a.noul > 0.5 ? "yes" : "no")) +
-        " · confidence " + (a.confidence * 100).toFixed(1) + "%";
-      div.appendChild(m);
-      out.appendChild(div);
-    });
-  } catch (e) {
-    status.innerHTML = "";
-    const s = document.createElement("span");
-    s.className = "err";
-    s.textContent = "Could not load or run the model in this browser: " + (e && e.message ? e.message : e) +
-      " — the Python agent and its brief still work; this layer needs a modern browser with WebAssembly.";
-    status.appendChild(s);
-  } finally {
-    btn.disabled = false;
+function AnswerBlock({ q, a }) {
+  const probs = a.probabilities || {};
+  const entries = Object.entries(probs).sort((x, y) => y[1] - x[1]);
+  let answer;
+  if (a.type === 'noul') answer = (a.noul > 0.5 ? 'yes' : 'no');
+  else if (a.type === 'score') answer = a.level + ' (' + (a.probabilities ? '' : '') + ')';
+  else answer = a.choice;
+  return e('div', { className: 'vl-divider' },
+    e(Text, null, q.instructions),
+    e('div', { style: { margin: '.35rem 0' } },
+      entries.map(([label, p]) => e('div', { key: label, className: 'vl-obar-row' },
+        e('span', { className: 'vl-obar-lbl' }, label),
+        e('div', { style: { flex: '1' } },
+          e('div', { className: 'vl-bar-track' },
+            e('div', { className: 'vl-bar-fill', style: { width: Math.round(p * 100) + '%' } }))),
+        e('span', { className: 'vl-obar-val vl-mono' }, (p * 100).toFixed(1) + '%')))),
+    e('div', { className: 'vl-tag' }, 'model answer: ' + answer + ' · confidence ' + (a.confidence * 100).toFixed(1) + '%'));
+}
+
+function SignalRow({ s, idx }) {
+  const cites = (s.sources || []).map((src) => (idx[src] !== undefined ? idx[src] + 1 : null))
+    .filter(Boolean);
+  return e('div', { className: 'vl-divider' },
+    e('div', { className: 'vl-row' },
+      e('strong', null, s.signal.replace(/_/g, ' ')),
+      e('span', { className: 'vl-mono', style: { fontWeight: 600,
+        color: s.weight >= 0 ? 'var(--color-error,#d23a3a)' : 'var(--color-success,#2e9e5b)' } },
+        (s.weight > 0 ? '+' : '') + s.weight)),
+    e(Text, null, s.detail),
+    cites.length ? e('span', { style: { fontSize: '.78rem' } },
+      cites.map((n) => e('a', { key: n, className: 'vl-cite', href: '#src-' + n }, '[' + n + ']'))) : null);
+}
+
+function App() {
+  const [input, setInput] = React.useState('');
+  const [mode, setMode] = React.useState('demo');
+  const [loading, setLoading] = React.useState(false);
+  const [result, setResult] = React.useState(null);
+  const [error, setError] = React.useState('');
+  const [expanded, setExpanded] = React.useState(false);
+  const [odel, setModel] = React.useState({ status: 'idle', answers: null, ms: 0, model: '' });
+
+  async function investigate() {
+    const q = input.trim();
+    if (!q) { setError('Enter a company name or domain.'); return; }
+    setLoading(true); setError(''); setResult(null); setExpanded(false);
+    setModel({ status: 'idle', answers: null, ms: 0, model: '' });
+    try {
+      const r = await fetch(AGENT_API + '?q=' + encodeURIComponent(q) + '&mode=' + mode,
+                            { headers: { 'x-api-key': AGENT_KEY } });
+      const d = await r.json().catch(() => ({}));
+      if (!d.ok) { setError(d.error || ('Error ' + r.status)); return; }
+      setResult(d);
+    } catch (err) {
+      setError('Request failed: ' + (err && err.message ? err.message : err));
+    } finally { setLoading(false); }
   }
-});
+
+  React.useEffect(() => {
+    if (!result || !result.homepage_text) { setModel({ status: 'idle', answers: null, ms: 0, model: '' }); return; }
+    let cancelled = false;
+    setModel({ status: 'loading', answers: null, ms: 0, model: '' });
+    (async () => {
+      try {
+        const d = await getDecider();
+        const t0 = performance.now();
+        const { answers, timings } = await d.decide(result.homepage_text, QUESTIONS);
+        if (cancelled) return;
+        setModel({ status: 'ready', answers, ms: Math.round(performance.now() - t0),
+          model: d.info.model, infer: Math.round((timings && timings.runMs) || 0) });
+      } catch (err) {
+        if (!cancelled) setModel({ status: 'error', err: String(err && err.message ? err.message : err), answers: null, ms: 0, model: '' });
+      }
+    })();
+    return () => { cancelled = true; };
+  }, [result]);
+
+  const verdict = result && result.verdict;
+  const srcIndex = {};
+  if (result) (result.sources || []).forEach((s, i) => { srcIndex[s] = i; });
+
+  const details = (result && expanded) ? e(Stack, { gap: 2, className: 'vl-foot' },
+    e(Heading, { level: 4 }, 'Risk signals (' + result.signals.length + ')'),
+    result.signals.length ? result.signals.map((s, i) => e(SignalRow, { key: i, s, idx: srcIndex }))
+      : e(Text, { className: 'vl-tag' }, 'No significant signals.'),
+    e('div', { className: 'vl-divider' }),
+    e(Heading, { level: 4 }, 'Sources'),
+    e('ol', { className: 'vl-srcs', style: { paddingLeft: '1.2rem', fontSize: '.82rem' } },
+      result.sources.map((s, i) => e('li', { key: i, id: 'src-' + (i + 1) },
+        /^https?:/.test(s) ? e('a', { href: s, target: '_blank', rel: 'noopener' }, s) : s))),
+    e('div', { className: 'vl-divider' }),
+    e(Heading, { level: 4 }, 'Tools executed'),
+    result.tools.map((t) => e('div', { key: t.name, className: 'vl-row', style: { fontSize: '.85rem' } },
+      e('span', null, (t.ok ? '\u2713 ' : '\u2717 ') + t.name),
+      e('span', { className: 'vl-tag' }, t.ok ? 'ok' : (t.error || 'failed')))),
+    verdict.retries && Object.keys(verdict.retries).length ? e(Text, { className: 'vl-tag' },
+      'Retried with backoff: ' + Object.entries(verdict.retries).map((kv) => kv[0] + ' x' + kv[1]).join(', ')) : null
+  ) : null;
+
+  return e(Stack, { gap: 5 },
+    e('div', { className: 'vl-brand' }, e('div', { className: 'vl-dot' }), 'VendorLens'),
+    e('div', { className: 'vl-hero' },
+      e(Heading, { level: 1 }, 'Know your vendor before you pay them.'),
+      e(Text, null, 'Type a company name or domain. VendorLens runs an OSINT '
+        + 'due-diligence investigation (registration, DNS, TLS, certificate '
+        + 'history, firmographics, reports) and returns a cited risk verdict. '
+        + 'The final verdict text is scored on-device, so nothing you paste is '
+        + 'sent anywhere.')),
+
+    e(Card, { elevation: 'low', padding: 5 },
+      e('div', { className: 'vl-search' },
+        e('input', { className: 'vl-input', value: input, placeholder: 'Company name or domain (e.g. Acme Cloud or acme.com)',
+          onChange: (ev) => setInput(ev.target.value),
+          onKeyDown: (ev) => { if (ev.key === 'Enter') investigate(); }, id: 'q' }),
+        e('select', { className: 'vl-input', style: { flex: '0 0 150px' }, value: mode,
+          onChange: (ev) => setMode(ev.target.value) },
+          e('option', { value: 'demo' }, 'demo (canned)'),
+          e('option', { value: 'live' }, 'live')),
+        e('button', { className: 'vl-btn', onClick: investigate, disabled: loading, id: 'go' },
+          loading ? 'Investigating…' : 'Investigate'))),
+
+    error ? e(Text, null, e('span', { style: { color: 'var(--color-error,#d23a3a)' } }, error)) : null,
+
+    loading ? e(Text, { className: 'vl-tag' }, e('span', { className: 'vl-spin' }),
+      'Running the agent across live sources…') : null,
+
+    verdict ? e(Card, { elevation: 'low', padding: 6 },
+      e(Stack, { gap: 4 },
+        result.resolved_from ? e(Text, { className: 'vl-tag' },
+          'Resolved "' + result.input + '" → ' + result.domain) : null,
+        e('div', { className: 'vl-row', style: { alignItems: 'center' } },
+          e('div', null,
+            e('div', { className: 'vl-gauge' },
+              e('span', { className: 'vl-score vl-mono' }, String(verdict.score)),
+              e('span', { style: { color: 'var(--color-text-secondary,#666)' } }, '/ 100')),
+            e(Text, { className: 'vl-tag' }, result.domain + ' · run ' + result.run_id)),
+          e(Badge, { color: BAND_COLOR[verdict.band] || 'neutral' }, verdict.band)),
+        e('div', { className: 'vl-bar-track' },
+          e('div', { className: 'vl-bar-fill', style: { width: verdict.score + '%', background: BAND_VAR[verdict.band] } })),
+        e(Heading, { level: 3 }, verdict.headline),
+        e(Text, null, verdict.summary),
+
+        // on-device verdict model (auto-runs on the returned homepage text)
+        e('div', { className: 'vl-divider' }),
+        e('div', { className: 'vl-row' },
+          e(Heading, { level: 4 }, 'On-device verdict'),
+          e('span', { className: 'vl-tag' }, odel.status === 'ready'
+            ? (odel.model + ' · ' + odel.ms + 'ms · zero network') : odel.status)),
+        odel.status === 'loading' ? e(Text, { className: 'vl-tag' },
+          e('span', { className: 'vl-spin' }), 'Loading on-device model (first run ~29MB)…') : null,
+        odel.status === 'ready' && odel.answers ? e('div', null,
+          odel.answers.map((a, i) => e(AnswerBlock, { key: i, q: QUESTIONS[i], a }))) : null,
+        odel.status === 'skip' || (!result.homepage_text && odel.status === 'idle') ?
+          e(Text, { className: 'vl-tag' }, 'No homepage text to score.') : null,
+
+        // expandable investigation details
+        e('div', { className: 'vl-divider' }),
+        e('button', { className: 'vl-btn ghost', onClick: () => setExpanded(!expanded) },
+          expanded ? 'Hide investigation details' : 'View investigation details'),
+        details,
+      )) : null);
+}
+
+createRoot(document.getElementById('root')).render(e(App));
 </script>
 </body>
 </html>
