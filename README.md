@@ -117,9 +117,12 @@ with `neatlogs live tracing: on`.
 ### 2. Entire (checkpoints)
 
 The repo runs `entire enable --agent opencode` (hooks in `.git/hooks/`), so
-each commit captures the agent session that produced it. See
-[`entire/ENTIRE.md`](entire/ENTIRE.md) for setup; checkpoints show with
-`entire checkpoint list` and `entire checkpoint explain HEAD`.
+each commit captures the agent session that produced it.
+
+- **Checkpoint:** https://entire.io/gh/warsang/vendorlens/commit/3d5aab50787672851fdf76de5afa39b6e53e9f69
+- **Checkpoint ID:** `ddf4ab1afdcaae3a8fd47d92a42039f6b891146d`
+- Inspect with `entire checkpoint list` and `entire checkpoint explain HEAD`;
+  setup and steps in [`entire/ENTIRE.md`](entire/ENTIRE.md).
 
 ### 3. cfo.ai (business plan)
 
