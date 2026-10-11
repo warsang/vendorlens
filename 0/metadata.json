@@ -1,0 +1,52 @@
+{
+  "cli_version": "0.11.4",
+  "checkpoint_id": "01M4PN87Z18TS1VD1NDZXXJ5VX",
+  "session_id": "ses_ed301ab4dffeVNSS3Jr92DcdPk",
+  "strategy": "manual-commit",
+  "created_at": "2026-10-11T23:37:44.1700186Z",
+  "branch": "main",
+  "checkpoints_count": 1,
+  "files_touched": [
+    "README.md",
+    "runs/acme-cloud-services.example/20261011T215709Z/brief.md",
+    "runs/acme-cloud-services.example/20261011T215709Z/state.json",
+    "runs/acme-cloud-services.example/20261011T215709Z/trace.jsonl",
+    "runs/amazon.com/20261011T203036Z/brief.md",
+    "runs/amazon.com/20261011T203036Z/state.json",
+    "runs/amazon.com/20261011T203036Z/trace.jsonl",
+    "runs/example.com/20261011T091433Z/brief.md",
+    "runs/example.com/20261011T091433Z/state.json",
+    "runs/example.com/20261011T091433Z/trace.jsonl",
+    "runs/linear.app/20261011T215820Z/brief.md",
+    "runs/linear.app/20261011T215820Z/state.json",
+    "runs/linear.app/20261011T215820Z/trace.jsonl"
+  ],
+  "agent": "OpenCode",
+  "model": "",
+  "turn_id": "be113e35cf74",
+  "checkpoint_transcript_start": 2,
+  "transcript_lines_at_start": 2,
+  "compact_transcript_start": 2,
+  "token_usage": {
+    "input_tokens": 0,
+    "cache_creation_tokens": 0,
+    "cache_read_tokens": 0,
+    "output_tokens": 0,
+    "api_call_count": 0
+  },
+  "session_metrics": {
+    "turn_count": 1
+  },
+  "initial_attribution": {
+    "calculated_at": "2026-10-11T23:37:44.1597792Z",
+    "agent_lines": 6,
+    "agent_removed": 1414,
+    "human_added": 0,
+    "human_modified": 0,
+    "human_removed": 0,
+    "total_committed": 6,
+    "total_lines_changed": 1420,
+    "agent_percentage": 100,
+    "metric_version": 2
+  }
+}
