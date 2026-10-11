@@ -1,33 +1,38 @@
-# Demo video script — VendorLens (produced, 1:44)
+# Demo video script -- VendorLens (<= 3 minutes)
 
-The video is committed at `docs/demo.mp4` (release asset:
-https://github.com/warsang/vendorlens/releases/tag/demo). It explicitly covers
-all three mandatory tools: neatlogs, Entire and cfo.ai. The slide source is
-`docs/video-slides.html` (nine scenes, dark terminal aesthetic, SAPI narration).
+Target 2:45. The video MUST explicitly cover neatlogs, Entire and cfo.ai
+(they are a mandatory tool set). Recommended story per the judging brief: one
+legitimate vendor (LOW) and one suspicious domain (CRITICAL) side by side,
+one injected failure recovering, the brief with correct clickable citations and
+the confidence column, the neatlogs trace with nested tool spans, the Entire
+checkpoint, and the cfo.ai plan.
 
-## Scene timings (produced video)
+## Status
+
+- An **earlier cut** is committed at `docs/demo.mp4` (1:44, release asset:
+  https://github.com/warsang/vendorlens/releases/tag/demo). It was recorded
+  on an earlier canned dataset that scored MEDIUM 48/100; the current `--demo`
+  suspicious scenario scores CRITICAL 100/100 (see
+  `examples/suspicious-acme.example/brief.md`). Slide source:
+  `docs/video-slides.html`.
+- **Record the final cut** (below) before submission, from the current build,
+  so the on-screen verdict matches the committed examples.
+
+## Final script
 
 | Time | Scene | Content |
 |---|---|---|
-| 0:00-0:04 | 1 Title | VendorLens, know your vendor before you wire; neatHack 2026 |
-| 0:04-0:17 | 2 Problem | "Is this counterparty a real business, or a front?" URL checkers cannot answer it |
-| 0:17-0:40 | 3 Agent live | `python -m vendorlens acme-cloud-services.example --demo`: planner picks 9 tools, MEDIUM 48/100 verdict, cited signals |
-| 0:40-0:52 | 4 Failure and recovery | real trace.jsonl from the amazon.com run: phishtank_check 503, retry with backoff, run continues |
-| 0:52-1:06 | 5 neatlogs | init + wrapped OpenAI client, one WORKFLOW span per run, dashboard + committed trace evidence |
-| 1:06-1:14 | 6 Entire | checkpoint list / explain, checkpoint link in the submission |
-| 1:14-1:25 | 7 cfo.ai | pricing tiers, unit economics, revenue scenarios, costs and runway |
-| 1:25-1:40 | 8 On-device verdict | Bekko 17m typed-decision bars from the public demo page; zero network after weights load |
-| 1:40-1:44 | 9 Close | repo + pages.dev demo links |
+| 0:00-0:20 | Problem | "Is this counterparty a real business, or a front?" A URL checker cannot tell you whether the company behind it exists |
+| 0:20-1:05 | Agent, suspicious | `python -m vendorlens acme-cloud-services.example --demo`: 9 tools, verdict CRITICAL 100/100, every signal cited; a young domain triggers the rule-based phishing-feed check |
+| 1:05-1:30 | Recovery | `python -m vendorlens acme-cloud-services.example --demo --inject-failure ct_logs:2`: `tool_retry` x2 then `tool_recovered` visible in `trace.jsonl` |
+| 1:30-1:55 | neatlogs | one WORKFLOW span with nested TOOL spans; `neatlogs live tracing: on` in committed live runs |
+| 1:55-2:15 | Entire | `entire checkpoint explain HEAD`; checkpoint link + ID in the submission |
+| 2:15-2:35 | cfo.ai | pricing tiers, unit economics, runway and breakeven (see `docs/business-plan-inputs.md`) |
+| 2:35-2:45 | On-device verdict + close | public demo page "Load example" -> Bekko 17m bars, zero network after weights load; repo + pages.dev links |
 
-## B-roll used (all committed)
+## Evidence to have on screen
 
-- `runs/acme-cloud-services.example/20261011T215709Z` (canned run replayed by
-  the public demo page)
-- `runs/amazon.com/20261011T203036Z/trace.jsonl` (real retry/backoff events)
-- `runs/linear.app/20261011T215820Z/brief.md` (live LLM-planned run)
-- Entire checkpoint link (scene 6)
-
-## Narration style
-
-Microsoft David (SAPI), rate 0, one paragraph per scene, matching the
-narration lines in `docs/video-slides.html`.
+- `examples/stripe.com/brief.md` (LOW, live) vs `examples/suspicious-acme.example/brief.md` (CRITICAL).
+- `examples/injected-failure-acme.example/trace.jsonl` (failure -> retry -> recovery).
+- The brief's **Confidence** column and **What we could not verify** section.
+- Entire checkpoint link + ID; cfo.ai plan; neatlogs trace links (baseline and improved).

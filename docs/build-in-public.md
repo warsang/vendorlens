@@ -1,7 +1,8 @@
-# Build-in-public drafts — #neatHack
+# Build-in-public drafts, #neatHack
 
-DRAFTS ONLY. Do not post without his explicit approval of the exact text.
-Written in first person as a solo dev. Tag #neatHack in each.
+Drafts only. Nothing posts until the author approves the exact text, and
+posting is a manual, human step. Written in the first person as a solo dev.
+Tag #neatHack in each.
 
 ## Post 1 — kickoff (Sat)
 

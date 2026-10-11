@@ -1,0 +1,216 @@
+{
+  "ok": true,
+  "input": "acme-cloud-services.example",
+  "domain": "acme-cloud-services.example",
+  "resolved_from": null,
+  "mode": "demo",
+  "run_id": "ca405a38",
+  "verdict": {
+    "score": 100,
+    "band": "CRITICAL",
+    "headline": "CRITICAL risk",
+    "summary": "Domain registered 38 days ago (< 90 days).; Domain status (none) does not include a client transfer lock at Cheap Registrar LLC.; No MX records: the domain cannot receive email; unusual for a real business.",
+    "retries": {},
+    "signals_count": 13,
+    "could_not_verify": [
+      {
+        "item": "crustdata_enrich",
+        "reason": "ran, no signal produced"
+      }
+    ],
+    "re_registered": false
+  },
+  "signals": [
+    {
+      "signal": "domain_very_young",
+      "layer": "real & established",
+      "confidence": "single_source",
+      "weight": 30,
+      "detail": "Domain registered 38 days ago (< 90 days).",
+      "sources": [
+        "demo: canned RDAP response"
+      ]
+    },
+    {
+      "signal": "domain_status_unlocked",
+      "layer": "real & established",
+      "confidence": "single_source",
+      "weight": 4,
+      "detail": "Domain status (none) does not include a client transfer lock at Cheap Registrar LLC.",
+      "sources": [
+        "demo: canned RDAP response"
+      ]
+    },
+    {
+      "signal": "no_mx_records",
+      "layer": "real & established",
+      "confidence": "single_source",
+      "weight": 10,
+      "detail": "No MX records: the domain cannot receive email; unusual for a real business.",
+      "sources": [
+        "demo: canned DoH response"
+      ]
+    },
+    {
+      "signal": "no_spf_record",
+      "layer": "security posture",
+      "confidence": "single_source",
+      "weight": 6,
+      "detail": "No SPF record published for the domain.",
+      "sources": [
+        "demo: canned DoH response"
+      ]
+    },
+    {
+      "signal": "no_dmarc_record",
+      "layer": "security posture",
+      "confidence": "single_source",
+      "weight": 4,
+      "detail": "No DMARC policy published: the domain does not declare how unauthenticated mail is handled.",
+      "sources": [
+        "demo: canned DoH response"
+      ]
+    },
+    {
+      "signal": "certificate_history",
+      "layer": "real & established",
+      "confidence": "single_source",
+      "weight": -6,
+      "detail": "1 certificate(s) in transparency logs covering 1 name(s).",
+      "sources": [
+        "demo: canned crt.sh response"
+      ]
+    },
+    {
+      "signal": "single_certificate_only",
+      "layer": "real & established",
+      "confidence": "single_source",
+      "weight": 18,
+      "detail": "Only one certificate has ever been issued for the domain, covering a single name: it looks like a scratch or short-lived site, not an established service.",
+      "sources": [
+        "demo: canned crt.sh response"
+      ]
+    },
+    {
+      "signal": "urlscan_malicious",
+      "layer": "threat & reputation",
+      "confidence": "single_source",
+      "weight": 40,
+      "detail": "urlscan.io holds 3 of 5 scan verdict(s) marked malicious (phishing).",
+      "sources": [
+        "demo: canned urlscan response"
+      ]
+    },
+    {
+      "signal": "listed_in_phishtank",
+      "layer": "threat & reputation",
+      "confidence": "single_source",
+      "weight": 55,
+      "detail": "The domain is listed in the PhishTank feed of verified phishing sites (2 entries).",
+      "sources": [
+        "demo: canned PhishTank"
+      ]
+    },
+    {
+      "signal": "self_signed_cert",
+      "layer": "security posture",
+      "confidence": "single_source",
+      "weight": 25,
+      "detail": "TLS certificate is self-signed.",
+      "sources": [
+        "demo: canned TLS response"
+      ]
+    },
+    {
+      "signal": "scam_phrases",
+      "layer": "threat & reputation",
+      "confidence": "single_source",
+      "weight": 20,
+      "detail": "Homepage contains high-risk phrases: wire transfer, ends tonight, limited offer, telegram @, no company registration.",
+      "sources": [
+        "demo: canned homepage"
+      ]
+    },
+    {
+      "signal": "no_hsts",
+      "layer": "security posture",
+      "confidence": "single_source",
+      "weight": 2,
+      "detail": "No HSTS header on the homepage; traffic can be downgraded.",
+      "sources": [
+        "demo: canned homepage"
+      ]
+    },
+    {
+      "signal": "negative_reports",
+      "layer": "threat & reputation",
+      "confidence": "single_source",
+      "weight": 25,
+      "detail": "2 independent negative report(s); e.g. example-watch.example: Acme-cloud-services.example took a wire transfer and never delivered. Avoid.; example-bureau.example: Multiple complaints of fraud involving acme-cloud-services.example..",
+      "sources": [
+        "https://example-watch.example/acme-cloud-services",
+        "https://example-bureau.example/t/acme-cloud-services"
+      ]
+    }
+  ],
+  "sources": [
+    "demo: canned DoH response",
+    "demo: canned PhishTank",
+    "demo: canned RDAP response",
+    "demo: canned TLS response",
+    "demo: canned crt.sh response",
+    "demo: canned homepage",
+    "demo: canned urlscan response",
+    "https://example-bureau.example/t/acme-cloud-services",
+    "https://example-watch.example/acme-cloud-services"
+  ],
+  "tools": [
+    {
+      "name": "rdap_lookup",
+      "ok": true,
+      "error": null
+    },
+    {
+      "name": "doh_dns",
+      "ok": true,
+      "error": null
+    },
+    {
+      "name": "tls_inspect",
+      "ok": true,
+      "error": null
+    },
+    {
+      "name": "ct_logs",
+      "ok": true,
+      "error": null
+    },
+    {
+      "name": "urlscan_reputation",
+      "ok": true,
+      "error": null
+    },
+    {
+      "name": "fetch_homepage",
+      "ok": true,
+      "error": null
+    },
+    {
+      "name": "web_search_reports",
+      "ok": true,
+      "error": null
+    },
+    {
+      "name": "crustdata_enrich",
+      "ok": true,
+      "error": null
+    },
+    {
+      "name": "phishtank_check",
+      "ok": true,
+      "error": null
+    }
+  ],
+  "homepage_text": "Acme Cloud Services - Cut your cloud bill by 90% overnight! Limited offer ends tonight. Wire transfer only. Contact us on Telegram @acmeclouddeals. No company registration number listed.",
+  "brief_md": ""
+}

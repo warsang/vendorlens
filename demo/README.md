@@ -5,13 +5,20 @@ model (`jev-web`, Bekko 17m, about 29 MB) scores scam risk **entirely in the
 browser**. No text leaves the device. This is the client-side verdict layer of
 VendorLens, complementing the server-side OSINT agent.
 
-`jev-web` is **vendored** under `demo/jev-web/` (MIT, extracted from the
+`jev-web` is **vendored** under `demo/jeveb/` (MIT, extracted from the
 `jev-web-0.7.2.tgz` tarball in `demo/vendor/`), so there is no build step and no
 `node_modules` needed to run or deploy. `@huggingface/transformers` and
 `onnxruntime-web` load from the jsDelivr CDN through the import map in
-`index.html`; the Bekko model downloads from HuggingFace on first Assess (about
-29 MB, browser-cached afterwards). After weights load, the decision itself makes
-zero network requests.
+`index.html`; the Bekko model downloads from HuggingFace on page open (about
+29 MB, preloaded on mount with a visible progress bar, browser-cached
+afterwards). After weights load, the decision itself makes zero network
+requests.
+
+The committed page is the **public no-backend build**: `__AGENT_API__` and
+`__AGENT_TOKEN__` are left as placeholders (so `AGENT_CONNECTED` is false) and
+the **Load example** button renders the committed `demo/example.json` with no
+server. To build a backend-connected page, substitute them with `demo/build.py`
+(which fails if a placeholder is left unreplaced).
 
 ## Run locally
 

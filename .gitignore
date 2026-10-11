@@ -1,7 +1,7 @@
 .env
 __pycache__/
 *.pyc
-# (runs/ is committed evidence: briefs + traces judges can read)
+runs/
 node_modules/
 *.log
 .venv/
@@ -13,3 +13,5 @@ __pycache__/
 build/
 
 .opencode/
+.pytest_cache/
+demo/_dist/
