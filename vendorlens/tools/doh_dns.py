@@ -2,23 +2,17 @@
 
 dnspython needs raw UDP/53, which can be unreliable behind an outbound
 firewall. DNS-over-HTTPS gives the same A/MX/NS/TXT picture over a single
-HTTPS call, which is exactly what the Lambda deployment needs.
+HTTPS call, which is exactly what the Lambda deployment needs. It also fetches
+the DMARC record at ``_dmarc.<domain>`` so the agent can score email
+anti-spoofing posture without any extra tool.
 """
 from __future__ import annotations
 
 NAME = "doh_dns"
-DESCRIPTION = ("Resolve A, MX, NS, TXT and CNAME records over HTTPS "
-               "(DNS-over-HTTPS). A domain that does not resolve at all, or "
-               "that has no MX records, is unusual for a real business.")
-
-DEMO_DATA = {
-    "A": ["93.184.216.34"],
-    "MX": ["mail.acme-cloud-services.example"],
-    "NS": ["ns1.example-registrar.net", "ns2.example-registrar.net"],
-    "TXT": ["v=spf1 include:_spf.example ~all"],
-    "CNAME": [],
-    "_demo": True,
-}
+DESCRIPTION = ("Resolve A, MX, NS, TXT, CNAME and the _dmarc TXT record over "
+               "HTTPS (DNS-over-HTTPS). A domain that does not resolve at "
+               "all, or that has no MX records, is unusual for a real "
+               "business. Missing SPF/DMARC weakens email posture. Keyless.")
 _TYPES = ("A", "MX", "NS", "TXT", "CNAME")
 
 
@@ -34,10 +28,10 @@ def _answers(payload: dict) -> list[str]:
 async def run(args: dict, ctx: dict) -> dict:
     domain = args["domain"]
     if ctx.get("demo"):
-        data = dict(DEMO_DATA)
+        from . import demo_data
+        data, src = demo_data.for_tool(ctx.get("scenario"), NAME)
         data["domain"] = domain
-        return {"ok": True, "data": data,
-                "sources": ["demo: canned DoH response"]}
+        return {"ok": True, "data": data, "sources": [src]}
     import httpx
     records: dict[str, list[str]] = {}
     statuses: dict[str, int] = {}
@@ -56,6 +50,18 @@ async def run(args: dict, ctx: dict) -> dict:
                 except Exception:
                     statuses[rtype] = -1
                     records[rtype] = []
+            # DMARC lives one label below the apex: _dmarc.<domain>
+            try:
+                r = await c.get(
+                    "https://dns.google/resolve",
+                    params={"name": f"_dmarc.{domain}", "type": "TXT"},
+                    headers={"User-Agent": "VendorLens/0.2"})
+                r.raise_for_status()
+                dmarc = _answers(r.json())
+                statuses["DMARC"] = 0
+            except Exception:
+                dmarc, statuses["DMARC"] = [], -1
+            records["DMARC"] = dmarc
         return {"ok": True,
                 "data": dict(records, domain=domain, statuses=statuses,
                              _doh=True),

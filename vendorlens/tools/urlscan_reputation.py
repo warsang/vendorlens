@@ -10,17 +10,7 @@ from __future__ import annotations
 NAME = "urlscan_reputation"
 DESCRIPTION = ("Search urlscan.io for public scans of a domain: how often it "
                "has been scanned, how many were judged malicious, the worst "
-               "verdict score, and the categories seen.")
-
-DEMO_DATA = {
-    "total_scans": 3,
-    "malicious_scans": 2,
-    "worst_score": 85,
-    "categories": ["phishing"],
-    "first_seen": "2026-09-01T00:00:00+00:00",
-    "last_seen": "2026-10-05T00:00:00+00:00",
-    "_demo": True,
-}
+               "verdict score, and the categories seen. Keyless.")
 
 
 def _summarise(results: list) -> dict:
@@ -38,8 +28,6 @@ def _summarise(results: list) -> dict:
         score = verdicts.get("score")
         if isinstance(score, (int, float)):
             worst = max(worst, int(score))
-        for cat in (res.get("verdicts") or {}).get("urlscan") or []:
-            pass
         for cat in (res.get("verdicts") or {}).get("engines") or []:
             if isinstance(cat, dict):
                 for name in cat.get("categories") or []:
@@ -60,10 +48,10 @@ def _summarise(results: list) -> dict:
 async def run(args: dict, ctx: dict) -> dict:
     domain = args["domain"]
     if ctx.get("demo"):
-        data = dict(DEMO_DATA)
+        from . import demo_data
+        data, src = demo_data.for_tool(ctx.get("scenario"), NAME)
         data["domain"] = domain
-        return {"ok": True, "data": data,
-                "sources": ["demo: canned urlscan response"]}
+        return {"ok": True, "data": data, "sources": [src]}
     import httpx
     try:
         async with httpx.AsyncClient(timeout=30, follow_redirects=True) as c:

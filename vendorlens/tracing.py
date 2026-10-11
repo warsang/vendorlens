@@ -90,9 +90,18 @@ def log_event(kind: str, name: str, payload: dict | None = None) -> None:
 
 @contextmanager
 def trace_tool(name: str, args: dict | None = None):
-    """Time a tool execution; record status, latency, retries to evidence."""
+    """Time a tool execution; record status/latency to the local evidence log
+    and, when the neatlogs SDK + key are present, emit a nested child TOOL
+    span under the run's WORKFLOW span (mirrors trace.jsonl)."""
     start = time.perf_counter()
     log_event("tool_start", name, {"args": args or {}})
+    span = None
+    if _SDK and _key():
+        try:
+            span = neatlogs.trace(name, kind="TOOL", **(args or {}))
+            span.__enter__()
+        except Exception:
+            span = None
     try:
         yield
     except Exception as exc:  # noqa: BLE001
@@ -100,11 +109,21 @@ def trace_tool(name: str, args: dict | None = None):
             "error": f"{type(exc).__name__}: {exc}",
             "latency_ms": round((time.perf_counter() - start) * 1000, 1),
         })
+        if span is not None:
+            try:
+                span.__exit__(type(exc), exc, exc.__traceback__)
+            except Exception:
+                pass
         raise
     else:
         log_event("tool_end", name, {
             "latency_ms": round((time.perf_counter() - start) * 1000, 1),
         })
+        if span is not None:
+            try:
+                span.__exit__(None, None, None)
+            except Exception:
+                pass
 
 
 def flush() -> None:

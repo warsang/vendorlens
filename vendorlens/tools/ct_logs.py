@@ -11,16 +11,7 @@ NAME = "ct_logs"
 DESCRIPTION = ("Query certificate transparency logs for a domain: certificate "
                "count, earliest issuance date, and distinct subdomains. Long "
                "history and multiple subdomains indicate an established "
-               "organisation.")
-
-DEMO_DATA = {
-    "cert_count": 14,
-    "earliest_cert": "2022-06-01T00:00:00+00:00",
-    "latest_cert": "2026-09-30T00:00:00+00:00",
-    "subdomain_count": 4,
-    "issuers": ["Let's Encrypt", "Amazon"],
-    "_demo": True,
-}
+               "organisation. Keyless.")
 _MAX_BYTES = 20_000_000
 
 
@@ -65,9 +56,10 @@ def _parse(entries: list) -> dict:
 async def run(args: dict, ctx: dict) -> dict:
     domain = args["domain"]
     if ctx.get("demo"):
-        data = dict(DEMO_DATA)
+        from . import demo_data
+        data, src = demo_data.for_tool(ctx.get("scenario"), NAME)
         data["domain"] = domain
-        return {"ok": True, "data": data, "sources": ["demo: canned crt.sh response"]}
+        return {"ok": True, "data": data, "sources": [src]}
     import httpx
     from . import _http
     url = f"https://crt.sh/?q=%25.{domain}&output=json"

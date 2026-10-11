@@ -1,25 +1,24 @@
-"""WHOIS / domain age via python-whois."""
+"""WHOIS / domain age via python-whois.
+
+Kept for local corroboration; the keyless RDAP tool is preferred where
+TCP/43 is blocked.
+"""
 from __future__ import annotations
 
 from datetime import datetime, timezone
 
 NAME = "whois_lookup"
 DESCRIPTION = ("Get domain registration/creation date, registrar and age. "
-               "Very young domains are a classic scam signal.")
-
-DEMO_DATA = {
-    "registrar": "Example Registrar, Inc.",
-    "creation_date": "2024-03-15T00:00:00+00:00",
-    "age_days": 574,
-    "_demo": True,
-}
+               "Very young domains are a classic scam signal. Needs TCP/43.")
 
 
 async def run(args: dict, ctx: dict) -> dict:
     domain = args["domain"]
     if ctx.get("demo"):
-        return {"ok": True, "data": dict(DEMO_DATA),
-                "sources": ["demo: canned WHOIS response"]}
+        from . import demo_data
+        data, src = demo_data.for_tool(ctx.get("scenario"), NAME)
+        data["domain"] = domain
+        return {"ok": True, "data": data, "sources": [src]}
     try:
         import whois
         w = whois.whois(domain)

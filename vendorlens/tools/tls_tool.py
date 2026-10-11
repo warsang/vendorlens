@@ -9,20 +9,14 @@ NAME = "tls_inspect"
 DESCRIPTION = ("Fetch the TLS certificate: expiry date, issuer, days left. "
                "Expiring/self-signed certs are operational risk signals.")
 
-DEMO_DATA = {
-    "issuer": "Example CA",
-    "not_after": "2026-12-01T00:00:00+00:00",
-    "days_left": 52,
-    "self_signed": False,
-    "_demo": True,
-}
-
 
 async def run(args: dict, ctx: dict) -> dict:
     domain = args["domain"]
     if ctx.get("demo"):
-        return {"ok": True, "data": dict(DEMO_DATA),
-                "sources": ["demo: canned TLS response"]}
+        from . import demo_data
+        data, src = demo_data.for_tool(ctx.get("scenario"), NAME)
+        data["domain"] = domain
+        return {"ok": True, "data": data, "sources": [src]}
     try:
         context = ssl.create_default_context()
         with socket.create_connection((domain, 443), timeout=10) as sock:
@@ -30,7 +24,7 @@ async def run(args: dict, ctx: dict) -> dict:
                 cert = ssock.getpeercert()
         not_after = datetime.strptime(
             cert["notAfter"], "%b %d %H:%M:%S %Y %Z").replace(
-                tzinfo=timezone.utc)
+            tzinfo=timezone.utc)
         issuer = dict(x[0] for x in cert.get("issuer", ()))
         subject = dict(x[0] for x in cert.get("subject", ()))
         days_left = (not_after - datetime.now(timezone.utc)).days

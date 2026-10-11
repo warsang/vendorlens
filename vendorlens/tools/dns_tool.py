@@ -1,25 +1,24 @@
-"""DNS lookup: A, MX, TXT records via dnspython."""
+"""DNS lookup: A, MX, TXT records via dnspython.
+
+Prefer the keyless ``doh_dns`` tool on serverless/restricted networks; this
+raw UDP/53 resolver is kept for local runs and corroboration.
+"""
 from __future__ import annotations
 
 import dns.resolver
 
 NAME = "dns_lookup"
-DESCRIPTION = ("Resolve A, MX and TXT records for a domain. "
-               "Missing MX or suspicious TXT patterns feed risk signals.")
-
-DEMO_DATA = {
-    "A": ["93.184.216.34"],
-    "MX": ["mail.acme-cloud-services.example"],
-    "TXT": ["v=spf1 include:_spf.example ~all"],
-    "_demo": True,
-}
+DESCRIPTION = ("Resolve A, MX and TXT records for a domain. Missing MX or "
+               "suspicious TXT patterns feed risk signals. Needs UDP/53.")
 
 
 async def run(args: dict, ctx: dict) -> dict:
     domain = args["domain"]
     if ctx.get("demo"):
-        return {"ok": True, "data": dict(DEMO_DATA),
-                "sources": ["demo: canned DNS response"]}
+        from . import demo_data
+        data, src = demo_data.for_tool(ctx.get("scenario"), NAME)
+        data["domain"] = domain
+        return {"ok": True, "data": data, "sources": [src]}
     out: dict = {}
     try:
         res = dns.resolver.Resolver()

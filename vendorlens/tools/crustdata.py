@@ -17,23 +17,11 @@ import httpx
 NAME = "crustdata_enrich"
 DESCRIPTION = (
     "Look up a company by domain: legal name, location, headcount, "
-    "founding year, LinkedIn, key people. Returns structured firmographics."
+    "founding year, LinkedIn, key people. Returns structured firmographics "
+    "that corroborate a real, established business. Needs a key."
 )
 BASE = "https://api.crustdata.com"
 API_VERSION = "2025-11-01"
-
-DEMO_DATA = {
-    "company_name": "Acme Cloud Services Ltd",
-    "domain": "acme-cloud-services.example",
-    "location": "Austin, TX, USA",
-    "headcount": "11-50",
-    "founded": 2024,
-    "linkedin_url": "https://www.linkedin.com/company/acme-cloud-services",
-    "description": "Cloud cost optimization platform for startups.",
-    "key_people": [{"name": "Jane Doe", "title": "CEO"}],
-    "found": False,
-    "_demo": True,
-}
 
 
 def _pick(d: dict, *keys):
@@ -46,10 +34,10 @@ def _pick(d: dict, *keys):
 async def run(args: dict, ctx: dict) -> dict:
     domain = args["domain"]
     if ctx.get("demo"):
-        data = dict(DEMO_DATA)
+        from . import demo_data
+        data, src = demo_data.for_tool(ctx.get("scenario"), NAME)
         data["domain"] = domain
-        return {"ok": True, "data": data,
-                "sources": ["demo: canned Crustdata response"]}
+        return {"ok": True, "data": data, "sources": [src]}
     key = os.environ.get("CRUSTDATA_API_KEY", "").strip()
     if not key:
         return {"ok": False, "error": "CRUSTDATA_API_KEY not set",

@@ -1,15 +1,22 @@
 """AWS Lambda entry point for a live VendorLens investigation.
 
-Served publicly via an API Gateway. Protection layers:
-  - shared API key header (VENDORLENS_API_KEY)
-  - origin/referrer allow-list (ALLOWED_ORIGIN)
-  - reserved concurrency on the function (set via CLI, not here)
+Served publicly via an API Gateway. Because the endpoint is public by design,
+the browser "x-api-key" header is a *public client token* (rate/billing
+attribution), NOT authentication. The real protections are external:
+
+  - per-IP request throttling + usage plan on API Gateway
+  - a hard daily budget alarm (CloudWatch billing alarm)
+  - reserved concurrency on the function (caps blast radius / spend)
+  - ALLOWED_ORIGIN pinned to the real demo origin (never "*" in production)
+
+Input is validated to a strict bare public hostname before any tool runs, so a
+domain string can never steer a fetch at an internal address (SSRF).
 
 Query: ?<domain|q=><domain or company name>&mode=demo|nollm|live
 Returns structured JSON (no raw markdown in the UI path):
   ok, input, domain, mode, run_id,
   verdict {score, band, headline, summary},
-  signals[{signal, weight, detail, sources}],
+  signals[{signal, layer, confidence, weight, detail, sources}],
   sources[], tools[{name, ok, error}],
   homepage_text  (fed to the on-device jev-web verdict model),
   brief_md       (kept for the CLI / archival only)
@@ -25,11 +32,11 @@ import uuid
 from pathlib import Path
 
 from . import agent, tracing
+from .tools import _netguard
 
-# A bare domain has no spaces and a dotted TLD; anything else is treated as a
-# company name that we try to resolve to a domain.
-_DOMAIN_RE = re.compile(r"^(?=.{1,253}$)[a-z0-9](?:[a-z0-9-]{0,61}[a-z0-9])?"
-                        r"(?:\.[a-z0-9](?:[a-z0-9-]{0,61}[a-z0-9])?)+$")
+# A company name (not yet a domain) is anything with no dotted TLD; a bare
+# domain roughly looks like a dotted hostname. The strict check below
+# (_netguard.normalize_domain) is the authoritative gate before any fetch.
 _TLD_RE = re.compile(r"\.[a-z]{2,}$")
 _STOP_DOMAINS = {
     "facebook.com", "twitter.com", "x.com", "linkedin.com", "instagram.com",
@@ -44,9 +51,13 @@ def _headers(event) -> dict:
 
 
 def _authorized(event) -> bool:
+    """Public client-token check (defense in depth, NOT auth). If a token is
+    configured it must match; origin/referrer, if pinned, must match. When
+    neither is configured the endpoint is intentionally open and its real
+    protection is external rate limiting + a spend budget."""
     want = os.environ.get("VENDORLENS_API_KEY", "").strip()
     got = str(_headers(event).get("x-api-key", "")).strip()
-    if not want or got != want:
+    if want and got != want:
         return False
     allow = os.environ.get("ALLOWED_ORIGIN", "").strip().rstrip("/")
     if allow:
@@ -57,20 +68,21 @@ def _authorized(event) -> bool:
 
 
 def _resp(code: int, payload: dict) -> dict:
-    return {
-        "statusCode": code,
-        "headers": {
-            "content-type": "application/json",
-            "access-control-allow-origin": os.environ.get("ALLOWED_ORIGIN", "*"),
-            "access-control-allow-headers": "content-type,x-api-key",
-            "access-control-allow-methods": "GET,OPTIONS",
-        },
-        "body": json.dumps(payload),
+    allow = os.environ.get("ALLOWED_ORIGIN", "").strip().rstrip("/")
+    headers = {
+        "content-type": "application/json",
+        "access-control-allow-headers": "content-type,x-api-key",
+        "access-control-allow-methods": "GET,OPTIONS",
     }
+    # Never default to a wildcard: echo the configured origin only.
+    if allow:
+        headers["access-control-allow-origin"] = allow
+    return {"statusCode": code, "headers": headers,
+            "body": json.dumps(payload)}
 
 
 def _looks_like_domain(value: str) -> bool:
-    return ("." in value) and bool(_TLD_RE.search(value))
+    return "." in value and bool(_TLD_RE.search(value.lower()))
 
 
 def _hosts_from_html(html_text: str) -> list[str]:
@@ -155,7 +167,7 @@ async def _resolve_company_to_domain(name: str) -> str | None:
         try:
             async with httpx.AsyncClient(timeout=15, follow_redirects=True) as c:
                 r = await c.post(url, data=data,
-                                 headers={"User-Agent": "VendorLens/0.2"})
+                                 headers={"User-Agent": "VendorLens/0.3"})
                 r.raise_for_status()
             picked = _pick_domain(_hosts_from_html(r.text), name)
             if picked:
@@ -170,7 +182,9 @@ def _structured(state: dict, domain: str, mode: str, run_id: str,
     a = state.get("assessment", {})
     findings = state.get("findings", {})
     signals = [{"signal": s["signal"], "weight": s["weight"],
-                "detail": s["detail"], "sources": s.get("sources", [])}
+                "detail": s["detail"], "sources": s.get("sources", []),
+                "layer": s.get("layer", ""),
+                "confidence": s.get("verification", "")}
                for s in a.get("signals", [])]
     tools = [{"name": name, "ok": bool(res.get("ok")),
               "error": res.get("error")}
@@ -183,7 +197,7 @@ def _structured(state: dict, domain: str, mode: str, run_id: str,
         pass
     retries = state.get("retries", {})
     weighted = sorted(signals, key=lambda s: abs(s["weight"]), reverse=True)
-    headline = (f"{a.get('band','?')} risk" if weighted[0]["weight"] > 0
+    headline = (f"{a.get('band','?')} risk" if weighted and weighted[0]["weight"] > 0
                 else "No strong risk signals found")
     summary = "; ".join(s["detail"] for s in signals[:3]) or \
         "No significant risk signals were detected across the sources checked."
@@ -201,6 +215,8 @@ def _structured(state: dict, domain: str, mode: str, run_id: str,
             "summary": summary,
             "retries": retries,
             "signals_count": len(signals),
+            "could_not_verify": a.get("could_not_verify", []),
+            "re_registered": a.get("re_registered", False),
         },
         "signals": signals,
         "sources": a.get("sources", []),
@@ -226,7 +242,7 @@ def lambda_handler(event, context=None):
     run_id = uuid.uuid4().hex[:8]
     resolved_from = None
 
-    if _looks_like_domain(raw):
+    if _looks_like_domain(raw.lower()):
         domain = raw.lower()
     else:
         domain = raw.lower().replace(" ", "")
@@ -240,6 +256,13 @@ def lambda_handler(event, context=None):
                 return _resp(422, {"ok": False,
                                    "error": f"could not resolve a domain for "
                                             f"'{raw}'. Try the exact domain."})
+
+    # Authoritative SSRF gate: only a strict, public bare hostname is allowed.
+    safe = _netguard.normalize_domain(domain)
+    if not safe:
+        return _resp(422, {"ok": False,
+                           "error": f"'{domain}' is not a valid public domain."})
+    domain = safe
 
     try:
         tracing.init_tracing("vendorlens-investigation")

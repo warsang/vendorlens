@@ -10,19 +10,7 @@ from __future__ import annotations
 NAME = "rdap_lookup"
 DESCRIPTION = ("Look up registration data over RDAP: creation date, last "
                "update, expiry, registrar, status and nameservers. A domain "
-               "registered days ago is a classic vendor-scam signal.")
-
-DEMO_DATA = {
-    "registered": "created 2024-03-15T00:00:00+00:00",
-    "created": "2024-03-15T00:00:00+00:00",
-    "age_days": 574,
-    "registrar": "Example Registrar, Inc.",
-    "expires": "2027-03-15T00:00:00+00:00",
-    "status": ["client transfer prohibited"],
-    "nameservers": ["ns1.example-registrar.net"],
-    "found": True,
-    "_demo": True,
-}
+               "registered days ago is a classic vendor-scam signal. Keyless.")
 
 
 def _event_date(events: list, action: str):
@@ -53,10 +41,10 @@ def _registrar(entities: list):
 async def run(args: dict, ctx: dict) -> dict:
     domain = args["domain"]
     if ctx.get("demo"):
-        data = dict(DEMO_DATA)
+        from . import demo_data
+        data, src = demo_data.for_tool(ctx.get("scenario"), NAME)
         data["domain"] = domain
-        return {"ok": True, "data": data,
-                "sources": ["demo: canned RDAP response"]}
+        return {"ok": True, "data": data, "sources": [src]}
     import httpx
     from datetime import datetime, timezone
     url = f"https://rdap.org/domain/{domain}"

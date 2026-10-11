@@ -12,15 +12,7 @@ import re
 NAME = "phishtank_check"
 DESCRIPTION = ("Check whether the domain itself appears in the public "
                "PhishTank feed of verified phishing URLs. A listing is a "
-               "disqualifying signal.")
-
-DEMO_DATA = {
-    "listed": False,
-    "matching_entries": 0,
-    "sample_urls": [],
-    "feed_entries": 0,
-    "_demo": True,
-}
+               "disqualifying signal. Keyless.")
 _FEED = "http://data.phishtank.com/data/online-valid.json"
 _MAX_BYTES = 60_000_000
 _HOST_RE = re.compile(r'https?://([A-Za-z0-9.\-]+)')
@@ -44,9 +36,10 @@ def _hosts_in_feed(text: str, domain: str) -> list[str]:
 async def run(args: dict, ctx: dict) -> dict:
     domain = args["domain"]
     if ctx.get("demo"):
-        data = dict(DEMO_DATA)
+        from . import demo_data
+        data, src = demo_data.for_tool(ctx.get("scenario"), NAME)
         data["domain"] = domain
-        return {"ok": True, "data": data, "sources": ["demo: canned PhishTank"]}
+        return {"ok": True, "data": data, "sources": [src]}
     import httpx
     from . import _http
     try:
