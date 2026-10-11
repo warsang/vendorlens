@@ -1,0 +1,400 @@
+{
+  "domain": "amazon.com",
+  "run_id": "e1693822",
+  "started": "2026-10-11T20:30:36.652173+00:00",
+  "findings": {
+    "rdap_lookup": {
+      "ok": true,
+      "data": {
+        "found": true,
+        "created": "1994-11-01T05:00:00Z",
+        "last_changed": "2026-07-31T19:44:05Z",
+        "expires": "2027-10-31T04:00:00Z",
+        "age_days": 11667,
+        "registrar": "MarkMonitor Inc.",
+        "status": [
+          "client delete prohibited",
+          "client transfer prohibited",
+          "client update prohibited",
+          "server delete prohibited",
+          "server transfer prohibited",
+          "server update prohibited"
+        ],
+        "nameservers": [
+          "NS-1447.AWSDNS-52.ORG",
+          "NS-1707.AWSDNS-21.CO.UK",
+          "NS-264.AWSDNS-33.COM",
+          "NS-521.AWSDNS-01.NET"
+        ]
+      },
+      "sources": [
+        "rdap.org:amazon.com"
+      ]
+    },
+    "doh_dns": {
+      "ok": true,
+      "data": {
+        "A": [
+          "98.87.170.71",
+          "98.82.161.185",
+          "98.87.170.74"
+        ],
+        "MX": [
+          "5 amazon-smtp.amazon.com."
+        ],
+        "NS": [
+          "ns-1707.awsdns-21.co.uk.",
+          "ns-521.awsdns-01.net.",
+          "ns-264.awsdns-33.com.",
+          "ns-1447.awsdns-52.org."
+        ],
+        "TXT": [
+          "wrike-verification=MzI3NzM2ODo2NDk5MjE4NjQ2MWJmOTEwMGMxM2MzNzJmNWJlY2U5ZDU4MmVlNzQ2NWU4MTY5OWJjMjlmYjQ4Mjc5M2JiMzky",
+          "stripe-verification=35A865E5A20C09CD0288F87ACA29DE73FF8A704D21F7310A5AAFF4CB63062E81",
+          "apple-domain-verification=_j3fIZD8uuYetbG64YKTEpz-8mwyvYrLRqM5CoVZVTk",
+          "lucidlink-verification=QG752KJ3CMZAZTZ3ERMX1AXMCG",
+          "uber-domain-verification=5f5cc242-4dbe-4871-b726-bbbe085ff053",
+          "google-site-verification=14WGW2MdNMxchG8PlinF7LgqqE0OwwHqOq0HKhb7rDQ",
+          "stripe-verification=26EFABF97D624D7F4F3C062366A04C4B1399841F23F275DD81E58D00A981979C",
+          "autodesk-domain-verification=dmryiygGOGBJFJFVo5Bl",
+          "pendo-domain-verification=ecbe1a51-954d-4202-ab86-d15e04b96769",
+          "sending_domain1014172=003846595520e80ec84e8cc47c07e3a71afb855fc743bb92cdec93f88c7a4029",
+          "stripe-verification=8E217BE0FF12B50596BD78EEA3F81E62C6C7A2AC78FBD46DAD95B7D21BA2F8BF",
+          "sending_domain608861=d33a88e8540c33a1217138cf8a25879734bd35673bb7cfbd639f95c550b33ec4",
+          "canva-site-verification=Hksh9WEUPWP13_SEU1mPMA",
+          "apple-domain-verification=4wbNaeWvAH0pU1yi",
+          "stripe-verification=a5c01aa4d732f4b93154d67983d77982ef1a2db73fecfd4bcd64e224d3ab4075",
+          "sending_domain949422=1fa3e2bc8017cffb9de6a77aa0daa0ccb4e756a5851fb421d72482abf6d4216c",
+          "google-site-verification=D0RwRb_QApkpApKTFaFlRwbm_yrkey0uokKw0wQUIdk",
+          "sending_domain949422=99a7b44052aefc4dec2abf56189160824664d2fdac00ca962f4455be62b51d56",
+          "sending_domain229492=341509a116ea4311fcb2e489303bf09a139b10ce9b90e5029d2677055cb4dc89",
+          "sending_domain608861=81b0d52095dae60d604e7cbea5e58e1d842f7d950d6673a43feae339b664ca31",
+          "vizcom-domain-verification-Otrns5=NtkDXOBddZZnm9ETuwyrltTdl",
+          "stripe-verification=a27edc0da55836ea6bb7eac592bf2ca8e246eb652608d54493119df7df005afc",
+          "google-site-verification=G_-mXb0ZYjjGkQVGjpOOB2deSOaVdxVj4i4vozJTREs",
+          "sinch-domain-verification=c484be93-e6bc-4440-8984-621eef43d491",
+          "google-site-verification=NV91qEfNgqDZOPzwlhXE-KtDUfCBSNgAsdxaFebyh80",
+          "stripe-verification=76924B623B7105057C67D4F5EAE19F65EE8BD92635581BCACA2CCACA4D38FE1B",
+          "MS=4B600B22799EB2CAC0D8FF0A3A3CAECA5EE2BF3A",
+          "uber-domain-verification=0ddb4c64-175c-4e7a-8a7a-f552034222e8",
+          "kahoot-domain-verification=0a79e1c18457eed9572b28cd75792e4bbd220bc69b62d707c1f88e53956348d6",
+          "brevo-code:9be7f7c39958d253a31de6593fa831bc",
+          "sending_domain229492=7cde83fbc5246557c64d9d9ba79f0d11f7ba9eb6127f60451a9aa6f8dead4381",
+          "uber-domain-verification=7a35217f-6956-41a0-be5c-a28ea2646964",
+          "uber-domain-verification=01e9f567-7b84-45dd-9326-53992a028b40",
+          "docker-verification=1779f74e-699a-4d8b-acdc-ce242d73559f",
+          "sending_domain949422=43d714838567583460e7720e6049505edb8e25c1ef4321419d41bc5255db7ba5",
+          "facebook-domain-verification=d9u57u52gylohx845ogo1axzpywpmq",
+          "ZOOM_verify_ARI4AiKALCcjulAUZNwR8S",
+          "cisco-ci-domain-verification=1b256bd11daa486ba2fa405d2d5de70f75feb6757dd8993ca8de685a7dfea1df",
+          "DomainVerification=6BSORJ4NP9YO8U8EZFZDKIJVIL6TCYG69G7CXADQ8QOV3K8883K86XT2J9EX5R0J",
+          "bluebeam-verification=042eaxvbk65qgh5qom1ajtm4eyuo1k",
+          "sending_domain1003771=199bc63a54ace5d8d5c5d08286af86d7049b4afacb5ef7decd6b22cf9e8d5efb",
+          "apple-domain-verification=dVkKZnu17XS0EN2X",
+          "stripe-verification=45f746e3b195198f419af3f685fdf217532ce552b4b47070b3caefe325559a67",
+          "pardot326621=b26a7b44d7c73d119ef9dfd1a24d93c77d583ac50ba4ecedd899a9134734403b",
+          "pstk-verification-a938892542ffacd51af9339e4755dc1a",
+          "ZOOM_verify_6OUC1znUonKMCoyMMGyFfX",
+          "sending_domain197572=555e96ed2e576ced81c89f7001740cb72f9c66aeb136d0d05734aad625766bc1",
+          "neat-pulse-domain-verification-QgvLWLN=f37f2998-0bb3-493b-a3aa-c4ff8f3dce08",
+          "liveramp-site-verification=jZJKgMEQ_1mdjMhKj02iqNACZ-NJHRWhCEQdQ_OuCMo",
+          "TS1760027",
+          "stripe-verification=1D421397AAEC571CCBD9F25DDC90F00EDEBC3E74F4047270EC9A13B784579E34",
+          "v=spf1 include:spf1.amazon.com include:spf2.amazon.com include:amazonses.com -all",
+          "atlassian-domain-verification=ZT4AapXgobCpXIWoNcd7gtMjZyOUdr4EDFMnFUWrqqqgdaQVbDvoGpRaIwj/tgPH",
+          "spf2.0/pra include:spf1.amazon.com include:spf2.amazon.com include:amazonses.com -all",
+          "dell-technologies-domain-verification=amazon.com_2dc4b285-482d-4948-bf92-16e698f2cab9_1738858526",
+          "sending_domain1003771=f1303d8ee3b86e39db2703b11feb83e1e8b712a9ffc64c3d56505192e5b3bf4f",
+          "stripe-verification=C7ABA7B41F5AC26E3C397015A34CD46ACD2130DC8DAAFA7F59AAEFEDBC3FA517",
+          "stripe-verification=6a5d107aa37465eac2101bb1c725b02072689a4fa7bd38b455970baac4979a17",
+          "stripe-verification=79C640ED20153B836A623F16A3DCF65E2072948FB80C42D19300514DADF94EC5",
+          "canva-site-verification=WhUvTbfe6tUQWmIXnQifGA",
+          "stripe-verification=65883709F0B36AB2B73FFC870338AE9F817315DDBB1CAB28910F074F4A8DE1EC",
+          "00DcX000002xu6h=1TBcX00000000Xt",
+          "box-domain-verification=ffea95cd0e0d61c302198367155b07e74fd534fa1d867662dc9bf9969b6f535d",
+          "stripe-verification=B0AD8DC1918B8A717E5B6A29C2E04594A9872AB05F8DA24CB762BBA0A0487BC6",
+          "uber-domain-verification=72ffdffb-d431-452c-932e-cd1030d1eb46"
+        ],
+        "CNAME": [],
+        "domain": "amazon.com",
+        "statuses": {
+          "A": 0,
+          "MX": 0,
+          "NS": 0,
+          "TXT": 0,
+          "CNAME": 0
+        },
+        "_doh": true
+      },
+      "sources": [
+        "dns.google:amazon.com"
+      ]
+    },
+    "tls_inspect": {
+      "ok": true,
+      "data": {
+        "issuer": "DigiCert Inc",
+        "subject_cn": "*.peg.a2z.com",
+        "not_after": "2027-04-05T23:59:59+00:00",
+        "days_left": 176,
+        "self_signed": false
+      },
+      "sources": [
+        "tls:amazon.com:443"
+      ]
+    },
+    "ct_logs": {
+      "ok": true,
+      "data": {
+        "cert_count": 0,
+        "subdomain_count": 0
+      },
+      "sources": [
+        "crt.sh:amazon.com"
+      ]
+    },
+    "urlscan_reputation": {
+      "ok": true,
+      "data": {
+        "total_scans": 100,
+        "malicious_scans": 0,
+        "worst_score": 0,
+        "categories": [],
+        "first_seen": "2026-10-11T07:43:18.607Z",
+        "last_seen": "2026-10-11T20:09:51.093Z"
+      },
+      "sources": [
+        "urlscan.io:amazon.com"
+      ]
+    },
+    "phishtank_check": {
+      "ok": false,
+      "error": "gave up after 3: HTTPStatusError: Client error '404 Not Found' for url 'https://cdn.phishtank.com/datadumps/verified_online.json?Expires=1791750652&Signature=QSZUIJpc3YKobBxt1LvwgDBEtjuYtkseOnpCOowuobKFsxGktcfTEhNPkBFKUQUFUa6FG9JO3jP9a5Wu~039MtSM3k-NnBwOuJy-YJ1T1b4lmEvIZ~rWCBt6o24mtgtx11aRM7LYTB-QqpCr7PBRQC~h5jMGkhkj1FdGjQpaEX8CxeNCS2cTuX7SIbeiArQKi0fzLb0sk9i0~OqX1nS60lwusKkFsXK2zwERbZttxxmHyQJu~5xxx83rHIu1AtNDVWYKNc8~w~yPQXGUYfmCeoHj5~ldSihliExFfj1EXVKyNziGiMUItBlaYRcVjkNw24A-J3KnltBPulXLXOAF5g__&Key-Pair-Id=APKAILB45UG3RB4CSOJA'\nFor more information check: https://developer.mozilla.org/en-US/docs/Web/HTTP/Status/404",
+      "sources": []
+    },
+    "fetch_homepage": {
+      "ok": true,
+      "data": {
+        "url": "https://www.amazon.com/",
+        "title": "",
+        "text": "Click the button below to continue shopping\nContinue shopping\nConditions of Use\nPrivacy Policy\n\u00a9 1996-2025, Amazon.com, Inc. or its affiliates"
+      },
+      "sources": [
+        "https://www.amazon.com/"
+      ]
+    },
+    "web_search_reports": {
+      "ok": true,
+      "data": {
+        "query": "amazon.com scam reviews complaints",
+        "results": [
+          {
+            "title": "Amazon Reviews | Read Customer Service Reviews of www.amazon.com",
+            "url": "https://www.trustpilot.com/review/www.amazon.com",
+            "snippet": "Amazon Reviews 49,745 Book Store Write a review Visit website We use technology to protect platform integrity, but we don't fact-check reviews"
+          },
+          {
+            "title": "Amazon.com Reviews from Real Customers - ConsumerAffairs",
+            "url": "https://www.consumeraffairs.com/online/amazon.html",
+            "snippet": "The failures continued. I eventually filed a complaint with the Minnesota Attorney General, whose Consumer Action Division opened a mediation file and contacted Amazon regarding my concerns."
+          },
+          {
+            "title": "Identifying a scam - Amazon Customer Service",
+            "url": "https://www.amazon.com/gp/help/customer/display.html?nodeId=G4YFYCCNUSENA23B",
+            "snippet": "If you have received suspicious communication claiming to be from Amazon and you don't have an account with us, report it at reportascam@amazon.com. For more information on the most common scam tactics, visit Scam trends."
+          },
+          {
+            "title": "Scam trends - Amazon Customer Service",
+            "url": "https://www.amazon.com/gp/help/customer/display.html?nodeId=TapjnwRvIRtlgyLPSl",
+            "snippet": "We strongly encourage customers to report any suspicious communications through Amazon's report a scam tool or by contacting Customer Service. To learn more about Gift Card scams, visit the Common Gift Card Scams page. For more up-to-date information on trending scams, visit Scam Trends on Trustwort"
+          },
+          {
+            "title": "Amazon Shoppers Reviews and Complaints 2026 | ComplaintsBoard",
+            "url": "https://www.complaintsboard.com/amazon-b109438",
+            "snippet": "Read 25 honest reviews and 2125 complaints about Amazon, rated 1.2 out of 5 by online shoppers and their purchases. Share your experience on ComplaintsBoard."
+          },
+          {
+            "title": "Can You Trust Amazon Reviews? These Tips Will Help You Spot the ... - PCMag",
+            "url": "https://www.pcmag.com/explainers/can-you-trust-amazon-reviews-these-tips-will-help-you-spot-the-fakes",
+            "snippet": "AI tools have turned some Amazon listings into useless slop. If you're shopping Prime Day, here's how to identify and report untrustworthy reviews."
+          },
+          {
+            "title": "Amazon Complaints: Prime Refunds, Returns Settlement, A-to-z Claims ...",
+            "url": "https://usacomplaints.com/company/amazon/",
+            "snippet": "Amazon complaints: returns and A-to-z claims, Prime cancellation, FTC Prime settlement refunds, returns class settlement, D.C. AG deal, BBB, Trustpilot."
+          },
+          {
+            "title": "Amazon.com reviews and complaints",
+            "url": "https://www.complaintsboard.com/reviews/amazoncom-a743421",
+            "snippet": "Amazon.com Complaints? Read our user reviews first - discover the good, the bad, and the ugly about Amazon.com by reading customer reviews and complaints."
+          }
+        ]
+      },
+      "sources": [
+        "https://www.trustpilot.com/review/www.amazon.com",
+        "https://www.consumeraffairs.com/online/amazon.html",
+        "https://www.amazon.com/gp/help/customer/display.html?nodeId=G4YFYCCNUSENA23B",
+        "https://www.amazon.com/gp/help/customer/display.html?nodeId=TapjnwRvIRtlgyLPSl",
+        "https://www.complaintsboard.com/amazon-b109438",
+        "https://www.pcmag.com/explainers/can-you-trust-amazon-reviews-these-tips-will-help-you-spot-the-fakes",
+        "https://usacomplaints.com/company/amazon/",
+        "https://www.complaintsboard.com/reviews/amazoncom-a743421"
+      ]
+    },
+    "crustdata_enrich": {
+      "ok": true,
+      "data": {
+        "found": true,
+        "company_name": "Amazon",
+        "location": null,
+        "headcount": "10001+",
+        "founded": 2019,
+        "linkedin_url": "https://www.linkedin.com/company/amazon",
+        "description": "",
+        "confidence": 1.0
+      },
+      "sources": [
+        "https://api.crustdata.com/company/enrich"
+      ]
+    }
+  },
+  "retries": {
+    "s6": 3
+  },
+  "plan_history": [
+    {
+      "id": "s1",
+      "tool": "rdap_lookup",
+      "args": {
+        "domain": "amazon.com"
+      },
+      "why": "Registration age is the cheapest strong signal."
+    },
+    {
+      "id": "s2",
+      "tool": "doh_dns",
+      "args": {
+        "domain": "amazon.com"
+      },
+      "why": "Does the domain resolve, and does it take mail?"
+    },
+    {
+      "id": "s3",
+      "tool": "tls_inspect",
+      "args": {
+        "domain": "amazon.com"
+      },
+      "why": "Certificate hygiene check."
+    },
+    {
+      "id": "s4",
+      "tool": "ct_logs",
+      "args": {
+        "domain": "amazon.com"
+      },
+      "why": "Certificate history and subdomains show an established org."
+    },
+    {
+      "id": "s5",
+      "tool": "urlscan_reputation",
+      "args": {
+        "domain": "amazon.com"
+      },
+      "why": "Independent web-scan verdicts for the domain."
+    },
+    {
+      "id": "s6",
+      "tool": "phishtank_check",
+      "args": {
+        "domain": "amazon.com"
+      },
+      "why": "Is the domain in a verified phishing feed?"
+    },
+    {
+      "id": "s7",
+      "tool": "fetch_homepage",
+      "args": {
+        "domain": "amazon.com"
+      },
+      "why": "Scam-phrase analysis of vendor copy."
+    },
+    {
+      "id": "s8",
+      "tool": "web_search_reports",
+      "args": {
+        "domain": "amazon.com"
+      },
+      "why": "Independent reports and reviews."
+    },
+    {
+      "id": "s9",
+      "tool": "crustdata_enrich",
+      "args": {
+        "domain": "amazon.com"
+      },
+      "why": "Firmographic confirmation of a real company."
+    }
+  ],
+  "assessment": {
+    "domain": "amazon.com",
+    "score": 0,
+    "band": "LOW",
+    "signals": [
+      {
+        "signal": "domain_well_established",
+        "weight": -12,
+        "detail": "Domain registered 11667 days ago (over 4 years of history).",
+        "sources": [
+          "rdap.org:amazon.com"
+        ]
+      },
+      {
+        "signal": "no_certificate_history",
+        "weight": 12,
+        "detail": "No public certificate history. Real services leave a certificate-transparency trail; an absence is weak evidence of an operating business.",
+        "sources": [
+          "crt.sh:amazon.com"
+        ]
+      },
+      {
+        "signal": "urlscan_scan_history_clean",
+        "weight": -8,
+        "detail": "100 urlscan.io scans on record with no malicious verdicts.",
+        "sources": [
+          "urlscan.io:amazon.com"
+        ]
+      },
+      {
+        "signal": "negative_reports",
+        "weight": 25,
+        "detail": "6 negative report(s) found in web search.",
+        "sources": [
+          "https://www.consumeraffairs.com/online/amazon.html",
+          "https://www.amazon.com/gp/help/customer/display.html?nodeId=G4YFYCCNUSENA23B",
+          "https://www.amazon.com/gp/help/customer/display.html?nodeId=TapjnwRvIRtlgyLPSl",
+          "https://www.complaintsboard.com/amazon-b109438",
+          "https://usacomplaints.com/company/amazon/"
+        ]
+      },
+      {
+        "signal": "established_company",
+        "weight": -20,
+        "detail": "Company found in business data: Amazon (None, 10001+ employees).",
+        "sources": [
+          "https://api.crustdata.com/company/enrich"
+        ]
+      }
+    ],
+    "sources": [
+      "crt.sh:amazon.com",
+      "https://api.crustdata.com/company/enrich",
+      "https://usacomplaints.com/company/amazon/",
+      "https://www.amazon.com/gp/help/customer/display.html?nodeId=G4YFYCCNUSENA23B",
+      "https://www.amazon.com/gp/help/customer/display.html?nodeId=TapjnwRvIRtlgyLPSl",
+      "https://www.complaintsboard.com/amazon-b109438",
+      "https://www.consumeraffairs.com/online/amazon.html",
+      "rdap.org:amazon.com",
+      "urlscan.io:amazon.com"
+    ]
+  }
+}

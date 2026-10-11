@@ -1,0 +1,38 @@
+{"ts": "2026-10-11T21:57:09.572361+00:00", "run_id": "21199f99", "kind": "run_start", "name": "investigation", "payload": {"domain": "acme-cloud-services.example", "demo": true}}
+{"ts": "2026-10-11T21:57:09.574545+00:00", "run_id": "21199f99", "kind": "step_start", "name": "s1", "payload": {"tool": "rdap_lookup", "why": "Registration age is the cheapest strong signal."}}
+{"ts": "2026-10-11T21:57:09.575557+00:00", "run_id": "21199f99", "kind": "tool_start", "name": "rdap_lookup", "payload": {"args": {"domain": "acme-cloud-services.example"}}}
+{"ts": "2026-10-11T21:57:09.575557+00:00", "run_id": "21199f99", "kind": "tool_end", "name": "rdap_lookup", "payload": {"latency_ms": 0.7}}
+{"ts": "2026-10-11T21:57:09.576556+00:00", "run_id": "21199f99", "kind": "step_end", "name": "s1", "payload": {"ok": true}}
+{"ts": "2026-10-11T21:57:09.579613+00:00", "run_id": "21199f99", "kind": "step_start", "name": "s2", "payload": {"tool": "doh_dns", "why": "Does the domain resolve, and does it take mail?"}}
+{"ts": "2026-10-11T21:57:09.581181+00:00", "run_id": "21199f99", "kind": "tool_start", "name": "doh_dns", "payload": {"args": {"domain": "acme-cloud-services.example"}}}
+{"ts": "2026-10-11T21:57:09.588120+00:00", "run_id": "21199f99", "kind": "tool_end", "name": "doh_dns", "payload": {"latency_ms": 7.0}}
+{"ts": "2026-10-11T21:57:09.593016+00:00", "run_id": "21199f99", "kind": "step_end", "name": "s2", "payload": {"ok": true}}
+{"ts": "2026-10-11T21:57:09.595149+00:00", "run_id": "21199f99", "kind": "step_start", "name": "s3", "payload": {"tool": "tls_inspect", "why": "Certificate hygiene check."}}
+{"ts": "2026-10-11T21:57:09.595829+00:00", "run_id": "21199f99", "kind": "tool_start", "name": "tls_inspect", "payload": {"args": {"domain": "acme-cloud-services.example"}}}
+{"ts": "2026-10-11T21:57:09.596966+00:00", "run_id": "21199f99", "kind": "tool_end", "name": "tls_inspect", "payload": {"latency_ms": 0.9}}
+{"ts": "2026-10-11T21:57:09.600550+00:00", "run_id": "21199f99", "kind": "step_end", "name": "s3", "payload": {"ok": true}}
+{"ts": "2026-10-11T21:57:09.604781+00:00", "run_id": "21199f99", "kind": "step_start", "name": "s4", "payload": {"tool": "ct_logs", "why": "Certificate history and subdomains show an established org."}}
+{"ts": "2026-10-11T21:57:09.605392+00:00", "run_id": "21199f99", "kind": "tool_start", "name": "ct_logs", "payload": {"args": {"domain": "acme-cloud-services.example"}}}
+{"ts": "2026-10-11T21:57:09.605392+00:00", "run_id": "21199f99", "kind": "tool_end", "name": "ct_logs", "payload": {"latency_ms": 0.9}}
+{"ts": "2026-10-11T21:57:09.606940+00:00", "run_id": "21199f99", "kind": "step_end", "name": "s4", "payload": {"ok": true}}
+{"ts": "2026-10-11T21:57:09.607951+00:00", "run_id": "21199f99", "kind": "step_start", "name": "s5", "payload": {"tool": "urlscan_reputation", "why": "Independent web-scan verdicts for the domain."}}
+{"ts": "2026-10-11T21:57:09.607951+00:00", "run_id": "21199f99", "kind": "tool_start", "name": "urlscan_reputation", "payload": {"args": {"domain": "acme-cloud-services.example"}}}
+{"ts": "2026-10-11T21:57:09.608958+00:00", "run_id": "21199f99", "kind": "tool_end", "name": "urlscan_reputation", "payload": {"latency_ms": 0.7}}
+{"ts": "2026-10-11T21:57:09.610107+00:00", "run_id": "21199f99", "kind": "step_end", "name": "s5", "payload": {"ok": true}}
+{"ts": "2026-10-11T21:57:09.610107+00:00", "run_id": "21199f99", "kind": "step_start", "name": "s6", "payload": {"tool": "phishtank_check", "why": "Is the domain in a verified phishing feed?"}}
+{"ts": "2026-10-11T21:57:09.611100+00:00", "run_id": "21199f99", "kind": "tool_start", "name": "phishtank_check", "payload": {"args": {"domain": "acme-cloud-services.example"}}}
+{"ts": "2026-10-11T21:57:09.612125+00:00", "run_id": "21199f99", "kind": "tool_end", "name": "phishtank_check", "payload": {"latency_ms": 0.7}}
+{"ts": "2026-10-11T21:57:09.612660+00:00", "run_id": "21199f99", "kind": "step_end", "name": "s6", "payload": {"ok": true}}
+{"ts": "2026-10-11T21:57:09.613676+00:00", "run_id": "21199f99", "kind": "step_start", "name": "s7", "payload": {"tool": "fetch_homepage", "why": "Scam-phrase analysis of vendor copy."}}
+{"ts": "2026-10-11T21:57:09.613676+00:00", "run_id": "21199f99", "kind": "tool_start", "name": "fetch_homepage", "payload": {"args": {"domain": "acme-cloud-services.example"}}}
+{"ts": "2026-10-11T21:57:09.615188+00:00", "run_id": "21199f99", "kind": "tool_end", "name": "fetch_homepage", "payload": {"latency_ms": 0.8}}
+{"ts": "2026-10-11T21:57:09.625245+00:00", "run_id": "21199f99", "kind": "step_end", "name": "s7", "payload": {"ok": true}}
+{"ts": "2026-10-11T21:57:09.626353+00:00", "run_id": "21199f99", "kind": "step_start", "name": "s8", "payload": {"tool": "web_search_reports", "why": "Independent reports and reviews."}}
+{"ts": "2026-10-11T21:57:09.626901+00:00", "run_id": "21199f99", "kind": "tool_start", "name": "web_search_reports", "payload": {"args": {"domain": "acme-cloud-services.example"}}}
+{"ts": "2026-10-11T21:57:09.627424+00:00", "run_id": "21199f99", "kind": "tool_end", "name": "web_search_reports", "payload": {"latency_ms": 1.0}}
+{"ts": "2026-10-11T21:57:09.627424+00:00", "run_id": "21199f99", "kind": "step_end", "name": "s8", "payload": {"ok": true}}
+{"ts": "2026-10-11T21:57:09.628958+00:00", "run_id": "21199f99", "kind": "step_start", "name": "s9", "payload": {"tool": "crustdata_enrich", "why": "Firmographic confirmation of a real company."}}
+{"ts": "2026-10-11T21:57:09.629975+00:00", "run_id": "21199f99", "kind": "tool_start", "name": "crustdata_enrich", "payload": {"args": {"domain": "acme-cloud-services.example"}}}
+{"ts": "2026-10-11T21:57:09.629975+00:00", "run_id": "21199f99", "kind": "tool_end", "name": "crustdata_enrich", "payload": {"latency_ms": 0.8}}
+{"ts": "2026-10-11T21:57:09.630972+00:00", "run_id": "21199f99", "kind": "step_end", "name": "s9", "payload": {"ok": true}}
+{"ts": "2026-10-11T21:57:09.631978+00:00", "run_id": "21199f99", "kind": "run_end", "name": "investigation", "payload": {"score": 48, "band": "MEDIUM"}}

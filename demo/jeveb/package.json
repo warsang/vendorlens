@@ -1,0 +1,60 @@
+{
+  "name": "jev-web",
+  "version": "0.7.2",
+  "description": "Run open-jev-, Laya- and Strands-Decider-shaped typed-decision models in the browser: one state plus typed questions in, calibrated probabilities out.",
+  "type": "module",
+  "license": "MIT",
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/warsang/jev-web.git"
+  },
+  "homepage": "https://warsang.github.io/jev-web/",
+  "bugs": {
+    "url": "https://github.com/warsang/jev-web/issues"
+  },
+  "exports": {
+    ".": "./src/index.mjs"
+  },
+  "files": [
+    "src/",
+    "docs/",
+    "README.md"
+  ],
+  "keywords": [
+    "open-jev",
+    "laya",
+    "strands-decider",
+    "typed-decisions",
+    "onnx",
+    "transformers.js",
+    "webgpu",
+    "browser",
+    "classification"
+  ],
+  "scripts": {
+    "dev": "vite",
+    "build:dev": "vite build",
+    "demo": "vite --config vite.demo.config.js",
+    "build:demo": "vite build --config vite.demo.config.js",
+    "test": "node --test test/*.test.mjs"
+  },
+  "peerDependencies": {
+    "@huggingface/transformers": ">=3.0.0",
+    "onnxruntime-web": ">=1.17.0"
+  },
+  "peerDependenciesMeta": {
+    "@huggingface/transformers": {
+      "optional": true
+    },
+    "onnxruntime-web": {
+      "optional": true
+    }
+  },
+  "devDependencies": {
+    "@huggingface/transformers": "^4.3.0",
+    "vite": "^6.3.5"
+  },
+  "engines": {
+    "node": ">=20"
+  }
+}

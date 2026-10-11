@@ -1,0 +1,8 @@
+key,expected_band,rationale,source
+github.com,LOW,"10+ year domain (well-established), 1000+ certs since ~2010, clean urlscan history, HSTS/CSP, privacy+terms pages","analyst label; well-known legitimate vendor"
+stripe.com,LOW,"Established payments company (~1995-2010 CDN-era domain), DMARC enforced, long cert history, clean scans, strong headers","analyst label; well-known legitimate vendor"
+linear.app,LOW,"Established SaaS, domain 4+ years, clean scans, strong security posture","analyst label; well-known legitimate vendor"
+legit-acme.example,LOW,"Canned legit scenario: established domain, enforced DMARC, security.txt, company record found","canned scenario (legit)"
+young-startup.example,MEDIUM,"Canned: young (<1yr) but real - real cert history + clean scans offset age + weak posture (no DMARC/HSTS, no company record). Borderline case","canned scenario (young_startup)"
+suspicious-acme.example,CRITICAL,"Canned: 38-day domain, PhishTank + urlscan malicious listings, single self-signed cert, scam copy","canned scenario (suspicious)"
+injected-failure-acme.example,CRITICAL,"Canned suspicious scenario run with fault injection on ct_logs (tests recovery, same expected band)","canned scenario (suspicious)"

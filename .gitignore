@@ -1,0 +1,15 @@
+.env
+__pycache__/
+*.pyc
+# (runs/ is committed evidence: briefs + traces judges can read)
+node_modules/
+*.log
+.venv/
+__pycache__/
+.graymatter/
+
+.claude/
+
+build/
+
+.opencode/
