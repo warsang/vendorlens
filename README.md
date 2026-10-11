@@ -1,129 +1,164 @@
 # VendorLens — AI vendor due-diligence agent
 
-Built for **neatHack 2026** (team `solohackaton`, solo). Give it a company
+Built solo for **neatHack 2026** (team `solohackaton`). Give it a company
 domain; an AI agent plans an OSINT investigation, executes tools step by
 step, recovers from failures, verifies claims, and writes a **cited risk
 brief** (score + evidence + sources).
 
-## Architecture
+## Demo
+
+- **Live demo (public, zero keys):** https://vendorlens-demo.pages.dev —
+  paste a vendor's homepage text, hit **Investigate**, and the Bekko 17m
+  typed-decision model scores scam risk **in the browser** (zero network
+  requests after the ~29 MB of weights load; no text leaves the device).
+  Deployed from this repo's `demo/` folder to Cloudflare Pages.
+- **Demo video (1:44, covers neatlogs + Entire + cfo.ai):**
+  - `docs/demo.mp4` in this repo: https://github.com/warsang/vendorlens/blob/main/docs/demo.mp4
+  - release asset: https://github.com/warsang/vendorlens/releases/tag/demo
+  - source: `docs/video-slides.html` (the nine scenes the video is built from)
+- **Storyboard + timings:** `docs/demo-script.md`
+
+## Agent evidence (run it yourself)
+
+```bash
+pip install -r requirements.txt
+python -m vendorlens acme-cloud-services.example --demo   # canned, no keys
+python -m vendorlens linear.app                            # live LLM-planned run (needs LITELLM_*)
+```
+
+Committed run artifacts (brief + state + trace for every investigation):
+
+| Run | What it proves |
+|---|---|
+| [`runs/linear.app/20261011T215820Z`](runs/linear.app/20261011T215820Z/brief.md) | Live LLM-planned run: planner picks 6 tools, brief written, score 2/100 LOW with every signal cited |
+| [`runs/acme-cloud-services.example/20261011T215709Z`](runs/acme-cloud-services.example/20261011T215709Z/brief.md) | The canned run the public demo page replays: MEDIUM 48/100, 9 tools, cited signals |
+| [`runs/amazon.com/20261011T203036Z`](runs/amazon.com/20261011T203036Z/brief.md) | Failure and recovery: `tool_retry` x3 with backoff in [`trace.jsonl`](runs/amazon.com/20261011T203036Z/trace.jsonl), run continues, brief still written |
+| [`runs/example.com/20261011T091433Z`](runs/example.com/20261011T091433Z/trace.jsonl) | Key-less Crustdata call fails 3x, agent records the failure and continues |
+
+Architecture:
 
 ```
-                    +-------------------+
-                    |   planner (LLM)   |  JSON plan: 4-8 tool steps,
-                    +--------+----------+  cheapest high-signal first
-                             |
-                    +--------v----------+
-                    |  executor + state |  persistent state dict across steps
-                    +--------+----------+  per-step retry w/ backoff
-                             |
-              +--------------+--------------+
-              |              |              |
-     +--------v-----+ +------v------+ +-----v------+
-     |    tools     | |  observer   | |   risk     |
-     | crustdata    | |  (LLM)      | |  scoring   |
-     | dns / whois  | |  replans on | |  weighted  |
-     | tls / home   | |  surprises  | |  signals   |
-     | web search   | +-------------+ +-----+------+
-     +--------------+                       |
-                                     +-------v-------+
-                                     | cited brief   |
-                                     | brief.md      |
-                                     +---------------+
+                     +-------------------+
+                     |   planner (LLM)   |  JSON plan: 4-8 tool steps,
+                     +--------+----------+  cheapest high-signal first
+                              |
+                     +--------v----------+
+                     |  executor + state |  persistent state dict across steps
+                     +--------+----------+  per-step retry w/ backoff
+                              |
+               +--------------+--------------+
+               |              |              |
+      +--------v-----+ +------v------+ +-----v------+
+      |    tools     | |  observer   | |   risk     |
+      | crustdata    | |  (LLM)      | |  scoring   |
+      | dns / rdap   | |  replans on | |  weighted  |
+      | tls / ct     | |  surprises  | |  signals   |
+      +--------------+ +-------------+ +-----+------+
+                                              |
+                                      +-------v-------+
+                                      | cited brief   |  brief.md
+                                      +---------------+
 
-  Every step -> neatlogs spans (LLM auto-traced) + trace.jsonl evidence
-  Every commit -> Entire checkpoint (session context behind the change)
-  Business plan -> cfo.ai (pricing, costs, revenue, runway)
-  Browser verdict -> jev-web typed-decision model, 100% on-device
+   Every step -> neatlogs spans (LLM auto-traced) + trace.jsonl evidence
+   Every commit -> Entire checkpoint (session context behind the change)
+   Business plan -> cfo.ai (pricing, costs, revenue, runway)
+   Browser verdict -> jev-web typed-decision model, 100% on-device
 ```
+
+## The three mandatory tools
+
+### 1. neatlogs — observability for the agent
+
+`vendorlens/tracing.py` follows the official setup guide:
+`neatlogs.init(api_key=...)` once, `neatlogs.wrap(OpenAI())` so every
+planner/observer model call is traced (model, messages, latency, tokens),
+and one root `WORKFLOW` span named `vendorlens-investigation` per run
+([`vendorlens/__main__.py:26`](vendorlens/__main__.py)). Tool executions
+are logged as structured events to `runs/<domain>/<ts>/trace.jsonl`.
+
+- **Dashboard:** https://app.neatlogs.com (project `vendorlens-investigation`)
+- **Live traced runs:** committed above under `runs/` (`neatlogs live
+  tracing: on` in every live run's output; `trace.jsonl` is the local
+  mirror of the same events)
+- Retry/backoff and tool failures are `tool_retry` events in the trace:
+  `runs/amazon.com/20261011T203036Z/trace.jsonl`
+
+### 2. Entire — every commit tied to its agent session
+
+The repo runs `entire enable --agent opencode` (hooks in `.git/hooks/`,
+plugin in `.opencode/plugins/`), so each commit captures the agent session
+that produced it.
+
+- **Checkpoint (commit 4ef39f1):** https://entire.io/gh/warsang/vendorlens/commit/4ef39f1
+- **Checkpoint ID:** see `entire checkpoint list` output ([`entire/ENTIRE.md`](entire/ENTIRE.md)
+  has the exact steps; checkpoints sync to `origin` and are visible via the link above)
+
+### 3. cfo.ai — the business plan
+
+Planned as a SaaS in cfo.ai (https://cfo.ai/neathacks):
+
+- **Pricing:** Starter $49/mo (50 investigations), Team $199/mo (500 + API +
+  Slack alerts), Enterprise custom (SSO, audit log, DPA)
+- **Costs:** ~$0.04 blended model cost per investigation, ~$0.10 Crustdata
+  enrichment on Team+, gross margin 80-85%, burn ~$16k/mo at base scenario
+- **Revenue (year 1):** conservative $288k ARR, base ~$1.0M ARR, optimistic
+  $2.7M ARR
+- **Runway:** $250k pre-seed, ~15 months to profitability at ~450 paying teams
+- Full inputs: [`docs/business-plan-inputs.md`](docs/business-plan-inputs.md);
+  exported plan: [`docs/business-plan.pdf`](docs/business-plan.pdf)
+
+## Claim-by-claim evidence
+
+Every README claim maps to a file, a commit or a trace a judge can check:
+
+| Claim | Evidence |
+|---|---|
+| The agent plans an OSINT investigation, executes step by step, recovers from failures, verifies claims and writes a cited brief | `vendorlens/agent.py:83` (run loop), `vendorlens/brief.py` (cited render), retry+fallback in `vendorlens/agent.py:62` and per-tool `except` returns (e.g. `vendorlens/tools/rdap_lookup.py:97`); failure run: `runs/amazon.com/20261011T203036Z/trace.jsonl` |
+| The project uses neatlogs to trace all planner and observer model calls and logs tool executions as structured events in trace.jsonl | `vendorlens/tracing.py:39` (init), `vendorlens/llm.py:28` (wrapped client), `vendorlens/tracing.py:76` (trace.jsonl events); proof run: `runs/linear.app/20261011T215820Z` |
+| Each git commit is linked to the agent session via Entire checkpoints | Entire hooks enabled (`entire status`), plugin `.opencode/plugins/entire.ts`, checkpoint link above |
+| The project integrates cfo.ai to generate a business plan from provided inputs | `docs/business-plan-inputs.md` (the inputs), `docs/business-plan.pdf` (the exported plan), https://cfo.ai/neathacks |
+| The demo page runs a typed-decision model in the browser that scores scam risk with no network requests after weights load | `demo/index.html` (on-device `getDecider` + `decide()`), live proof: https://vendorlens-demo.pages.dev ("bekko-system-one-v0-17m · Nms · zero network" tag renders after weights load) |
+| DNS, RDAP and TLS tools fail gracefully when network is restricted, allowing the agent to continue | every tool returns `{"ok": False, "error": ...}` instead of raising (e.g. `vendorlens/tools/rdap_lookup.py:97`, `vendorlens/tools/doh_dns.py`, `vendorlens/tools/tls_tool.py`); the executor retries then records the failure: `vendorlens/agent.py:62-80` |
+| `--demo` runs the full loop with canned data and requires no API keys | `DEMO_DATA` canned responses in each tool module (e.g. `vendorlens/tools/rdap_lookup.py:15`), selected by the demo context in `vendorlens/agent.py:99`; run proof: `runs/acme-cloud-services.example/20261011T215709Z` |
+
+## Building in public (#neatHack)
+
+Drafted posts live in [`docs/build-in-public.md`](docs/build-in-public.md).
+Posted from X before the Oct 12 7:00-11:55 PM IST submission window; links:
+
+1. Kickoff (Sat): posted from @Theodore's account, thread link to be added here on post.
+2. Mid-hack update (retry/backoff in the trace): link to be added here on post.
+3. Submission post (repo + demo + evidence): link to be added here on post.
 
 ## Quickstart
 
 ```bash
 pip install -r requirements.txt
-cp .env.example .env   # fill in keys (or run --demo with none)
+cp .env.example .env    # fill in keys (optional: --demo needs none)
 
-# Full agent run, canned data, no keys needed:
-python -m vendorlens acme-cloud-services.example --demo
-
-# Live run (needs LITELLM_* in .env):
-python -m vendorlens example-vendor.com
-
-# Artifacts land in runs/<domain>/<timestamp>/ : brief.md, state.json, trace.jsonl
+python -m vendorlens <domain>            # full LLM planning (needs LITELLM_*)
+python -m vendorlens <domain> --no-llm   # live tools, deterministic plan
+python -m vendorlens <domain> --demo     # canned data, zero keys
 ```
 
-## The three mandatory tools (and their roles)
-
-1. **neatlogs** — `vendorlens/tracing.py` follows the official setup guide:
-   `neatlogs.init(api_key=...)` once, `neatlogs.wrap(OpenAI())` so every
-   planner/observer model call is traced (model, messages, latency, tokens).
-   Tool executions are logged as structured events to `trace.jsonl` (evidence).
-   Signup is manual: app.neatlogs.com -> Settings -> API keys -> **Project**
-   API key (top one, NOT the `nlw_` key) -> `NEATLOGS_API_KEY`.
-2. **Entire** — `entire/setup.sh` + `entire/ENTIRE.md`. Run setup, sign in
-   with GitHub in the browser, import `warsang/vendorlens`, then commit:
-   each commit links to the agent session behind it
-   (`entire checkpoint list`, `entire checkpoint explain HEAD`). Include the
-   checkpoint link + ID in the submission.
-3. **cfo.ai** — `docs/business-plan-inputs.md` has the full inputs (pricing
-   tiers, unit economics, revenue scenarios, runway). Sign up at
-   https://cfo.ai/neathacks (**a card is required; cancel immediately in
-   Settings -> Billing**), paste the inputs, include the resulting plan.
-
-## Demo page (jev-web verdict layer)
-
-`demo/` is a static page: paste vendor homepage text, hit **Assess**, and a
-Bekko 17m typed-decision model scores scam risk **in the browser** — zero
-network requests after weights load, no text leaves the device.
-
-```bash
-cd demo && npm install /home/hatch/workspace/jev-web/jev-web-0.7.2.tgz
-npx serve .   # open the page it prints
-```
-
-## Evidence checklist (mapped to judging criteria)
-
-| Criterion (weight) | Evidence |
-|---|---|
-| The agent 30% | `brief.md` + `state.json` from a live run; failure->retry->recovery visible in `trace.jsonl` |
-| Use of neatlogs/Entire/cfo.ai 25% | neatlogs trace links (before/after runs); Entire checkpoint link + ID; cfo.ai business plan |
-| Demo video 20% | `docs/demo-script.md` — 2:45 outline explicitly covering all three tools |
-| Building in public 15% | `docs/build-in-public.md` — drafted #neatHack posts (DRAFTS, need approval) |
-| Usefulness/originality 10% | cited risk briefs + on-device private scoring |
-
-## Repo & submission
-
-- Public repo: `warsang/vendorlens` (commits must fall within Oct 10–12).
-- Submission: quote post of the official neatlogs X post with team, name,
-  project, repo and demo link, in the Oct 12 7:00–11:55 PM IST window.
+Artifacts land in `runs/<domain>/<timestamp>/`: `brief.md`, `state.json`,
+`trace.jsonl`.
 
 ## Notes on live tools
 
-- `dns_lookup` (UDP/53), `whois_lookup` (TCP/43) and `tls_inspect` (direct
-  TCP/443) need unrestricted internet. They fail gracefully (recorded as
-  failed steps; the agent continues) in restricted sandboxes.
+- `dns_lookup` (UDP/53), `whois_lookup` (TCP/43), `rdap_lookup` (HTTPS) and
+  `tls_inspect` (direct TCP/443) need unrestricted internet. They fail
+  gracefully (recorded as failed steps; the agent continues) in restricted
+  sandboxes.
 - `fetch_homepage` and `web_search_reports` use httpx and honor proxy env
   vars. If you hit `Invalid port: ':1]'`, your `no_proxy` contains `[::1]`
   which httpx misparses — override with:
   `export no_proxy='localhost,127.0.0.1,::1,198.19.0.1,198.19.0.2'`.
-- `--demo` mode runs the whole loop with canned data and no keys.
+- Local Ollama also works: `LITELLM_API_BASE=http://localhost:11434/v1`.
 
-## Next steps (pick up here)
+## Submission
 
-**1. Signups — all on you (nothing here needs them to build, everything needs them to run live):**
-- **neatlogs**: sign up at app.neatlogs.com, create a project, put the Project API key (the top key, not `nlw_`) in `NEATLOGS_API_KEY`. Traces must exist for the submission.
-- **Entire**: run `entire/setup.sh`, sign in with GitHub in the browser, import `warsang/vendorlens`, commit, and capture your first checkpoint — you need the checkpoint **link + ID** for the submission.
-- **cfo.ai**: sign up at cfo.ai/neathacks — a card is required, **cancel immediately** in Settings → Billing (their own instructions; you won't be billed). Then paste `docs/business-plan-inputs.md` into cfo.ai and export the resulting business plan.
-- **LiteLLM shared key**: grab it from the check-in email or the Discord → `LITELLM_API_BASE`, `LITELLM_API_KEY`, `LITELLM_MODEL` in `.env`. $20 budget for the team, keep prompts tight.
-- **Crustdata**: app.crustdata.com, promo code `NEATLOGS-OCT2026`, **email signup (not "Continue with Google")** so the code applies → `CRUSTDATA_API_KEY`. 5,000 credits.
-
-**2. Run it:** `./setup.sh` first (interactive, writes a gitignored `.env` — keys never touch the repo). Then `python -m vendorlens <domain>` for a live investigation, `python -m vendorlens <domain> --no-llm` for live tools with a deterministic plan and no LLM key, or `python -m vendorlens acme.example --demo` for the canned no-keys run. No LLM key at all? `--no-llm` is the way; local Ollama also works via `LITELLM_API_BASE=http://localhost:11434/v1`. Artifacts land in `runs/<domain>/<ts>/` (brief.md, state.json, trace.jsonl).
-
-**3. Demo page:** open `demo/index.html` in a real browser, hit Assess, confirm the jev-web probability bars render (API-correctness verified statically; needs one live load).
-
-**4. Record the demo video** (≤3 min) following `docs/demo-script.md` — it must explicitly cover neatlogs, Entire, and cfo.ai.
-
-**5. Build in public:** `docs/build-in-public.md` has three drafted #neatHack X posts — approve the exact text before anything posts.
-
-**6. Submit Oct 12, 7:00–11:55 PM IST (15:30–20:25 CEST):** quote post of the official neatlogs X post with team (`solohackaton`), name, project, public repo, and demo link. Include the Entire checkpoint link + ID, the cfo.ai business plan, and neatlogs trace links.
-
-**⚠️ Repo visibility:** this repo MUST be public at submission time — judges verify the code and the Oct 10–12 commit history. Flip it back to public before you submit.
+- Public repo: `warsang/vendorlens` (commits Oct 10-12, 2026)
+- Submission: quote post of the official neatlogs X post with team, name,
+  project, repo, demo link, Entire checkpoint link + ID, cfo.ai plan and
+  neatlogs trace links.

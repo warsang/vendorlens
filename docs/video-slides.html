@@ -1,0 +1,220 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8" />
+<title>VendorLens demo</title>
+<style>
+  :root {
+    --bg: #0d0f16; --panel: #151926; --ink: #e8eaf2; --dim: #9aa3b8;
+    --accent: #7a4de1; --blue: #2a7de1; --green: #2e9e5b; --amber: #d99a00; --red: #d23a3a;
+  }
+  * { box-sizing: border-box; margin: 0; padding: 0; }
+  html, body { width: 100%; height: 100%; }
+  body { background: var(--bg); color: var(--ink); font-family: "Cascadia Code", "Segoe UI", Consolas, monospace;
+         overflow: hidden; }
+  .scene { display: none; width: 100vw; height: 100vh; padding: 56px 64px; }
+  .scene.on { display: block; }
+  .kicker { color: var(--accent); font-weight: 700; letter-spacing: .18em; text-transform: uppercase; font-size: 15px; }
+  h1 { font-size: 54px; line-height: 1.08; margin: 14px 0 18px; font-weight: 800; }
+  h2 { font-size: 30px; margin-bottom: 16px; font-weight: 700; }
+  p.lead { font-size: 22px; color: var(--dim); line-height: 1.45; max-width: 1000px; }
+  .terminal { background: #0a0c12; border: 1px solid #232a3d; border-radius: 12px; padding: 22px 26px;
+              font-size: 17.5px; line-height: 1.5; box-shadow: 0 18px 50px rgba(0,0,0,.45); }
+  .term-head { display: flex; gap: 8px; margin-bottom: 14px; }
+  .dot { width: 12px; height: 12px; border-radius: 50%; }
+  .green { color: var(--green); } .red { color: var(--red); } .amber { color: var(--amber); }
+  .blue { color: #5aa2f0; } .dim { color: var(--dim); } .purple { color: #a58bf5; }
+  .bar-row { display: flex; align-items: center; gap: 10px; margin: 7px 0; }
+  .bar-track { flex: 1; height: 14px; background: #232a3d; border-radius: 99px; overflow: hidden; }
+  .bar-fill { height: 100%; border-radius: 99px; }
+  .bar-lbl { width: 250px; text-align: right; font-size: 15px; color: var(--dim); }
+  .bar-val { width: 64px; font-size: 14px; color: var(--dim); }
+  .grid { display: grid; grid-template-columns: 1fr 1fr; gap: 22px; }
+  .card { background: var(--panel); border: 1px solid #232a3d; border-radius: 14px; padding: 24px 26px; }
+  .card h3 { font-size: 19px; margin-bottom: 10px; color: #fff; }
+  .card p, .card li { font-size: 16.5px; color: var(--dim); line-height: 1.5; }
+  .big-score { font-size: 92px; font-weight: 800; color: var(--amber); line-height: 1; }
+  .pill { display: inline-block; border: 1px solid #333c58; border-radius: 99px; padding: 4px 14px;
+          font-size: 14px; color: var(--dim); margin-right: 8px; }
+  a { color: #5aa2f0; text-decoration: none; }
+  .foot { position: absolute; bottom: 26px; left: 64px; right: 64px; display: flex;
+          justify-content: space-between; color: #5b6478; font-size: 14px; }
+  table { border-collapse: collapse; font-size: 16px; }
+  td, th { padding: 6px 14px 6px 0; text-align: left; color: var(--dim); }
+  th { color: #fff; }
+  .code { background: #0a0c12; border: 1px solid #232a3d; border-radius: 10px; padding: 16px 18px; font-size: 15.5px; }
+  .tf { position: absolute; left: 64px; bottom: 64px; font-size: 15px; color: #5b6478; }
+</style>
+</head>
+<body>
+
+<!-- 1 · title -->
+<section class="scene" data-s="1">
+  <div class="kicker">neatHack 2026 · team solohackaton · solo build</div>
+  <h1>VendorLens<br/>know your vendor before you wire</h1>
+  <p class="lead">An AI agent that runs a full OSINT due-diligence investigation on a
+     company domain, recovers from failures, and writes a cited risk brief.
+     Every model call traced in neatlogs. Every commit tied to its agent session with Entire.
+     Business plan from cfo.ai.</p>
+  <div style="margin-top:26px" class="dim">github.com/warsang/vendorlens</div>
+  <div class="tf">Demo video · 2:30 · all three mandatory tools covered</div>
+</section>
+
+<!-- 2 · problem -->
+<section class="scene" data-s="2">
+  <div class="kicker">the problem</div>
+  <h1>&ldquo;Is this counterparty a real business, or a front?&rdquo;</h1>
+  <p class="lead">A URL checker tells you whether a page is malicious. It cannot tell you
+     whether the company behind it exists. Before money or data goes to a new vendor, somebody
+     has to check registration, DNS, certificates, scans, reviews and company records.</p>
+  <div class="card" style="margin-top:34px">
+    <h3>VendorLens answers with evidence, not vibes</h3>
+    <p>Nine OSINT tools, a planner that orders them, an observer that replans on surprises,
+       weighted risk signals, and a brief where every claim cites the tool and source behind it.</p>
+  </div>
+</section>
+
+<!-- 3 · agent live -->
+<section class="scene" data-s="3">
+  <div class="kicker">the agent · live run (canned mode, zero keys)</div>
+  <h2 style="font-size:26px">python -m vendorlens acme-cloud-services.example --demo</h2>
+  <div class="terminal">
+    <div class="term-head"><span class="dot" style="background:#ff5f57"></span><span class="dot" style="background:#febc2e"></span><span class="dot" style="background:#28c840"></span></div>
+    <div><span class="dim">$</span> python -m vendorlens acme-cloud-services.example --demo</div>
+    <div class="dim">[planner] 9 steps, cheapest high-signal first</div>
+    <div>  s1 rdap_lookup      <span class="dim">registration age: cheapest strong signal</span></div>
+    <div>  s2 doh_dns          <span class="dim">does it resolve; does it take mail?</span></div>
+    <div>  s3 tls_inspect      <span class="dim">certificate hygiene</span></div>
+    <div>  s4 ct_logs          <span class="dim">certificate history + subdomains</span></div>
+    <div>  s5 urlscan_reputation <span class="dim">independent web-scan verdicts</span></div>
+    <div>  s6 phishtank_check  <span class="dim">verified phishing feed?</span></div>
+    <div>  s7 fetch_homepage   <span class="dim">scam-phrase analysis</span></div>
+    <div>  s8 web_search_reports <span class="dim">independent reports</span></div>
+    <div>  s9 crustdata_enrich <span class="dim">firmographics of a real company</span></div>
+    <div style="margin-top:10px"><span class="green">VERDICT: MEDIUM (48/100)</span>  <span class="dim">9/9 tools ok · run 21199f99</span></div>
+    <div class="dim">artifacts: runs/acme-cloud-services.example/&lt;ts&gt;/ → brief.md, state.json, trace.jsonl</div>
+  </div>
+  <div class="grid" style="margin-top:18px">
+    <div class="card"><h3 class="amber">urlscan_malicious +40</h3><p>2 of 3 scan verdicts marked malicious (phishing)</p></div>
+    <div class="card"><h3 class="green">certificates since 2022 -14</h3><p>14 certs in transparency logs, 4 subdomains</p></div>
+  </div>
+</section>
+
+<!-- 4 · failure + recovery -->
+<section class="scene" data-s="4">
+  <div class="kicker">the agent · failure, retry, recovery</div>
+  <h2>When a source fails, the run continues</h2>
+  <div class="terminal">
+    <div class="term-head"><span class="dot" style="background:#ff5f57"></span><span class="dot" style="background:#febc2e"></span><span class="dot" style="background:#28c840"></span></div>
+    <div class="dim"># runs/amazon.com/20261011T203036Z/trace.jsonl (real live run)</div>
+    <div><span class="amber">tool_retry</span> phishtank_check attempt 1: PhishTank HTTP 503</div>
+    <div><span class="amber">tool_retry</span> phishtank_check attempt 2: PhishTank HTTP 503 <span class="dim">(backoff 2s → 4s)</span></div>
+    <div><span class="amber">tool_retry</span> phishtank_check attempt 3: PhishTank HTTP 503 <span class="dim">(backoff 8s)</span></div>
+    <div><span class="red">gave up after 3</span> — recorded as a failed step, run continues</div>
+    <div class="green">run_end score 12 band LOW — brief still written, every claim still cited</div>
+  </div>
+  <p class="lead" style="margin-top:22px">Per-step retry with exponential backoff <span class="dim">(vendorlens/agent.py:62)</span>,
+     failures never fatal <span class="dim">(agent.py:78)</span>, and the whole sequence lives in the trace.</p>
+</section>
+
+<!-- 5 · neatlogs -->
+<section class="scene" data-s="5">
+  <div class="kicker">mandatory tool 1 · neatlogs</div>
+  <h2>Every planner and observer call, traced</h2>
+  <div class="code">
+    <span class="purple">import</span> neatlogs<br/>
+    neatlogs.init(api_key=..., endpoint=<span class="green">"https://ingest.neatlogs.com"</span>, workflow_name=<span class="green">"vendorlens-investigation"</span>)<br/>
+    client = neatlogs.wrap(OpenAI(base_url=LITELLM_API_BASE))  <span class="dim"># auto-traces every model call</span><br/>
+    <span class="purple">with</span> neatlogs.trace(<span class="green">"vendorlens-investigation"</span>, kind=<span class="green">"WORKFLOW"</span>): <span class="dim"># one root trace per run</span>
+  </div>
+  <div class="grid" style="margin-top:18px">
+    <div class="card"><h3>What lands in the dashboard</h3>
+      <p>Model, messages, latency, tokens for each planner/observer call; tool executions as structured events; one root WORKFLOW span per investigation.</p></div>
+    <div class="card"><h3>What lands in the repo</h3>
+      <p>The same tool events append to <span class="blue">runs/&lt;domain&gt;/&lt;ts&gt;/trace.jsonl</span> — committed evidence judges can read without an account.</p></div>
+  </div>
+  <div style="margin-top:16px" class="dim">Dashboard: app.neatlogs.com · live run proof: runs/linear.app/20261011T215820Z (LLM-planned, live tools, traced)</div>
+</section>
+
+<!-- 6 · Entire -->
+<section class="scene" data-s="6">
+  <div class="kicker">mandatory tool 2 · Entire</div>
+  <h2>Every commit links to the agent session behind it</h2>
+  <div class="terminal">
+    <div class="term-head"><span class="dot" style="background:#ff5f57"></span><span class="dot" style="background:#febc2e"></span><span class="dot" style="background:#28c840"></span></div>
+    <div class="dim">$ entire checkpoint list</div>
+    <div class="green">checkpoint</div> <span class="dim">commit 4ef39f1… · agent session attached · branch main</span>
+    <div class="dim">$ entire checkpoint explain HEAD</div>
+    <div>Checkpoint ties the commit to the OpenCode session that produced it:</div>
+    <div class="dim">decisions, diffs and context stay with the repository.</div>
+    <div style="margin-top:8px"><span class="blue">entire.io/gh/warsang/vendorlens/commit/&lt;sha&gt;</span></div>
+  </div>
+  <p class="lead" style="margin-top:20px">Checkpoint link + ID in the README and the submission post.
+     Sessions for every commit synced to the forge.</p>
+</section>
+
+<!-- 7 · cfo.ai -->
+<section class="scene" data-s="7">
+  <div class="kicker">mandatory tool 3 · cfo.ai</div>
+  <h2>Planned as a business, not just a build</h2>
+  <div class="grid">
+    <div class="card"><h3>Pricing</h3>
+      <table>
+        <tr><th>Starter</th><td>$49/mo · 50 investigations</td></tr>
+        <tr><th>Team</th><td>$199/mo · 500 + API</td></tr>
+        <tr><th>Enterprise</th><td>custom · SSO, DPA</td></tr>
+      </table></div>
+    <div class="card"><h3>Unit economics</h3>
+      <p>~$0.04 blended model cost per investigation · ~$0.10 Crustdata enrichment (Team+) · gross margin ~80–85%.</p></div>
+    <div class="card"><h3>Year-1 revenue scenarios</h3>
+      <p>Conservative $288k ARR · Base ~$1.0M ARR · Optimistic $2.7M ARR.</p></div>
+    <div class="card"><h3>Costs &amp; runway</h3>
+      <p>Burn ~$16k/mo · $250k pre-seed · ~15 months runway to profitability at ~450 paying teams.</p></div>
+  </div>
+  <div style="margin-top:18px" class="dim">Full plan: docs/business-plan.pdf · inputs: docs/business-plan-inputs.md · cfo.ai/neathacks</div>
+</section>
+
+<!-- 8 · on-device -->
+<section class="scene" data-s="8">
+  <div class="kicker">the verdict layer · on-device</div>
+  <h2>Scored in your browser, not on a server</h2>
+  <div class="grid">
+    <div>
+      <div class="bar-row"><span class="bar-lbl">scam operation?</span><div class="bar-track"><div class="bar-fill" style="width:89.5%;background:var(--amber)"></div></div><span class="bar-val">89.5%</span></div>
+      <div class="bar-row"><span class="bar-lbl">trustworthy (level 3)</span><div class="bar-track"><div class="bar-fill" style="width:31.8%;background:var(--blue)"></div></div><span class="bar-val">31.8%</span></div>
+      <div class="bar-row"><span class="bar-lbl">dominant risk signal</span><div class="bar-track"><div class="bar-fill" style="width:80.4%;background:var(--red)"></div></div><span class="bar-val">80.4%</span></div>
+      <div class="card" style="margin-top:16px"><p>Bekko 17m typed-decision model via jev-web + onnxruntime-web.
+        About 29 MB of weights load once, then the decision makes <strong>zero network requests</strong>.
+        Verdict text never leaves the device.</p></div>
+    </div>
+    <div class="card" style="display:flex;flex-direction:column;justify-content:center">
+      <div class="pill">public demo</div>
+      <h3 style="margin:14px 0"><a href="https://vendorlens-demo.pages.dev">vendorlens-demo.pages.dev</a></h3>
+      <p>Paste a vendor's homepage text, hit Investigate: the risk brief renders, then the
+         on-device bars fill in. No API key, no account, no data leaving the browser.</p>
+    </div>
+  </div>
+</section>
+
+<!-- 9 · close -->
+<section class="scene" data-s="9">
+  <div class="kicker">close</div>
+  <h1>VendorLens — know your vendor</h1>
+  <p class="lead">Repo: <a href="https://github.com/warsang/vendorlens">github.com/warsang/vendorlens</a><br/>
+     Demo: <a href="https://vendorlens-demo.pages.dev">vendorlens-demo.pages.dev</a><br/>
+     Evidence in-repo: runs/ (brief + trace), docs/business-plan.pdf, Entire checkpoints per commit</p>
+  <div class="card" style="margin-top:30px">
+    <p>neatlogs: every model call traced · Entire: every commit tied to its agent session ·
+       cfo.ai: pricing, costs, revenue, runway · on-device verdict layer, private by default.</p>
+  </div>
+</section>
+
+<script>
+  const params = new URLSearchParams(location.search);
+  const n = parseInt(params.get("scene") || "1", 10);
+  const el = document.querySelector(`.scene[data-s="${n}"]`);
+  if (el) el.classList.add("on");
+  document.title = "scene " + n;
+</script>
+</body>
+</html>
