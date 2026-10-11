@@ -70,6 +70,44 @@ const AGENT_API = "__AGENT_API__";
 const AGENT_KEY = "__AGENT_KEY__";
 
 const e = React.createElement;
+// When the page is built without an agent gateway (AGENT_API left as the
+// placeholder), Investigate runs a built-in canned investigation result,
+// captured from a real `python -m vendorlens acme-cloud-services.example
+// --demo` run (run 21199f99, see runs/ in the repo). The public page then
+// has zero backend: the verdict renders and the on-device jev-web model
+// scores the homepage text entirely in the browser.
+const AGENT_CONNECTED = !/^__.*__$/.test(AGENT_API);
+const CANNED_VERDICT = {
+  ok: true, input: 'acme-cloud-services.example', domain: 'acme-cloud-services.example',
+  resolved_from: null, mode: 'demo', run_id: '21199f99',
+  verdict: {
+    score: 48, band: 'MEDIUM',
+    headline: 'MEDIUM risk',
+    summary: 'urlscan.io holds 2 of 3 scan verdict(s) marked malicious (phishing); 2 negative report(s) found in web search. (discounted: corroborating registry, certificate and firmographic evidence outweigh a keyword search hit)',
+    retries: {}, signals_count: 5,
+  },
+  signals: [
+    { signal: 'certificate_history', weight: -6, detail: '14 certificate(s) in transparency logs covering 4 name(s).', sources: ['demo: canned crt.sh response'] },
+    { signal: 'certificate_history_long', weight: -8, detail: 'Certificates publicly logged since 2022 (more than three years of continuity).', sources: ['demo: canned crt.sh response'] },
+    { signal: 'urlscan_malicious', weight: 40, detail: 'urlscan.io holds 2 of 3 scan verdict(s) marked malicious (phishing).', sources: ['demo: canned urlscan response'] },
+    { signal: 'scam_phrases', weight: 10, detail: 'Homepage contains high-risk phrases: wire transfer, ends tonight, limited offer, telegram @, no company registration. (discounted: corroborating registry, certificate and firmographic evidence outweigh a keyword search hit)', sources: ['demo: canned homepage'] },
+    { signal: 'negative_reports', weight: 12, detail: '2 negative report(s) found in web search. (discounted: corroborating registry, certificate and firmographic evidence outweigh a keyword search hit)', sources: ['https://example-forum.example/t/12345', 'https://example-reviews.example/acme'] },
+  ],
+  sources: ['demo: canned crt.sh response', 'demo: canned homepage', 'demo: canned urlscan response', 'https://example-forum.example/t/12345', 'https://example-reviews.example/acme'],
+  tools: [
+    { name: 'rdap_lookup', ok: true, error: null },
+    { name: 'doh_dns', ok: true, error: null },
+    { name: 'tls_inspect', ok: true, error: null },
+    { name: 'ct_logs', ok: true, error: null },
+    { name: 'urlscan_reputation', ok: true, error: null },
+    { name: 'phishtank_check', ok: true, error: null },
+    { name: 'fetch_homepage', ok: true, error: null },
+    { name: 'web_search_reports', ok: true, error: null },
+    { name: 'crustdata_enrich', ok: true, error: null },
+  ],
+  homepage_text: "Acme Cloud Services - Cut your cloud bill by 90% overnight!\nLimited offer ends tonight. No company registration number listed.\nContact us on Telegram @acmeclouddeals. Wire transfer only.\nOur revolutionary AI does everything, trusted by thousands (reviews coming soon).",
+  brief_md: '',
+};
 const QUESTIONS = [
   { type: 'noul', instructions: 'This text shows signs of a scam operation.' },
   { type: 'score', instructions: 'How trustworthy does this vendor appear?',
@@ -151,6 +189,17 @@ function App() {
     if (!q) { setError('Enter a company name or domain.'); return; }
     setLoading(true); setError(''); setResult(null); setExpanded(false);
     setModel({ status: 'idle', answers: null, ms: 0, model: '' });
+    if (!AGENT_CONNECTED) {
+      // No agent gateway baked into this build: replay the canned run so the
+      // public page always demonstrates the full flow, including the
+      // on-device verdict model.
+      await new Promise((r) => setTimeout(r, 350));
+      setResult({ ...CANNED_VERDICT, input: q || CANNED_VERDICT.input,
+        mode: 'demo',
+        resolved_from: null });
+      setLoading(false);
+      return;
+    }
     try {
       const r = await fetch(AGENT_API + '?q=' + encodeURIComponent(q) + '&mode=' + mode,
                             { headers: { 'x-api-key': AGENT_KEY } });
@@ -229,14 +278,19 @@ function App() {
         e('select', { className: 'vl-input', style: { flex: '0 0 auto', minWidth: 'auto', width: 'auto' }, value: mode,
           onChange: (ev) => setMode(ev.target.value) },
           e('option', { value: 'demo' }, 'demo (canned)'),
-          e('option', { value: 'live' }, 'live')),
+          AGENT_CONNECTED ? e('option', { value: 'live' }, 'live') : null),
         e('button', { className: 'vl-btn', onClick: investigate, disabled: loading, id: 'go' },
           loading ? 'Investigating…' : 'Investigate'))),
 
     error ? e(Text, null, e('span', { style: { color: 'var(--color-error,#d23a3a)' } }, error)) : null,
 
     loading ? e(Text, { className: 'vl-tag' }, e('span', { className: 'vl-spin' }),
-      'Running the agent across live sources…') : null,
+      AGENT_CONNECTED ? 'Running the agent across live sources…'
+        : 'Running the agent across the sources…') : null,
+
+    !AGENT_CONNECTED ? e(Text, { className: 'vl-tag', style: { marginTop: '.25rem' } },
+      'Public build: the full OSINT agent runs locally (python -m vendorlens <domain>); '
+      + 'this page replays a captured run and then scores it on-device below.') : null,
 
     verdict ? e(Card, { elevation: 'low', padding: 6 },
       e(Stack, { gap: 4 },
