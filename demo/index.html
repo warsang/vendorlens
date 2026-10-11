@@ -22,7 +22,7 @@
   "imports": {
     "jev-web": "./node_modules/jev-web/src/index.mjs",
     "@huggingface/transformers": "https://cdn.jsdelivr.net/npm/@huggingface/transformers@4.3.0/dist/transformers.min.js",
-    "onnxruntime-web": "https://cdn.jsdelivr.net/npm/onnxruntime-web@1.22.0/dist/ort.web.min.mjs"
+    "onnxruntime-web": "https://cdn.jsdelivr.net/npm/onnxruntime-web@1.22.0/dist/ort.min.mjs"
   }
 }
 </script>
@@ -81,6 +81,7 @@ btn.addEventListener("click", async () => {
     if (!decider) {
       status.textContent = "Loading model weights (first run only)...";
       decider = await createBekkoDecider({
+        wasmPaths: "https://cdn.jsdelivr.net/npm/onnxruntime-web@1.22.0/dist/",
         onProgress: (p) => { status.textContent = "Loading: " + (p.file || p.phase || ""); },
       });
       status.textContent = "Model ready (" + decider.info.model + ").";
@@ -90,7 +91,7 @@ btn.addEventListener("click", async () => {
     const { answers, timings } = await decider.decide(state, QUESTIONS);
     const ms = Math.round(performance.now() - t0);
     status.textContent = "Done in " + ms + " ms on-device (infer " +
-      Math.round(timings?.inferMs ?? 0) + " ms). Zero network requests for the decision itself.";
+      Math.round(timings?.runMs ?? timings?.inferMs ?? 0) + " ms). Zero network requests for the decision itself.";
 
     answers.forEach((a, i) => {
       const div = document.createElement("div");
