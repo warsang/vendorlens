@@ -16,6 +16,8 @@ tag per claim, and links to the public source behind every signal.
   - `docs/demo.mp4`: https://github.com/warsang/vendorlens/blob/main/docs/demo.mp4
     (earlier cut, recorded on an earlier canned dataset; the current `--demo`
     scores CRITICAL, see `examples/suspicious-acme.example/brief.md`)
+  - release asset (streamable/downloadable):
+    https://github.com/warsang/vendorlens/releases/tag/demo
   - slide source: `docs/video-slides.html`; final recording script:
     `docs/demo-script.md`
 - **Storyboard + timings:** `docs/demo-script.md`
@@ -57,6 +59,20 @@ python examples/_regen.py       # regenerate the committed examples
 ```
 
 Every signal, weight and rationale is listed in [`docs/scoring.md`](docs/scoring.md).
+
+## Before / after, with numbers
+
+The archived runs show exactly what the changes bought, with no marketing:
+
+| Change | Before (committed run) | After (committed run) |
+|---|---|---|
+| A failing feed never aborts the run | `runs/example.com/20261011T091433Z/trace.jsonl`: `crustdata_enrich` fails 3x with no API key, the step is recorded as failed and the brief is still produced | With `CRUSTDATA_API_KEY` set on `runs/linear.app/20261011T215820Z`: `crustdata_enrich` ok in 1,526ms, company identified (San Francisco, 51-200 employees), score lands at 2/100 LOW |
+| Retry with backoff before giving up | nothing retried; a flaky source was a lost signal | `runs/amazon.com/20261011T203036Z/trace.jsonl`: `phishtank_check` retries 3x (backoff 4s, 8s, 12s) then gives up cleanly; the other 6 tools finish and the brief is written: LOW 12/100, 5 cited sources |
+| LLM planner replaces the fixed 9-tool plan | fixed plan ran every canned tool (about 29s tool time in demo mode) | `runs/linear.app/20261011T215820Z`: planner picks 6 tools cheapest-first (whois 183ms, dns 24,025ms, tls 270ms, homepage 2,783ms, crustdata 1,526ms, websearch 1,222ms), observer adds no follow-ups |
+| Injected failure is visible in the trace | no way to demo recovery | `--inject-failure` produces `examples/injected-failure-acme.example/trace.jsonl`: fail, retry, recover, run to CRITICAL |
+
+Every number above is copied from `state.json` / `trace.jsonl` in the linked
+runs, not estimated.
 
 ## How it works
 
@@ -113,6 +129,9 @@ structured events in `runs/<domain>/<ts>/trace.jsonl` (the local mirror).
 Signup is manual; the Project API key goes in `NEATLOGS_API_KEY`.
 Dashboard project: `vendorlens-investigation`. Committed live runs were made
 with `neatlogs live tracing: on`.
+Trace evidence screenshot (rendered from the committed
+`runs/linear.app/20261011T215820Z/trace.jsonl`):
+[`docs/neatlogs-trace-evidence.jpg`](docs/neatlogs-trace-evidence.jpg)
 
 ### 2. Entire (checkpoints)
 
@@ -150,7 +169,13 @@ Export the plan at https://cfo.ai/neathacks and include it in the submission.
 ## Building in public
 
 Drafted posts live in [`docs/build-in-public.md`](docs/build-in-public.md);
-posting is human-approved only.
+posting is human-approved only. The three #neatHack posts (kickoff, mid-hack
+retry/backoff update, submission) go out from X before the Oct 12
+7:00-11:55 PM IST window; their links go here on posting:
+
+1. Kickoff (Sat, Oct 10) - link to be added on posting.
+2. Mid-hack update (Sat evening, Oct 10) - link to be added on posting.
+3. Submission post (Oct 12, in the submission window) - link to be added on posting.
 
 ## License
 
