@@ -89,9 +89,12 @@ The repo runs `entire enable --agent opencode` (hooks in `.git/hooks/`,
 plugin in `.opencode/plugins/`), so each commit captures the agent session
 that produced it.
 
-- **Checkpoint (commit 4ef39f1):** https://entire.io/gh/warsang/vendorlens/commit/4ef39f1
-- **Checkpoint ID:** see `entire checkpoint list` output ([`entire/ENTIRE.md`](entire/ENTIRE.md)
-  has the exact steps; checkpoints sync to `origin` and are visible via the link above)
+- **Checkpoint:** https://entire.io/gh/warsang/vendorlens/commit/3d5aab50787672851fdf76de5afa39b6e53e9f69
+- **Checkpoint ID:** `ddf4ab1afdcaae3a8fd47d92a42039f6b891146d` (session
+  `ses_ed301ab4dffeVNSS3Jr92DcdPk`, OpenCode agent, visible via
+  `entire checkpoint list`)
+- Inspect with: `entire checkpoint list`, `entire checkpoint explain ddf4ab1`
+- Setup and steps: [`entire/ENTIRE.md`](entire/ENTIRE.md) · `entire/setup.sh`
 
 ### 3. cfo.ai — the business plan
 
