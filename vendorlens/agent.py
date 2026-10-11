@@ -17,17 +17,23 @@ from . import brief, llm, risk, tracing
 from .tools import TOOLS
 
 DEMO_PLAN = [
-    {"id": "s1", "tool": "whois_lookup",
-     "args": {}, "why": "Domain age is the cheapest strong signal."},
-    {"id": "s2", "tool": "dns_lookup",
-     "args": {}, "why": "Missing MX records suggest a non-business."},
+    {"id": "s1", "tool": "rdap_lookup",
+     "args": {}, "why": "Registration age is the cheapest strong signal."},
+    {"id": "s2", "tool": "doh_dns",
+     "args": {}, "why": "Does the domain resolve, and does it take mail?"},
     {"id": "s3", "tool": "tls_inspect",
      "args": {}, "why": "Certificate hygiene check."},
-    {"id": "s4", "tool": "fetch_homepage",
+    {"id": "s4", "tool": "ct_logs",
+     "args": {}, "why": "Certificate history and subdomains show an established org."},
+    {"id": "s5", "tool": "urlscan_reputation",
+     "args": {}, "why": "Independent web-scan verdicts for the domain."},
+    {"id": "s6", "tool": "phishtank_check",
+     "args": {}, "why": "Is the domain in a verified phishing feed?"},
+    {"id": "s7", "tool": "fetch_homepage",
      "args": {}, "why": "Scam-phrase analysis of vendor copy."},
-    {"id": "s5", "tool": "web_search_reports",
+    {"id": "s8", "tool": "web_search_reports",
      "args": {}, "why": "Independent reports and reviews."},
-    {"id": "s6", "tool": "crustdata_enrich",
+    {"id": "s9", "tool": "crustdata_enrich",
      "args": {}, "why": "Firmographic confirmation of a real company."},
 ]
 

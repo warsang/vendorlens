@@ -73,32 +73,95 @@ def _looks_like_domain(value: str) -> bool:
     return ("." in value) and bool(_TLD_RE.search(value))
 
 
-async def _resolve_company_to_domain(name: str) -> str | None:
-    """Best-effort company name -> official domain via a web search."""
-    import html as _html
+def _hosts_from_html(html_text: str) -> list[str]:
     import re as _re
-    import httpx
-    try:
-        async with httpx.AsyncClient(timeout=12, follow_redirects=True) as c:
-            r = await c.post("https://html.duckduckgo.com/html/",
-                             data={"q": f"{name} official website"},
-                             headers={"User-Agent": "VendorLens/0.2"})
-            r.raise_for_status()
-        # pull out bounce-redirect targets (uddg=) and bare hosts, in order
-        hosts = []
-        for m in _re.finditer(r'uddg=([^&"]+)', r.text):
-            from urllib.parse import unquote, urlparse
-            u = urlparse(unquote(m.group(1)))
+    from urllib.parse import unquote, urlsplit
+    hosts: list[str] = []
+    # ddg wraps outbound links as /l/?uddg=<encoded>, but also emits raw hrefs.
+    for m in _re.finditer(r'uddg=([^&"\'>]+)', html_text):
+        try:
+            u = urlsplit(unquote(m.group(1)))
             if u.netloc:
                 hosts.append(u.netloc.lower())
-        for host in hosts:
-            host = host.split(":")[0]
-            if host.startswith("www."):
-                host = host[4:]
-            if host and host not in _STOP_DOMAINS and _looks_like_domain(host):
-                return host
-    except Exception:
+        except Exception:
+            pass
+    if not hosts:
+        for m in _re.finditer(r'href="(https?://[^"]+)"', html_text):
+            try:
+                u = urlsplit(m.group(1))
+                if u.netloc:
+                    hosts.append(u.netloc.lower())
+            except Exception:
+                pass
+    cleaned = []
+    for h in hosts:
+        h = h.split(":")[0]
+        if h.startswith("www."):
+            h = h[4:]
+        if h and h not in cleaned:
+            cleaned.append(h)
+    return cleaned
+
+
+def _pick_domain(hosts: list[str], name: str) -> str | None:
+    tokens = [t for t in re.findall(r"[a-z0-9]+", name.lower()) if len(t) > 2]
+    pool = [h for h in hosts
+            if h not in _STOP_DOMAINS
+            and "duckduckgo" not in h
+            and _looks_like_domain(h)]
+    if not pool:
         return None
+    key = re.sub(r"[^a-z0-9]", "", name.lower())
+    tld_bonus = {"com": 5, "org": 4, "net": 3, "io": 3, "co": 2, "ai": 2}
+    # "aboutamazon.com" and "dashboard.stripe.com" are real but they are not
+    # where you would verify a counterparty, so prefer the brand apex domain.
+    prefixes = ("about", "dashboard", "login", "accounts", "account",
+                "support", "help", "careers", "jobs", "www", "app")
+
+    def score(h):
+        labels = h.split(".")
+        first = labels[0].replace("-", "")
+        s = 0.0
+        if key and first == key:
+            s += 100
+        elif key and len(first) >= 3 and key.startswith(first):
+            s += 60
+        elif key and len(key) >= 6 and first.startswith(key[:6]):
+            s += 40
+        elif any(t in h for t in tokens):
+            s += 20
+        s += tld_bonus.get(labels[-1], 0)
+        s -= (len(labels) - 2) * 6      # penalty per extra subdomain label
+        s -= len(first) * 0.2
+        if first in prefixes or any(first.startswith(p) for p in prefixes):
+            s -= 8
+        return s
+
+    pool.sort(key=score, reverse=True)
+    return pool[0]
+
+
+async def _resolve_company_to_domain(name: str) -> str | None:
+    """Best-effort company name -> official domain, without any API key.
+
+    Ranks candidate hosts by how much of the company name they contain, so
+    "Acme Cloud" prefers acmecloud.com over the first result on the page.
+    """
+    import httpx
+    for url, data in (
+        ("https://lite.duckduckgo.com/lite/", {"q": f"{name} official website"}),
+        ("https://html.duckduckgo.com/html/", {"q": f"{name} official website"}),
+    ):
+        try:
+            async with httpx.AsyncClient(timeout=15, follow_redirects=True) as c:
+                r = await c.post(url, data=data,
+                                 headers={"User-Agent": "VendorLens/0.2"})
+                r.raise_for_status()
+            picked = _pick_domain(_hosts_from_html(r.text), name)
+            if picked:
+                return picked
+        except Exception:
+            continue
     return None
 
 

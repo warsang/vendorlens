@@ -53,8 +53,33 @@ def plan_with_llm(client, model: str, domain: str) -> list[dict]:
         max_tokens=800,
     )
     import json
-    plan = json.loads(r.choices[0].message.content)
-    return plan["steps"]
+    raw = r.choices[0].message.content or ""
+    try:
+        plan = json.loads(raw)
+    except Exception:
+        # Models occasionally append prose or a second object around the JSON.
+        # Recover the first balanced {...} run rather than failing the run.
+        plan = None
+        start = raw.find("{")
+        if start != -1:
+            depth = 0
+            for i in range(start, len(raw)):
+                ch = raw[i]
+                if ch == "{":
+                    depth += 1
+                elif ch == "}":
+                    depth -= 1
+                    if depth == 0:
+                        try:
+                            plan = json.loads(raw[start:i + 1])
+                        except Exception:
+                            plan = None
+                        break
+    if isinstance(plan, dict):
+        return plan.get("steps") or []
+    if isinstance(plan, list):
+        return plan
+    return []
 
 
 def replan_with_llm(client, model: str, domain: str, state: dict,

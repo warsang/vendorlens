@@ -210,9 +210,10 @@ function App() {
       e(Text, null, 'VendorLens answers the question a phishing detector cannot. '
         + 'A URL checker tells you whether a page is malicious; it cannot tell you '
         + 'whether the company behind it exists. Enter a company name or domain and '
-        + 'an OSINT agent checks registration age, DNS and mail infrastructure, TLS '
-        + 'hygiene, certificate history, business records, and independent reports, '
-        + 'then returns a cited risk verdict.'),
+        + 'an OSINT agent checks registration data, DNS and mail infrastructure, TLS '
+        + 'hygiene, certificate transparency history and subdomains, web-scan '
+        + 'reputation, phishing blocklists, business records and independent reports, '
+        + 'then reasons across them into a cited risk verdict.'),
       e('div', { className: 'vl-diff' },
         e('strong', null, 'This is counterparty due-diligence, not phishing detection.'),
         e(Text, { className: 'vl-tag', style: { marginTop: '.25rem' } },
