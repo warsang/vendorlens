@@ -3,7 +3,7 @@
 <head>
 <meta charset="utf-8" />
 <meta name="viewport" content="width=device-width, initial-scale=1" />
-<title>VendorLens — vendor due-diligence</title>
+<title>VendorLens — is this vendor a real business, or a front?</title>
 <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Figtree:wght@400;500;600;700&display=swap" />
 <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@astryxdesign/core@0.4.1/src/reset.css" />
 <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@astryxdesign/core@0.4.1/dist/astryx.css" />
@@ -28,8 +28,12 @@
   .vl-brand { display: flex; align-items: center; gap: .6rem; font-weight: 700; font-size: 1.05rem; }
   .vl-dot { width: 26px; height: 26px; border-radius: 8px; background: linear-gradient(135deg, var(--color-blue-vivid, #2a7de1), var(--color-violet-vivid, #7a4de1)); }
   .vl-hero h1 { margin: .2rem 0 .4rem; }
+  .vl-diff { margin-top: .7rem; padding: .7rem .95rem;
+    border-left: 3px solid var(--color-blue-vivid, #2a7de1);
+    background: var(--color-background-surface, #fff);
+    border-radius: 0 10px 10px 0; }
   .vl-search { display: flex; gap: .6rem; flex-wrap: wrap; align-items: center; margin-top: 1rem; }
-  .vl-input { flex: 1 1 320px; min-width: 260px; padding: .7rem .9rem; font: inherit;
+  .vl-input { flex: 1 1 360px; min-width: 240px; padding: .7rem .9rem; font: inherit;
     border: 1px solid var(--color-border, #d7d7db); border-radius: var(--radius-container, 12px);
     background: var(--color-background-surface, #fff); }
   .vl-gauge { display:flex; align-items:baseline; gap:.5rem; }
@@ -202,19 +206,26 @@ function App() {
   return e(Stack, { gap: 5 },
     e('div', { className: 'vl-brand' }, e('div', { className: 'vl-dot' }), 'VendorLens'),
     e('div', { className: 'vl-hero' },
-      e(Heading, { level: 1 }, 'Know your vendor before you pay them.'),
-      e(Text, null, 'Type a company name or domain. VendorLens runs an OSINT '
-        + 'due-diligence investigation (registration, DNS, TLS, certificate '
-        + 'history, firmographics, reports) and returns a cited risk verdict. '
-        + 'The final verdict text is scored on-device, so nothing you paste is '
-        + 'sent anywhere.')),
+      e(Heading, { level: 1 }, 'Is this counterparty a real, verifiable business, or a front?'),
+      e(Text, null, 'VendorLens answers the question a phishing detector cannot. '
+        + 'A URL checker tells you whether a page is malicious; it cannot tell you '
+        + 'whether the company behind it exists. Enter a company name or domain and '
+        + 'an OSINT agent checks registration age, DNS and mail infrastructure, TLS '
+        + 'hygiene, certificate history, business records, and independent reports, '
+        + 'then returns a cited risk verdict.'),
+      e('div', { className: 'vl-diff' },
+        e('strong', null, 'This is counterparty due-diligence, not phishing detection.'),
+        e(Text, { className: 'vl-tag', style: { marginTop: '.25rem' } },
+          'It is the check you run before wiring money or sharing data with a vendor, '
+          + 'on the legitimacy signals a URL classifier never sees. The verdict text is '
+          + 'then scored on-device in your browser, so it never leaves the device.'))),
 
     e(Card, { elevation: 'low', padding: 5 },
       e('div', { className: 'vl-search' },
-        e('input', { className: 'vl-input', value: input, placeholder: 'Company name or domain (e.g. Acme Cloud or acme.com)',
+        e('input', { className: 'vl-input', value: input, placeholder: 'Company name or domain to verify (e.g. Acme Cloud or acme.com)',
           onChange: (ev) => setInput(ev.target.value),
           onKeyDown: (ev) => { if (ev.key === 'Enter') investigate(); }, id: 'q' }),
-        e('select', { className: 'vl-input', style: { flex: '0 0 150px' }, value: mode,
+        e('select', { className: 'vl-input', style: { flex: '0 0 auto', minWidth: 'auto', width: 'auto' }, value: mode,
           onChange: (ev) => setMode(ev.target.value) },
           e('option', { value: 'demo' }, 'demo (canned)'),
           e('option', { value: 'live' }, 'live')),
