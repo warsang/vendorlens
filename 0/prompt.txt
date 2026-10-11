@@ -1,0 +1,1 @@
+I ran our repo in https://3-82-224-157.sslip.io/a/e176182e1382 (PreJudge audit, 62/100) - can you look at fixing some/all of this stuff? Make the video demo for me. Prep the script and demo and add it to the github with the link to the pages.dev demo. Also get the entire sessions fixed etc. Basically fix everything you can so we can win this. Make sure to push to main when done.
