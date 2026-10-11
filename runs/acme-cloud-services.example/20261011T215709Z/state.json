@@ -1,0 +1,303 @@
+{
+  "domain": "acme-cloud-services.example",
+  "run_id": "21199f99",
+  "started": "2026-10-11T21:57:09.572361+00:00",
+  "findings": {
+    "rdap_lookup": {
+      "ok": true,
+      "data": {
+        "registered": "created 2024-03-15T00:00:00+00:00",
+        "created": "2024-03-15T00:00:00+00:00",
+        "age_days": 574,
+        "registrar": "Example Registrar, Inc.",
+        "expires": "2027-03-15T00:00:00+00:00",
+        "status": [
+          "client transfer prohibited"
+        ],
+        "nameservers": [
+          "ns1.example-registrar.net"
+        ],
+        "found": true,
+        "_demo": true,
+        "domain": "acme-cloud-services.example"
+      },
+      "sources": [
+        "demo: canned RDAP response"
+      ]
+    },
+    "doh_dns": {
+      "ok": true,
+      "data": {
+        "A": [
+          "93.184.216.34"
+        ],
+        "MX": [
+          "mail.acme-cloud-services.example"
+        ],
+        "NS": [
+          "ns1.example-registrar.net",
+          "ns2.example-registrar.net"
+        ],
+        "TXT": [
+          "v=spf1 include:_spf.example ~all"
+        ],
+        "CNAME": [],
+        "_demo": true,
+        "domain": "acme-cloud-services.example"
+      },
+      "sources": [
+        "demo: canned DoH response"
+      ]
+    },
+    "tls_inspect": {
+      "ok": true,
+      "data": {
+        "issuer": "Example CA",
+        "not_after": "2026-12-01T00:00:00+00:00",
+        "days_left": 52,
+        "self_signed": false,
+        "_demo": true
+      },
+      "sources": [
+        "demo: canned TLS response"
+      ]
+    },
+    "ct_logs": {
+      "ok": true,
+      "data": {
+        "cert_count": 14,
+        "earliest_cert": "2022-06-01T00:00:00+00:00",
+        "latest_cert": "2026-09-30T00:00:00+00:00",
+        "subdomain_count": 4,
+        "issuers": [
+          "Let's Encrypt",
+          "Amazon"
+        ],
+        "_demo": true,
+        "domain": "acme-cloud-services.example"
+      },
+      "sources": [
+        "demo: canned crt.sh response"
+      ]
+    },
+    "urlscan_reputation": {
+      "ok": true,
+      "data": {
+        "total_scans": 3,
+        "malicious_scans": 2,
+        "worst_score": 85,
+        "categories": [
+          "phishing"
+        ],
+        "first_seen": "2026-09-01T00:00:00+00:00",
+        "last_seen": "2026-10-05T00:00:00+00:00",
+        "_demo": true,
+        "domain": "acme-cloud-services.example"
+      },
+      "sources": [
+        "demo: canned urlscan response"
+      ]
+    },
+    "phishtank_check": {
+      "ok": true,
+      "data": {
+        "listed": false,
+        "matching_entries": 0,
+        "sample_urls": [],
+        "feed_entries": 0,
+        "_demo": true,
+        "domain": "acme-cloud-services.example"
+      },
+      "sources": [
+        "demo: canned PhishTank"
+      ]
+    },
+    "fetch_homepage": {
+      "ok": true,
+      "data": {
+        "url": "https://acme-cloud-services.example/",
+        "title": "Acme Cloud Services - Cut your cloud bill by 90%",
+        "text": "Acme Cloud Services - Cut your cloud bill by 90% overnight!\nLimited offer ends tonight. No company registration number listed.\nContact us on Telegram @acmeclouddeals. Wire transfer only.\nOur revolutionary AI does everything, trusted by thousands (reviews coming soon).",
+        "_demo": true
+      },
+      "sources": [
+        "demo: canned homepage"
+      ]
+    },
+    "web_search_reports": {
+      "ok": true,
+      "data": {
+        "query": "acme-cloud-services.example scam reviews complaints",
+        "results": [
+          {
+            "title": "Is acme-cloud-services.example a scam?",
+            "url": "https://example-forum.example/t/12345",
+            "snippet": "Users report paying by wire transfer and never receiving access. Avoid."
+          },
+          {
+            "title": "Acme Cloud Services reviews",
+            "url": "https://example-reviews.example/acme",
+            "snippet": "1.2/5 from 34 reviews. Complaints about fake testimonials."
+          }
+        ],
+        "_demo": true
+      },
+      "sources": [
+        "demo: canned search results"
+      ]
+    },
+    "crustdata_enrich": {
+      "ok": true,
+      "data": {
+        "company_name": "Acme Cloud Services Ltd",
+        "domain": "acme-cloud-services.example",
+        "location": "Austin, TX, USA",
+        "headcount": "11-50",
+        "founded": 2024,
+        "linkedin_url": "https://www.linkedin.com/company/acme-cloud-services",
+        "description": "Cloud cost optimization platform for startups.",
+        "key_people": [
+          {
+            "name": "Jane Doe",
+            "title": "CEO"
+          }
+        ],
+        "found": false,
+        "_demo": true
+      },
+      "sources": [
+        "demo: canned Crustdata response"
+      ]
+    }
+  },
+  "retries": {},
+  "plan_history": [
+    {
+      "id": "s1",
+      "tool": "rdap_lookup",
+      "args": {
+        "domain": "acme-cloud-services.example"
+      },
+      "why": "Registration age is the cheapest strong signal."
+    },
+    {
+      "id": "s2",
+      "tool": "doh_dns",
+      "args": {
+        "domain": "acme-cloud-services.example"
+      },
+      "why": "Does the domain resolve, and does it take mail?"
+    },
+    {
+      "id": "s3",
+      "tool": "tls_inspect",
+      "args": {
+        "domain": "acme-cloud-services.example"
+      },
+      "why": "Certificate hygiene check."
+    },
+    {
+      "id": "s4",
+      "tool": "ct_logs",
+      "args": {
+        "domain": "acme-cloud-services.example"
+      },
+      "why": "Certificate history and subdomains show an established org."
+    },
+    {
+      "id": "s5",
+      "tool": "urlscan_reputation",
+      "args": {
+        "domain": "acme-cloud-services.example"
+      },
+      "why": "Independent web-scan verdicts for the domain."
+    },
+    {
+      "id": "s6",
+      "tool": "phishtank_check",
+      "args": {
+        "domain": "acme-cloud-services.example"
+      },
+      "why": "Is the domain in a verified phishing feed?"
+    },
+    {
+      "id": "s7",
+      "tool": "fetch_homepage",
+      "args": {
+        "domain": "acme-cloud-services.example"
+      },
+      "why": "Scam-phrase analysis of vendor copy."
+    },
+    {
+      "id": "s8",
+      "tool": "web_search_reports",
+      "args": {
+        "domain": "acme-cloud-services.example"
+      },
+      "why": "Independent reports and reviews."
+    },
+    {
+      "id": "s9",
+      "tool": "crustdata_enrich",
+      "args": {
+        "domain": "acme-cloud-services.example"
+      },
+      "why": "Firmographic confirmation of a real company."
+    }
+  ],
+  "assessment": {
+    "domain": "acme-cloud-services.example",
+    "score": 48,
+    "band": "MEDIUM",
+    "signals": [
+      {
+        "signal": "certificate_history",
+        "weight": -6,
+        "detail": "14 certificate(s) in transparency logs covering 4 name(s).",
+        "sources": [
+          "demo: canned crt.sh response"
+        ]
+      },
+      {
+        "signal": "certificate_history_long",
+        "weight": -8,
+        "detail": "Certificates publicly logged since 2022 (more than three years of continuity).",
+        "sources": [
+          "demo: canned crt.sh response"
+        ]
+      },
+      {
+        "signal": "urlscan_malicious",
+        "weight": 40,
+        "detail": "urlscan.io holds 2 of 3 scan verdict(s) marked malicious (phishing).",
+        "sources": [
+          "demo: canned urlscan response"
+        ]
+      },
+      {
+        "signal": "scam_phrases",
+        "weight": 10,
+        "detail": "Homepage contains high-risk phrases: wire transfer, ends tonight, limited offer, telegram @, no company registration. (discounted: corroborating registry, certificate and firmographic evidence outweigh a keyword search hit)",
+        "sources": [
+          "demo: canned homepage"
+        ]
+      },
+      {
+        "signal": "negative_reports",
+        "weight": 12,
+        "detail": "2 negative report(s) found in web search. (discounted: corroborating registry, certificate and firmographic evidence outweigh a keyword search hit)",
+        "sources": [
+          "https://example-forum.example/t/12345",
+          "https://example-reviews.example/acme"
+        ]
+      }
+    ],
+    "sources": [
+      "demo: canned crt.sh response",
+      "demo: canned homepage",
+      "demo: canned urlscan response",
+      "https://example-forum.example/t/12345",
+      "https://example-reviews.example/acme"
+    ]
+  }
+}

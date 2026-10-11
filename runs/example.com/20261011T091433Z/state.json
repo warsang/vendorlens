@@ -1,0 +1,205 @@
+{
+  "domain": "example.com",
+  "run_id": "1de9e421",
+  "started": "2026-10-11T09:14:33.944445+00:00",
+  "findings": {
+    "whois_lookup": {
+      "ok": true,
+      "data": {
+        "registrar": "RESERVED-Internet Assigned Numbers Authority",
+        "creation_date": "1995-08-14T04:00:00+00:00",
+        "age_days": 11381
+      },
+      "sources": [
+        "whois:example.com"
+      ]
+    },
+    "dns_lookup": {
+      "ok": true,
+      "data": {
+        "A": [
+          "104.20.23.154",
+          "172.66.147.243"
+        ],
+        "MX": [
+          "0 ."
+        ],
+        "TXT": [
+          "_k2n1y4vw3qtb4skdx9e7dxt97qrmmq9",
+          "v=spf1 -all"
+        ]
+      },
+      "sources": [
+        "dns:A example.com",
+        "dns:MX example.com",
+        "dns:TXT example.com"
+      ]
+    },
+    "tls_inspect": {
+      "ok": true,
+      "data": {
+        "issuer": "SSL Corporation",
+        "subject_cn": "example.com",
+        "not_after": "2026-12-25T22:56:35+00:00",
+        "days_left": 75,
+        "self_signed": false
+      },
+      "sources": [
+        "tls:example.com:443"
+      ]
+    },
+    "fetch_homepage": {
+      "ok": true,
+      "data": {
+        "url": "https://example.com/",
+        "title": "Example Domain",
+        "text": "This domain is for use in documentation examples without needing permission. This is not a service; avoid relying on it for testing and monitoring purposes."
+      },
+      "sources": [
+        "https://example.com/"
+      ]
+    },
+    "web_search_reports": {
+      "ok": true,
+      "data": {
+        "query": "example.com scam reviews complaints",
+        "results": [
+          {
+            "title": "example.com Reviews | check if site is scam or legit | Scamadviser",
+            "url": "https://www.scamadviser.com/check-website/example.com",
+            "snippet": "Check example.com with our free review tool and find out if example.com is legit and reliable. Need advice? Report scams Check Scamadviser!"
+          },
+          {
+            "title": "example.com Reviews: Is this site a scam or legit?",
+            "url": "https://www.scam-detector.com/validator/example-com-review/",
+            "snippet": "Wondering about the authenticity of example.com? Is it a secure option or a scam? This comprehensive review highlights if it's legit or a scam."
+          },
+          {
+            "title": "examples.com Reviews: Is this site a scam or legit?",
+            "url": "https://www.scam-detector.com/validator/examples-com-review/",
+            "snippet": "Is examples.com legit? Is it a secure bet or could there be potential risks? Check out our analysis review, where we outline if it's a scam or not."
+          },
+          {
+            "title": "ScamAdviser | Check Any Website for Scams & Fraud | Free",
+            "url": "https://www.scamadviser.com/",
+            "snippet": "Don't get scammed online. ScamAdviser's free website checker reveals if a site is legit or hiding fraud, malware, or phishing traps. Check any URL in seconds."
+          },
+          {
+            "title": "If example.com is a legit website, does that mean 123.example.com is?",
+            "url": "https://www.reddit.com/r/Scams/comments/1686a8o/if_examplecom_is_a_legit_website_does_that_mean/",
+            "snippet": "But to the question at hand, I won't ignore the unusual cases where a legit website is compromised and a subdomain may be the scam. Mind you, big brands don't get compromised so any subdomain belonging to a big brand legit website, is a legit subdomain."
+          },
+          {
+            "title": "Example.com reviews | Average Trust Score: 69%",
+            "url": "https://www.scamdoc.com/view/10010",
+            "snippet": "Explore reviews of Example.com on Scamdoc. Discover detailed trust scores, user ratings, and in-depth analysis. Share your experience to help our community make informed decisions."
+          },
+          {
+            "title": "Example.com Review: Safe or Legit? (98/100 Trust Score)",
+            "url": "https://gridinsoft.com/online-virus-scanner/url/example-com",
+            "snippet": "Example.com has 98/100 trust. Details: 31-year domain history, public traffic rank, and no major malware/phishing detections. See reviews and reputation."
+          },
+          {
+            "title": "Example.com Review: Legit or Scam?",
+            "url": "https://eveninsight.com/safety-checker/website/example.com",
+            "snippet": "Example.com Review Example.com is a highly trusted and safe website with an excellent Safety Score. It's a recommended platform for a wide range of services. There's no history of scams, and people trust it a lot. Still look forward to actual user reviews for particular products/services from Exampl"
+          }
+        ]
+      },
+      "sources": [
+        "https://www.scamadviser.com/check-website/example.com",
+        "https://www.scam-detector.com/validator/example-com-review/",
+        "https://www.scam-detector.com/validator/examples-com-review/",
+        "https://www.scamadviser.com/",
+        "https://www.reddit.com/r/Scams/comments/1686a8o/if_examplecom_is_a_legit_website_does_that_mean/",
+        "https://www.scamdoc.com/view/10010",
+        "https://gridinsoft.com/online-virus-scanner/url/example-com",
+        "https://eveninsight.com/safety-checker/website/example.com"
+      ]
+    },
+    "crustdata_enrich": {
+      "ok": false,
+      "error": "gave up after 3: CRUSTDATA_API_KEY not set",
+      "sources": []
+    }
+  },
+  "retries": {
+    "s6": 3
+  },
+  "plan_history": [
+    {
+      "id": "s1",
+      "tool": "whois_lookup",
+      "args": {
+        "domain": "example.com"
+      },
+      "why": "Domain age is the cheapest strong signal."
+    },
+    {
+      "id": "s2",
+      "tool": "dns_lookup",
+      "args": {
+        "domain": "example.com"
+      },
+      "why": "Missing MX records suggest a non-business."
+    },
+    {
+      "id": "s3",
+      "tool": "tls_inspect",
+      "args": {
+        "domain": "example.com"
+      },
+      "why": "Certificate hygiene check."
+    },
+    {
+      "id": "s4",
+      "tool": "fetch_homepage",
+      "args": {
+        "domain": "example.com"
+      },
+      "why": "Scam-phrase analysis of vendor copy."
+    },
+    {
+      "id": "s5",
+      "tool": "web_search_reports",
+      "args": {
+        "domain": "example.com"
+      },
+      "why": "Independent reports and reviews."
+    },
+    {
+      "id": "s6",
+      "tool": "crustdata_enrich",
+      "args": {
+        "domain": "example.com"
+      },
+      "why": "Firmographic confirmation of a real company."
+    }
+  ],
+  "assessment": {
+    "domain": "example.com",
+    "score": 25,
+    "band": "MEDIUM",
+    "signals": [
+      {
+        "signal": "negative_reports",
+        "weight": 25,
+        "detail": "7 negative report(s) found in web search.",
+        "sources": [
+          "https://www.scamadviser.com/check-website/example.com",
+          "https://www.scam-detector.com/validator/example-com-review/",
+          "https://www.scam-detector.com/validator/examples-com-review/",
+          "https://www.scamadviser.com/",
+          "https://www.reddit.com/r/Scams/comments/1686a8o/if_examplecom_is_a_legit_website_does_that_mean/"
+        ]
+      }
+    ],
+    "sources": [
+      "https://www.reddit.com/r/Scams/comments/1686a8o/if_examplecom_is_a_legit_website_does_that_mean/",
+      "https://www.scam-detector.com/validator/example-com-review/",
+      "https://www.scam-detector.com/validator/examples-com-review/",
+      "https://www.scamadviser.com/",
+      "https://www.scamadviser.com/check-website/example.com"
+    ]
+  }
+}
