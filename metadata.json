@@ -1,0 +1,45 @@
+{
+  "cli_version": "0.11.4",
+  "checkpoint_id": "01M4PMYTERDC35T0XZX995KTFG",
+  "strategy": "manual-commit",
+  "branch": "main",
+  "checkpoints_count": 1,
+  "files_touched": [
+    "vendorlens/__main__.py",
+    "vendorlens/agent.py",
+    "vendorlens/aws_lambda.py",
+    "vendorlens/brief.py",
+    "vendorlens/eval.py",
+    "vendorlens/llm.py",
+    "vendorlens/risk.py",
+    "vendorlens/tools/_http.py",
+    "vendorlens/tools/crustdata.py",
+    "vendorlens/tools/ct_logs.py",
+    "vendorlens/tools/dns_tool.py",
+    "vendorlens/tools/doh_dns.py",
+    "vendorlens/tools/homepage.py",
+    "vendorlens/tools/phishtank_check.py",
+    "vendorlens/tools/rdap_lookup.py",
+    "vendorlens/tools/tls_tool.py",
+    "vendorlens/tools/urlscan_reputation.py",
+    "vendorlens/tools/websearch.py",
+    "vendorlens/tools/whois_tool.py",
+    "vendorlens/tracing.py"
+  ],
+  "sessions": [
+    {
+      "metadata": "/0/metadata.json",
+      "transcript": "/0/full.jsonl",
+      "compact_transcript": "/0/transcript.jsonl",
+      "content_hash": "/0/content_hash.txt",
+      "prompt": "/0/prompt.txt"
+    }
+  ],
+  "token_usage": {
+    "input_tokens": 0,
+    "cache_creation_tokens": 0,
+    "cache_read_tokens": 0,
+    "output_tokens": 0,
+    "api_call_count": 0
+  }
+}

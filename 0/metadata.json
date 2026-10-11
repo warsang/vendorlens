@@ -1,0 +1,58 @@
+{
+  "cli_version": "0.11.4",
+  "checkpoint_id": "01M4PMYTERDC35T0XZX995KTFG",
+  "session_id": "ses_ed301ab4dffeVNSS3Jr92DcdPk",
+  "strategy": "manual-commit",
+  "created_at": "2026-10-11T23:32:25.4849175Z",
+  "branch": "main",
+  "checkpoints_count": 1,
+  "save_step_count": 1,
+  "files_touched": [
+    "vendorlens/__main__.py",
+    "vendorlens/agent.py",
+    "vendorlens/aws_lambda.py",
+    "vendorlens/brief.py",
+    "vendorlens/eval.py",
+    "vendorlens/llm.py",
+    "vendorlens/risk.py",
+    "vendorlens/tools/_http.py",
+    "vendorlens/tools/crustdata.py",
+    "vendorlens/tools/ct_logs.py",
+    "vendorlens/tools/dns_tool.py",
+    "vendorlens/tools/doh_dns.py",
+    "vendorlens/tools/homepage.py",
+    "vendorlens/tools/phishtank_check.py",
+    "vendorlens/tools/rdap_lookup.py",
+    "vendorlens/tools/tls_tool.py",
+    "vendorlens/tools/urlscan_reputation.py",
+    "vendorlens/tools/websearch.py",
+    "vendorlens/tools/whois_tool.py",
+    "vendorlens/tracing.py"
+  ],
+  "agent": "OpenCode",
+  "model": "",
+  "turn_id": "be113e35cf74",
+  "compact_transcript_start": 0,
+  "token_usage": {
+    "input_tokens": 0,
+    "cache_creation_tokens": 0,
+    "cache_read_tokens": 0,
+    "output_tokens": 0,
+    "api_call_count": 0
+  },
+  "session_metrics": {
+    "turn_count": 1
+  },
+  "initial_attribution": {
+    "calculated_at": "2026-10-11T23:32:25.470681Z",
+    "agent_lines": 1073,
+    "agent_removed": 417,
+    "human_added": 971,
+    "human_modified": 142,
+    "human_removed": 0,
+    "total_committed": 2186,
+    "total_lines_changed": 2603,
+    "agent_percentage": 57.24164425662697,
+    "metric_version": 2
+  }
+}
