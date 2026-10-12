@@ -68,15 +68,13 @@ import { Card, Stack, Heading, Text, Badge } from '@astryxdesign/core';
 
 // "x-api-key" is a PUBLIC client token for rate/billing attribution, not auth;
 // the endpoint's real protection is external rate limiting + a spend budget.
+// demo/build.py substitutes both values; a page that still holds the
+// placeholders is a build error, not a canned fallback.
 const AGENT_API = "__AGENT_API__";
 const AGENT_KEY = "__AGENT_TOKEN__";
-const EXAMPLE_URL = "./example.json";
 const AGENT_CONNECTED = !/^__.*__$/.test(AGENT_API);
 
 const e = React.createElement;
-// The "Load example" button fetches ./example.json (a committed real brief),
-// so the public page renders a correct verdict with no backend at all.
-const CANNED_VERDICT = null;
 const QUESTIONS = [
   { type: 'noul', instructions: 'This text shows signs of a scam operation.' },
   { type: 'score', instructions: 'How trustworthy does this vendor appear?',
@@ -151,38 +149,27 @@ function SignalRow({ s, idx }) {
 
 function App() {
   const [input, setInput] = React.useState('');
-  const [mode, setMode] = React.useState('demo');
   const [loading, setLoading] = React.useState(false);
   const [result, setResult] = React.useState(null);
   const [error, setError] = React.useState('');
   const [expanded, setExpanded] = React.useState(false);
   const [odel, setModel] = React.useState({ status: 'idle', answers: null, ms: 0, model: '' });
 
-  async function loadExample() {
-    setLoading(true); setError(''); setResult(null); setExpanded(false);
-    try {
-      const r = await fetch(EXAMPLE_URL);
-      const d = await r.json();
-      if (!d.ok) { setError('example.json is not a valid verdict'); return; }
-      setResult(d);
-    } catch (err) {
-      setError('Could not load the example: ' + (err && err.message ? err.message : err));
-    } finally { setLoading(false); }
-  }
-
   async function investigate() {
     const q = input.trim();
-    if (!q) { setError('Enter a company name or domain, or use "Load example".'); return; }
+    if (!q) { setError('Enter a company name or domain.'); return; }
     setLoading(true); setError(''); setResult(null); setExpanded(false);
     setModel({ status: 'idle', answers: null, ms: 0, model: '' });
     if (!AGENT_CONNECTED) {
-      // No agent gateway baked into this public build: load the committed
-      // example so the on-device verdict model still runs end to end.
-      await loadExample();
+      // The build step (demo/build.py) must substitute the live agent gateway
+      // and public client token; there is no canned fallback by design.
+      setError('No live agent endpoint in this build: the __AGENT_API__/__AGENT_TOKEN__ '
+        + 'placeholders were not replaced. Build with: python demo/build.py --out dist');
+      setLoading(false);
       return;
     }
     try {
-      const r = await fetch(AGENT_API + '?q=' + encodeURIComponent(q) + '&mode=' + mode,
+      const r = await fetch(AGENT_API + '?q=' + encodeURIComponent(q) + '&mode=live',
                             { headers: { 'x-api-key': AGENT_KEY } });
       const d = await r.json().catch(() => ({}));
       if (!d.ok) { setError(d.error || ('Error ' + r.status)); return; }
@@ -283,14 +270,8 @@ function App() {
         e('input', { className: 'vl-input', value: input, placeholder: 'Company name or domain to verify (e.g. Acme Cloud or acme.com)',
           onChange: (ev) => setInput(ev.target.value),
           onKeyDown: (ev) => { if (ev.key === 'Enter') investigate(); }, id: 'q' }),
-        e('select', { className: 'vl-input', style: { flex: '0 0 auto', minWidth: 'auto', width: 'auto' }, value: mode,
-          onChange: (ev) => setMode(ev.target.value) },
-          e('option', { value: 'demo' }, 'demo (canned)'),
-          AGENT_CONNECTED ? e('option', { value: 'live' }, 'live') : null),
         e('button', { className: 'vl-btn', onClick: investigate, disabled: loading, id: 'go' },
-          loading ? 'Investigating…' : 'Investigate'),
-        e('button', { className: 'vl-btn ghost', onClick: loadExample, disabled: loading, id: 'example' },
-          'Load example'))),
+          loading ? 'Investigating…' : 'Investigate'))),
 
     e('div', { className: 'vl-tag' },
       'On-device model: ' +
@@ -304,12 +285,11 @@ function App() {
     error ? e(Text, null, e('span', { style: { color: 'var(--color-error,#d23a3a)' } }, error)) : null,
 
     loading ? e(Text, { className: 'vl-tag' }, e('span', { className: 'vl-spin' }),
-      AGENT_CONNECTED ? 'Running the agent across live sources…'
-        : 'Running the agent across the sources…') : null,
+      'Running the agent across live sources…') : null,
 
     !AGENT_CONNECTED ? e(Text, { className: 'vl-tag', style: { marginTop: '.25rem' } },
-      'Public build: the full OSINT agent runs locally (python -m vendorlens <domain>). '
-      + 'Here, "Load example" renders a committed real brief and then scores it on-device below.') : null,
+      'No live agent endpoint in this build: demo/build.py must replace the '
+      + '__AGENT_API__ and __AGENT_TOKEN__ placeholders before deploy.') : null,
 
     verdict ? e(Card, { elevation: 'low', padding: 6 },
       e(Stack, { gap: 4 },

@@ -1,72 +1,79 @@
 #!/usr/bin/env python
 """Build the demo page.
 
-Two supported builds:
+The page is live-only: it always invokes the deployed agent gateway
+(`__AGENT_API__` + public client token `__AGENT_TOKEN__`). This build
+substitutes both values into demo/index.html and FAILS if either is missing
+or any placeholder is left unreplaced.
 
-  public (default)      no backend. Leaves the __AGENT_API__/__AGENT_TOKEN__
-                        placeholders in place so AGENT_CONNECTED is false and
-                        the page uses the "Load example" button (a committed
-                        brief). This is what is committed and deployed to Pages.
+Values come from (in order): --api/--token, the AGENT_API/AGENT_TOKEN env
+vars, or the gitignored deploy/.deploy.local (ENDPOINT= / PUBLIC_TOKEN=).
 
-  backend               substitutes a real gateway URL + public client token
-                        from --api/--token (or AGENT_API/AGENT_TOKEN env) and
-                        FAILS if any placeholder is left unreplaced.
-
-Examples:
-    python demo/build.py --public --out dist
-    python demo/build.py --out dist --api https://...execute-api... --token TOK
+Example:
+    python demo/build.py --out dist
+    wrangler pages deploy dist --project-name vendorlens-demo
 """
 from __future__ import annotations
 
 import argparse
 import os
+import shutil
 import sys
 from pathlib import Path
 
-SRC = Path(__file__).resolve().parent / "index.html"
+HERE = Path(__file__).resolve().parent
+SRC = HERE / "index.html"
 PLACEHOLDERS = ("__AGENT_API__", "__AGENT_TOKEN__")
+DEPLOY_LOCAL = HERE.parent / "deploy" / ".deploy.local"
+
+
+def from_deploy_local() -> dict:
+    values: dict[str, str] = {}
+    if DEPLOY_LOCAL.exists():
+        for line in DEPLOY_LOCAL.read_text(encoding="utf-8").splitlines():
+            line = line.strip()
+            if line and not line.startswith("#") and "=" in line:
+                key, _, value = line.partition("=")
+                values[key.strip()] = value.strip()
+    return values
 
 
 def build(out: Path, api: str | None, token: str | None) -> int:
+    missing = [flag for flag, value in (("--api/AGENT_API", api),
+                                        ("--token/AGENT_TOKEN", token))
+               if not value]
+    if missing:
+        sys.stderr.write(
+            "error: the demo page is live-only; missing " + ", ".join(missing) + ".\n"
+            "Pass both --api and --token, set AGENT_API/AGENT_TOKEN, or fill the\n"
+            f"gitignored {DEPLOY_LOCAL} (ENDPOINT=, PUBLIC_TOKEN=).\n")
+        return 2
     html = SRC.read_text(encoding="utf-8")
-    if api is not None:
-        html = html.replace("__AGENT_API__", api)
-    if token is not None:
-        html = html.replace("__AGENT_TOKEN__", token)
+    html = html.replace("__AGENT_API__", api).replace("__AGENT_TOKEN__", token)
     left = [p for p in PLACEHOLDERS if p in html]
-    if api is not None or token is not None:
-        # A backend build must not ship any unreplaced placeholder.
-        if left:
-            sys.stderr.write(
-                f"error: placeholders left unreplaced: {left}\n"
-                f"pass both --api and --token, or use --public for the "
-                f"no-backend build.\n")
-            return 2
+    if left:  # defensive: the source must not ship a placeholder in a live build
+        sys.stderr.write(f"error: placeholders left unreplaced: {left}\n")
+        return 2
     out.mkdir(parents=True, exist_ok=True)
     (out / "index.html").write_text(html, encoding="utf-8")
     # copy the vendored assets the page references
-    import shutil
-    for name in ("example.json", "jeveb", "vendor", ".nojekyll"):
-        src = Path(__file__).resolve().parent / name
+    for name in ("jeveb", "vendor", ".nojekyll"):
+        src = HERE / name
         if src.is_dir():
             shutil.copytree(src, out / name, dirs_exist_ok=True)
         elif src.exists():
             shutil.copy(src, out / name)
-    kind = "public (no backend)" if api is None else "backend"
-    print(f"built {kind} -> {out}  placeholders remaining: {left or 'none'}")
+    print(f"built live demo -> {out}  (agent endpoint + client token substituted)")
     return 0
 
 
 def main() -> int:
+    local = from_deploy_local()
     ap = argparse.ArgumentParser()
-    ap.add_argument("--public", action="store_true",
-                    help="build the no-backend page (keeps placeholders)")
     ap.add_argument("--out", default="dist")
-    ap.add_argument("--api", default=os.environ.get("AGENT_API"))
-    ap.add_argument("--token", default=os.environ.get("AGENT_TOKEN"))
+    ap.add_argument("--api", default=os.environ.get("AGENT_API") or local.get("ENDPOINT"))
+    ap.add_argument("--token", default=os.environ.get("AGENT_TOKEN") or local.get("PUBLIC_TOKEN"))
     a = ap.parse_args()
-    if a.public:
-        return build(Path(a.out), None, None)
     return build(Path(a.out), a.api, a.token)
 
 

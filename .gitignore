@@ -15,6 +15,7 @@ build/
 .opencode/
 .pytest_cache/
 demo/_dist/
+/dist/
 deploy/_build/
 deploy/*.zip
 deploy/.deploy.local

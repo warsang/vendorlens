@@ -1,9 +1,9 @@
 # Deploy the live VendorLens endpoint (AWS Lambda)
 
-The public demo page works with **zero backend** (the "Load example" button
-renders a committed brief). This endpoint is the optional live "Investigate"
-path: a domain/company name goes in, a fresh investigation runs, and the page
-renders the verdict.
+The public demo page at `https://vendorlens-demo.pages.dev` is **live-only**:
+**Investigate** invokes this endpoint (a domain/company name goes in, a fresh
+investigation runs, and the page renders the verdict). There is no canned
+fallback in the page or in this deployment.
 
 ## Live resources (deployed)
 
@@ -43,13 +43,18 @@ curl "https://gxqk0fcwne.execute-api.us-east-1.amazonaws.com?q=stripe.com&mode=n
   -H "x-api-key: $VENDORLENS_API_KEY"     # -> LOW (live tools)
 ```
 
-## Optional backend demo build
+## Build + deploy the demo page
+
+The committed `demo/index.html` keeps the `__AGENT_API__`/`__AGENT_TOKEN__`
+placeholders; the build must substitute the real endpoint and public token
+(it fails if either is missing). `demo/build.py` reads the gitignored
+`deploy/.deploy.local` automatically, or take explicit flags:
 
 ```bash
 python demo/build.py --out dist \
   --api "https://gxqk0fcwne.execute-api.us-east-1.amazonaws.com" \
   --token "$VENDORLENS_API_KEY"
-# then deploy dist/ to Cloudflare Pages
+wrangler pages deploy dist --project-name vendorlens-demo
 ```
 
 ## Remaining hardening (needs your input)
@@ -68,4 +73,4 @@ python demo/build.py --out dist \
 The `x-api-key` header is a **public client token** for rate/billing
 attribution, NOT authentication: the real protections are the throttle,
 reserved concurrency, the pinned `ALLOWED_ORIGIN`, and the budget ceiling.
-Never commit the token; the committed `demo/index.html` keeps placeholders.
+Never commit the token; only the built `dist/` page contains it.

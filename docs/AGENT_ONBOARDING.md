@@ -61,11 +61,14 @@ card on a paid plan.
 
 ## 5. Demo page
 
+The page is live-only: the build substitutes the deployed gateway URL and the
+public client token (from `--api`/`--token`, the env, or the gitignored
+`deploy/.deploy.local`) and fails if either is missing.
+
 ```bash
-cd demo
-python build.py --public --out dist     # no-backend build (Load example)
-# or a backend build: python build.py --out dist --api <URL> --token <TOKEN>
-python -m http.server -d dist 8000
+python demo/build.py --out dist         # reads deploy/.deploy.local
+python -m http.server -d dist 8000      # localhost is not the pinned origin
+wrangler pages deploy dist --project-name vendorlens-demo
 ```
 
 ## 6. Release checklist
@@ -77,7 +80,9 @@ python -m http.server -d dist 8000
 - [ ] cfo.ai plan exported and linked; no card left on a paid plan.
 - [ ] Lambda: ALLOWED_ORIGIN pinned (not `*`), per-IP rate limit + daily budget
       alarm set, reserved concurrency configured, domain strict-validated.
-- [ ] Demo page loads from a clean clone and via "Load example".
+- [ ] Demo page built from a clean clone (`python demo/build.py --out dist`)
+      and deployed live (a real domain returns a fresh verdict at
+      https://vendorlens-demo.pages.dev).
 - [ ] Record <=3 min video (docs/demo-script.md), show neatlogs + Entire + cfo.ai.
 - [ ] Repo public; commits within Oct 10-12; no secrets in history.
 - [ ] Submit in the Oct 12 7:00-11:55 PM IST window, quote-posting neatlogs.

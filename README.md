@@ -8,10 +8,12 @@ tag per claim, and links to the public source behind every signal.
 
 ## Demo
 
-- **Live demo page (public, zero keys):** https://vendorlens-demo.pages.dev
-  Open it, hit **Load example** to render a committed brief, and the Bekko
-  17m typed-decision model scores the text **in the browser** (zero network
-  after the ~29 MB of weights load; no text leaves the device).
+- **Live demo page:** https://vendorlens-demo.pages.dev — enter a company name
+  or domain; the page invokes the deployed agent (AWS Lambda) for a fresh
+  investigation, then the Bekko 17m typed-decision model scores the returned
+  homepage text **in the browser** (zero network after the ~29 MB of weights
+  load; that text never leaves the device). The page is live-only — no canned
+  replay; build/deploy steps in [`demo/README.md`](demo/README.md).
 - **Demo video (2:58, covers neatlogs + Entire + cfo.ai):**
   - `docs/demo.mp4`: https://github.com/warsang/vendorlens/blob/main/docs/demo.mp4
   - release asset (streamable/downloadable):
@@ -170,10 +172,10 @@ The plan export lives at https://cfo.ai/neathacks.
 - `--inject-failure` is a fault injection flag for demoing recovery.
 - The public endpoint treats `x-api-key` as a **public client token** (rate
   attribution), not authentication; protection is external rate limiting, a
-  spend budget, and a pinned `ALLOWED_ORIGIN`. A live endpoint is deployed for
-  optional use (function `vendorlens-agent`, HTTP API `gxqk0fcwne`; setup and
-  re-deploy steps in [`deploy/README.md`](deploy/README.md)); the public page
-  above runs backend-free.
+  spend budget, and a pinned `ALLOWED_ORIGIN`. The deployed live endpoint
+  (function `vendorlens-agent`, HTTP API `gxqk0fcwne`) is what the public demo
+  page invokes; setup and re-deploy steps in
+  [`deploy/README.md`](deploy/README.md).
 
 ## Building in public
 
