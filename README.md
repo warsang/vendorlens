@@ -62,7 +62,7 @@ Every signal, weight and rationale is listed in [`docs/scoring.md`](docs/scoring
 
 ## Before / after, with numbers
 
-The archived runs show exactly what the changes bought, with no marketing:
+The archived runs show what the changes bought:
 
 | Change | Before (committed run) | After (committed run) |
 |---|---|---|
@@ -71,8 +71,7 @@ The archived runs show exactly what the changes bought, with no marketing:
 | LLM planner replaces the fixed 9-tool plan | fixed plan ran every canned tool (about 29s tool time in demo mode) | `runs/linear.app/20261011T215820Z`: planner picks 6 tools cheapest-first (whois 183ms, dns 24,025ms, tls 270ms, homepage 2,783ms, crustdata 1,526ms, websearch 1,222ms), observer adds no follow-ups |
 | Injected failure is visible in the trace | no way to demo recovery | `--inject-failure` produces `examples/injected-failure-acme.example/trace.jsonl`: fail, retry, recover, run to CRITICAL |
 
-Every number above is copied from `state.json` / `trace.jsonl` in the linked
-runs, not estimated.
+Sources for every number: `state.json` / `trace.jsonl` in the linked runs.
 
 ## How it works
 
@@ -147,7 +146,7 @@ each commit captures the agent session that produced it.
 
 Inputs are in [`docs/business-plan-inputs.md`](docs/business-plan-inputs.md)
 (margins, unit economics, runway and breakeven are internally consistent).
-Export the plan at https://cfo.ai/neathacks and include it in the submission.
+The plan export lives at https://cfo.ai/neathacks.
 
 ## Honest limitations
 
@@ -184,7 +183,6 @@ MIT, see [`LICENSE`](LICENSE).
 ## Submission
 
 - Public repo: `warsang/vendorlens` (commits Oct 10-12, 2026).
-- Submission: quote post of the official neatlogs X post with team
-  (`solohackaton`), name, project, repo, demo link, Entire checkpoint
-  link + ID, cfo.ai plan, and neatlogs trace links, inside the Oct 12
-  7:00-11:55 PM IST window.
+- The planned submission is a quote post of the official neatlogs X post
+  inside the Oct 12 7:00-11:55 PM IST window, pointing at team `solohackaton`,
+  this repo, the demo page and the evidence linked above.
