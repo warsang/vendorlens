@@ -6,7 +6,10 @@ Free tier for the hackathon: credits with promo code NEATLOGS-OCT2026.
 
 Endpoint: POST /company/enrich with {"domains": [...]}. Every call is wrapped
 so any failure degrades gracefully (the agent records the miss and continues
-with the other tools). In --demo mode, canned data is returned instead.
+with the other tools). A 400/404 means Crustdata cannot match the domain
+(e.g. a reserved TLD such as .example): that is a no-record answer, returned
+as found=false, not a tool failure. In --demo mode, canned data is returned
+instead.
 """
 from __future__ import annotations
 
@@ -55,6 +58,13 @@ async def run(args: dict, ctx: dict) -> dict:
                                  "locations", "social_profiles"],
                       "exact_match": True},
             )
+            if r.status_code in (400, 404):
+                # Crustdata rejects domains it cannot match (e.g. reserved
+                # TLDs like .example) with 400: that is a no-record answer,
+                # not an outage, so report it like rdap_lookup does. Auth,
+                # rate-limit and server errors still surface below.
+                return {"ok": True, "data": {"found": False},
+                        "sources": [f"{BASE}/company/enrich"]}
             r.raise_for_status()
             payload = r.json()
             entries = payload if isinstance(payload, list) else \
