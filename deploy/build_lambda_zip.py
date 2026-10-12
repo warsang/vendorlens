@@ -4,9 +4,9 @@
     python deploy/build_lambda_zip.py            # -> deploy/vendorlens-lambda.zip
 
 Installs only the packages the handler actually imports at runtime (httpx,
-openai, dnspython, trafilatura) plus the `vendorlens` package, and writes a
-zip ready for `aws lambda update-function-code`. neatlogs stays an optional
-import (tracing degrades to a no-op without it).
+openai, dnspython, trafilatura, lxml_html_clean) plus the `vendorlens`
+package, and writes a zip ready for `aws lambda update-function-code`.
+neatlogs stays an optional import (tracing degrades to a no-op without it).
 """
 from __future__ import annotations
 
@@ -19,8 +19,11 @@ from pathlib import Path
 ROOT = Path(__file__).resolve().parent.parent
 BUILD = ROOT / "deploy" / "_build"
 ZIP = ROOT / "deploy" / "vendorlens-lambda.zip"
-DEPS = ["httpx", "openai", "dnspython", "trafilatura", "neatlogs",
-        "python-whois"]
+# lxml_html_clean: lxml>=5 moved lxml.html.clean (used by trafilatura at
+# runtime) into this separate package; installing lxml alone leaves a
+# Runtime.ImportModuleError on cold start.
+DEPS = ["httpx", "openai", "dnspython", "trafilatura", "lxml_html_clean",
+        "neatlogs", "python-whois"]
 
 
 def main() -> int:

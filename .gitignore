@@ -13,6 +13,7 @@ __pycache__/
 build/
 
 .opencode/
+.openchamber/
 .pytest_cache/
 demo/_dist/
 /dist/
