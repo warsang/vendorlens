@@ -47,7 +47,7 @@ Real briefs + traces live in [`examples/`](examples/README.md):
 | [`examples/stripe.com`](examples/stripe.com/brief.md) | live | LOW 0/100 | Established vendor: long cert history, DMARC enforced, HSTS/CSP, all cited |
 | [`examples/github.com`](examples/github.com/brief.md) | live | LOW 0/100 | Same, from live OSINT with no keys |
 | [`examples/suspicious-acme.example`](examples/suspicious-acme.example/brief.md) | canned | CRITICAL 100/100 | Young domain + PhishTank/urlscan listings + self-signed cert + scam copy |
-| [`examples/young-startup.example`](examples/young-startup.example/brief.md) | canned | MEDIUM 29/100 | The hard borderline case, honestly scored |
+| [`examples/young-startup.example`](examples/young-startup.example/brief.md) | canned | MEDIUM 29/100 | The borderline case near the LOW/MEDIUM boundary |
 | [`examples/injected-failure-acme.example`](examples/injected-failure-acme.example/trace.jsonl) | canned | CRITICAL | Failure -> retry -> recovery visible in `trace.jsonl` |
 
 Offline eval (re-scores the committed runs, no network):
@@ -150,7 +150,7 @@ The plan export lives at https://cfo.ai/neathacks.
 
 ## Honest limitations
 
-- Weights are expert-chosen, not learned; the offline eval scores 7 labelled
+- Weights are expert-chosen heuristics; the offline eval scores 7 labelled
   cached runs and domain classification is subjective near the LOW/MEDIUM
   boundary. See `docs/scoring.md`.
 - `dns_lookup` (UDP/53), `whois_lookup` (TCP/43) and `tls_inspect` (direct
@@ -159,8 +159,7 @@ The plan export lives at https://cfo.ai/neathacks.
 - `httpx` honors proxy env vars. If you hit `Invalid port: ':1]'`, your
   `no_proxy` contains `[::1]`, which httpx misparses; override with
   `export no_proxy='localhost,127.0.0.1,::1,198.19.0.1,198.19.0.2'`.
-- `--inject-failure` is labelled fault injection for demoing recovery, not a
-  real outage.
+- `--inject-failure` is a fault injection flag for demoing recovery.
 - The public endpoint treats `x-api-key` as a **public client token** (rate
   attribution), not authentication; protection is external rate limiting, a
   spend budget, and a pinned `ALLOWED_ORIGIN`.
