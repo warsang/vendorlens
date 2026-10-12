@@ -19,25 +19,45 @@ from pathlib import Path
 ROOT = Path(__file__).resolve().parent.parent
 BUILD = ROOT / "deploy" / "_build"
 ZIP = ROOT / "deploy" / "vendorlens-lambda.zip"
-DEPS = ["httpx", "openai", "dnspython", "trafilatura"]
+DEPS = ["httpx", "openai", "dnspython", "trafilatura", "neatlogs",
+        "python-whois"]
 
 
 def main() -> int:
     if BUILD.exists():
         shutil.rmtree(BUILD)
     BUILD.mkdir(parents=True)
-    print("installing runtime deps into the build dir...")
+    print("installing runtime deps into the build dir (linux/manylinux wheels)...")
     subprocess.run([sys.executable, "-m", "pip", "install", "-q",
-                    "--target", str(BUILD), *DEPS], check=True)
+                    "--target", str(BUILD),
+                    "--only-binary=:all:",
+                    "--platform", "manylinux2014_x86_64",
+                    "--platform", "manylinux_2_28_x86_64",
+                    "--platform", "manylinux_2_34_x86_64",
+                    "--python-version", "3.12",
+                    "--implementation", "cp",
+                    "--abi", "cp312", *DEPS], check=True)
     print("copying the vendorlens package...")
     shutil.copytree(ROOT / "vendorlens", BUILD / "vendorlens",
                     ignore=shutil.ignore_patterns("__pycache__", "*.pyc"))
     # the handler entry point is vendorlens.aws_lambda.lambda_handler
     if ZIP.exists():
         ZIP.unlink()
+    # Skip files that are not needed at runtime (tests, metadata, stubs,
+    # setuptools) to stay under the 50 MB direct-upload limit.
+    def keep(rel: Path) -> bool:
+        parts = rel.parts
+        if "__pycache__" in parts:
+            return False
+        if any(p in ("tests", "test", "testing") for p in parts):
+            return False
+        if rel.suffix in (".pyi", ".md", ".rst"):
+            return False
+        return True
+
     with zipfile.ZipFile(ZIP, "w", zipfile.ZIP_DEFLATED) as z:
         for p in BUILD.rglob("*"):
-            if p.is_file():
+            if p.is_file() and keep(p.relative_to(BUILD)):
                 z.write(p, p.relative_to(BUILD))
     size = ZIP.stat().st_size / 1e6
     print(f"wrote {ZIP.relative_to(ROOT)}  ({size:.1f} MB)")

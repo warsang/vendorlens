@@ -1,94 +1,71 @@
 # Deploy the live VendorLens endpoint (AWS Lambda)
 
 The public demo page works with **zero backend** (the "Load example" button
-renders a committed brief). This endpoint is only needed if you want the live
-"Investigate" path: a domain/company name goes in, a fresh investigation runs,
-and the page renders the verdict + the on-device model scores the homepage text.
+renders a committed brief). This endpoint is the optional live "Investigate"
+path: a domain/company name goes in, a fresh investigation runs, and the page
+renders the verdict.
 
-Everything below runs against **your** AWS account. Authenticate first with
-`aws login` (device flow) in this repo's directory, then run the steps in order.
-The agent could not run these because the AWS session was expired.
+## Live resources (deployed)
 
-## 1. Build the deployment zip
+| Resource | Value |
+|---|---|
+| Function | `vendorlens-agent` (python3.12, handler `vendorlens.aws_lambda.lambda_handler`, 300s, 1024 MB) |
+| Execution role | `vendorlens-lambda-role` (AWSLambdaBasicExecutionRole) |
+| API | `vendorlens-api` (HTTP API `gxqk0fcwne`), `$default` stage, Lambda proxy |
+| Endpoint | `https://gxqk0fcwne.execute-api.us-east-1.amazonaws.com` |
+| Hardening | reserved concurrency **2**, route throttle **5/s burst 10**, budget `vendorlens-monthly` ($10/mo) |
+| Client token | env `VENDORLENS_API_KEY` on the function; `ALLOWED_ORIGIN=https://vendorlens-demo.pages.dev` |
 
-```bash
-python deploy/build_lambda_zip.py        # -> deploy/vendorlens-lambda.zip (~32 MB)
-```
+Live keys (`LITELLM_*`, `CRUSTDATA_API_KEY`, `NEATLOGS_API_KEY`) are set as
+Lambda env vars, never in the repo.
 
-It bundles the `vendorlens` package and only the runtime deps the handler
-imports (`httpx`, `openai`, `dnspython`, `trafilatura`); `neatlogs` is optional
-and degrades to a no-op if absent.
-
-## 2. Create the function
-
-```bash
-ROLE_ARN=arn:aws:iam::<account>:role/<lambda-basic-execution-role>   # create if needed
-PUBLIC_TOKEN=$(openssl rand -hex 16)                                  # a public client token, not auth
-
-aws lambda create-function \
-  --function-name vendorlens \
-  --runtime python3.12 \
-  --handler vendorlens.aws_lambda.lambda_handler \
-  --role "$ROLE_ARN" \
-  --zip-file fileb://deploy/vendorlens-lambda.zip \
-  --timeout 60 --memory-size 512 \
-  --environment "Variables={ALLOWED_ORIGIN=https://vendorlens-demo.pages.dev,VENDORLENS_API_KEY=$PUBLIC_TOKEN}"
-
-# Cap blast radius / spend:
-aws lambda put-function-concurrency \
-  --function-name vendorlens --reserved-concurrent-executions 2
-```
-
-Optional env for live LLM + enrichment (leave unset to stay keyless/demo):
-`NEATLOGS_API_KEY`, `CRUSTDATA_API_KEY`, `LITELLM_API_BASE`, `LITELLM_API_KEY`,
-`LITELLM_MODEL`.
-
-## 3. Put it behind an HTTPS API with throttling
+## Rebuild + deploy a code change
 
 ```bash
-# HTTP API in front of the function
-aws apigatewayv2 create-api --name vendorlens-api --protocol-type HTTP \
-  --target "arn:aws:lambda:<region>:<account>:function:vendorlens"
-
-# Per-route throttle (a global ceiling; add WAF for true per-IP limits)
-aws apigatewayv2 update-stage --api-id <API_ID> --stage-name '$default' \
-  --default-route-settings ThrottlingRateLimit=5,ThrottlingBurstLimit=10
+python deploy/build_lambda_zip.py          # -> deploy/vendorlens-lambda.zip (~40 MB)
+aws lambda update-function-code \
+  --function-name vendorlens-agent \
+  --zip-file fileb://deploy/vendorlens-lambda.zip
+aws lambda wait function-updated --function-name vendorlens-agent
 ```
 
-For genuine **per-IP** rate limiting, attach an AWS WAF rate-based rule to the
-stage (`aws wafv2 create-web-acl` with a `RateBasedStatement`, e.g. 100 req / 5
-min per IP). Reserved concurrency (step 2) already hard-caps runaway spend.
-
-## 4. A hard spend ceiling
-
-```bash
-aws budgets create-budget --account-id <account> \
-  --budget '{"BudgetName":"vendorlens-monthly","BudgetLimit":{"Amount":"5","Unit":"USD"},"TimeUnit":"MONTHLY","BudgetType":"COST"}' \
-  --notifications-with-subscribers '[{"Notification":{"NotificationType":"ACTUAL","ComparisonOperator":"GREATER_THAN","Threshold":80,"ThresholdType":"PERCENTAGE"},"Subscribers":[{"SubscriptionType":"EMAIL","Address":"<you@example.com>"}]}]'
-```
-
-## 5. Point the page at it (optional backend build)
-
-```bash
-python demo/build.py --out dist \
-  --api "https://<API_ID>.execute-api.<region>.amazonaws.com/<stage>" \
-  --token "$PUBLIC_TOKEN"
-# then deploy dist/ to Cloudflare Pages (wrangler pages deploy dist)
-```
-
-The `x-api-key` header is a **public client token** for rate/billing
-attribution, NOT authentication: the real protections are the route throttle,
-reserved concurrency, the pinned `ALLOWED_ORIGIN`, and the budget alarm. Never
-commit the token; the committed `demo/index.html` keeps placeholders and is the
-no-backend build.
+`build_lambda_zip.py` installs **manylinux** wheels (`pip --platform
+manylinux* --only-binary=:all:`) so native modules like `pydantic_core` run on
+Lambda's Linux; it keeps package metadata (some imports read their version)
+and drops only tests/stubs/docs.
 
 ## Verify
 
 ```bash
-curl "https://<API_ID>.execute-api.<region>.amazonaws.com/$default?q=stripe.com&mode=nollm" \
-  -H "x-api-key: $PUBLIC_TOKEN"
-# -> {"ok": true, "verdict": {"band": "LOW", ...}}
+curl "https://gxqk0fcwne.execute-api.us-east-1.amazonaws.com?q=acme-cloud-services.example&mode=demo" \
+  -H "x-api-key: $VENDORLENS_API_KEY"     # -> CRITICAL 100/100
+curl "https://gxqk0fcwne.execute-api.us-east-1.amazonaws.com?q=stripe.com&mode=nollm" \
+  -H "x-api-key: $VENDORLENS_API_KEY"     # -> LOW (live tools)
 ```
 
-Then load the deployed page from a phone on cellular and run one live
-investigation end to end.
+## Optional backend demo build
+
+```bash
+python demo/build.py --out dist \
+  --api "https://gxqk0fcwne.execute-api.us-east-1.amazonaws.com" \
+  --token "$VENDORLENS_API_KEY"
+# then deploy dist/ to Cloudflare Pages
+```
+
+## Remaining hardening (needs your input)
+
+- **Budget notification:** attach an email to `vendorlens-monthly`
+  (`aws budgets create-notification`) or in the console (Budgets -> the budget
+  -> Add notification). No email is exposed via the API, so this needs you.
+- **Per-IP rate limiting:** route throttling is a global ceiling. For true
+  per-IP limits, attach an AWS WAF rate-based rule to the stage
+  (`aws wafv2 create-web-acl` with a RateBasedStatement, then
+  `associate-web-acl` on the stage ARN).
+- **Root account:** the CLI session used `arn:aws:iam::<account>:root`.
+  Prefer a scoped IAM user or role with permission only on this function for
+  day-to-day deploys.
+
+The `x-api-key` header is a **public client token** for rate/billing
+attribution, NOT authentication: the real protections are the throttle,
+reserved concurrency, the pinned `ALLOWED_ORIGIN`, and the budget ceiling.
+Never commit the token; the committed `demo/index.html` keeps placeholders.

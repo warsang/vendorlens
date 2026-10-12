@@ -170,8 +170,10 @@ The plan export lives at https://cfo.ai/neathacks.
 - `--inject-failure` is a fault injection flag for demoing recovery.
 - The public endpoint treats `x-api-key` as a **public client token** (rate
   attribution), not authentication; protection is external rate limiting, a
-  spend budget, and a pinned `ALLOWED_ORIGIN`. The optional AWS deployment
-  (Lambda + throttling + budget alarm) is scripted in [`deploy/README.md`](deploy/README.md).
+  spend budget, and a pinned `ALLOWED_ORIGIN`. A live endpoint is deployed for
+  optional use (function `vendorlens-agent`, HTTP API `gxqk0fcwne`; setup and
+  re-deploy steps in [`deploy/README.md`](deploy/README.md)); the public page
+  above runs backend-free.
 
 ## Building in public
 
