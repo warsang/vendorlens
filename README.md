@@ -126,11 +126,13 @@ traced (model, messages, latency, tokens), one root `WORKFLOW` span per run
 with a nested child span per tool step. Tool executions also land as
 structured events in `runs/<domain>/<ts>/trace.jsonl` (the local mirror).
 Signup is manual; the Project API key goes in `NEATLOGS_API_KEY`.
-Dashboard project: `vendorlens-investigation`. Committed live runs were made
-with `neatlogs live tracing: on`.
-Trace evidence screenshot (rendered from the committed
-`runs/linear.app/20261011T215820Z/trace.jsonl`):
-[`docs/neatlogs-trace-evidence.jpg`](docs/neatlogs-trace-evidence.jpg)
+Dashboard project: `vendorlens-investigation` (https://app.neatlogs.com).
+Committed live runs were made with `neatlogs live tracing: on`.
+
+neatlogs trace evidence, rendered from the committed run
+`runs/linear.app/20261011T215820Z/trace.jsonl`:
+
+![neatlogs trace evidence](docs/neatlogs-trace-evidence.jpg)
 
 ### 2. Entire (checkpoints)
 
