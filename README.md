@@ -60,18 +60,26 @@ python examples/_regen.py       # regenerate the committed examples
 
 Every signal, weight and rationale is listed in [`docs/scoring.md`](docs/scoring.md).
 
-## Before / after, with numbers
+## What changed, with evidence
 
-The archived runs show what the changes bought:
+Every row links to a committed `trace.jsonl` / `state.json` (raw archives
+under [`runs/`](runs/README.md)) or a corrected brief under `examples/`. Live
+source counts drift between runs, so treat any single score as one heuristic
+result, not a fixed number.
 
-| Change | Before (committed run) | After (committed run) |
+| Improvement | Before | After (committed evidence) |
 |---|---|---|
-| A failing feed never aborts the run | `runs/example.com/20261011T091433Z/trace.jsonl`: `crustdata_enrich` fails 3x with no API key, the step is recorded as failed and the brief is still produced | With `CRUSTDATA_API_KEY` set on `runs/linear.app/20261011T215820Z`: `crustdata_enrich` ok in 1,526ms, company identified (San Francisco, 51-200 employees), score lands at 2/100 LOW |
-| Retry with backoff before giving up | nothing retried; a flaky source was a lost signal | `runs/amazon.com/20261011T203036Z/trace.jsonl`: `phishtank_check` retries 3x (backoff 4s, 8s, 12s) then gives up cleanly; the other 6 tools finish and the brief is written: LOW 12/100, 5 cited sources |
-| LLM planner replaces the fixed 9-tool plan | fixed plan ran every canned tool (about 29s tool time in demo mode) | `runs/linear.app/20261011T215820Z`: planner picks 6 tools cheapest-first (whois 183ms, dns 24,025ms, tls 270ms, homepage 2,783ms, crustdata 1,526ms, websearch 1,222ms), observer adds no follow-ups |
-| Injected failure is visible in the trace | no way to demo recovery | `--inject-failure` produces `examples/injected-failure-acme.example/trace.jsonl`: fail, retry, recover, run to CRITICAL |
+| Citations resolve to the signal's own source | earlier briefs numbered sources per signal, so every row cited `[1]` (`tests/test_brief.py` is the regression guard) | `examples/*/brief.md`: each `[n]` maps to that signal's own source |
+| The corroboration discount is honest | it fired on any one signal and named evidence that had not run | `risk.py` requires >= 2 independent tools and names only what fired (`tests/test_risk.py`); see `examples/stripe.com/brief.md` |
+| Retry only what can change, and log recovery | `runs/amazon.com/20261011T203036Z/trace.jsonl`: fixed sleeps retried even a deterministic "feed too large" error | `examples/injected-failure-acme.example/trace.jsonl`: a classified transient failure retries with jitter and a cap, then emits `tool_recovered` |
+| Adaptive, capped replanning | fixed plan only | `examples/suspicious-acme.example/trace.jsonl`: a `replan` event adds the phishing-feed check because the domain is young |
+| Claims are verified across sources | no cross-source check | `verify.py` tags corroborated / single-source / contradicted; the brief renders a Confidence column and a "What we could not verify" list (`examples/*/brief.md`) |
+| A failing feed never aborts the run | `runs/example.com/20261011T091433Z/trace.jsonl`: `crustdata_enrich` fails (no key) and the run still completes | `examples/linear.app/brief.md` and the other live examples list failures under "What we could not verify" |
 
-Sources for every number: `state.json` / `trace.jsonl` in the linked runs.
+Sources for every number: `state.json` / `trace.jsonl` in the linked runs and
+the briefs under `examples/`. The archived `linear.app` run is a historical
+live LLM-planned run; its trace backs the neatlogs screenshot (its pre-fix
+`brief.md` is not committed, see `runs/README.md`).
 
 ## How it works
 
