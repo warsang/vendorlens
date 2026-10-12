@@ -9,14 +9,14 @@ checkpoint, and the cfo.ai plan.
 
 ## Status
 
-- An **earlier cut** is committed at `docs/demo.mp4` (1:44, release asset:
-  https://github.com/warsang/vendorlens/releases/tag/demo). It was recorded
-  on an earlier canned dataset that scored MEDIUM 48/100; the current `--demo`
-  suspicious scenario scores CRITICAL 100/100 (see
-  `examples/suspicious-acme.example/brief.md`). Slide source:
-  `docs/video-slides.html`.
-- **Record the final cut** (below) before submission, from the current build,
-  so the on-screen verdict matches the committed examples.
+- The committed `docs/demo.mp4` (2:41) is built from `docs/video-slides.html`
+  with `python docs/build_video.py` (headless scene screenshots + Windows SAPI
+  narration + ffmpeg) and reflects the current behaviour: CRITICAL 100/100 for
+  the canned suspicious run, classified retry/recovery, the confidence column,
+  and the corrected business-plan numbers.
+- The GitHub release asset at `releases/tag/demo` should be refreshed with the
+  current mp4 (re-upload is a GitHub UI step).
+- Re-record or rebuild any time; keep it under 3 minutes.
 
 ## Final script
 

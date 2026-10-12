@@ -12,14 +12,12 @@ tag per claim, and links to the public source behind every signal.
   Open it, hit **Load example** to render a committed brief, and the Bekko
   17m typed-decision model scores the text **in the browser** (zero network
   after the ~29 MB of weights load; no text leaves the device).
-- **Demo video (covers neatlogs + Entire + cfo.ai):**
+- **Demo video (2:41, covers neatlogs + Entire + cfo.ai):**
   - `docs/demo.mp4`: https://github.com/warsang/vendorlens/blob/main/docs/demo.mp4
-    (earlier cut, recorded on an earlier canned dataset; the current `--demo`
-    scores CRITICAL, see `examples/suspicious-acme.example/brief.md`)
   - release asset (streamable/downloadable):
     https://github.com/warsang/vendorlens/releases/tag/demo
-  - slide source: `docs/video-slides.html`; final recording script:
-    `docs/demo-script.md`
+  - built from `docs/video-slides.html` with `python docs/build_video.py`
+    (headless slides + SAPI narration + ffmpeg); re-run it to rebuild the mp4
 - **Storyboard + timings:** `docs/demo-script.md`
 
 ## Quickstart

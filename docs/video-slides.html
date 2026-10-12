@@ -49,112 +49,117 @@
 <body>
 
 <!-- 1 · title -->
-<section class="scene" data-s="1">
+<section class="scene" data-s="1" data-narration="I built VendorLens for neatHack 2026. Give it a company domain, and an AI agent runs a due-diligence investigation, adapts when things go wrong, and writes a cited risk brief. It uses neatlogs for tracing, Entire for checkpoints, and cfo.ai for the business plan.">
   <div class="kicker">neatHack 2026 · team solohackaton · solo build</div>
   <h1>VendorLens<br/>know your vendor before you wire</h1>
   <p class="lead">An AI agent that runs a full OSINT due-diligence investigation on a
-     company domain, recovers from failures, and writes a cited risk brief.
+     company domain, adapts and recovers from failures, and writes a cited risk brief.
      Every model call traced in neatlogs. Every commit tied to its agent session with Entire.
      Business plan from cfo.ai.</p>
   <div style="margin-top:26px" class="dim">github.com/warsang/vendorlens</div>
-  <div class="tf">Demo video · 2:30 · all three mandatory tools covered</div>
+  <div class="tf">Demo video · all three mandatory tools covered</div>
 </section>
 
 <!-- 2 · problem -->
-<section class="scene" data-s="2">
+<section class="scene" data-s="2" data-narration="A URL checker tells you whether a page is malicious. It cannot tell you whether the company behind it exists. Before money or data goes to a new vendor, somebody has to check registration, DNS, certificates, scans, reviews and company records. VendorLens answers that with evidence.">
   <div class="kicker">the problem</div>
   <h1>&ldquo;Is this counterparty a real business, or a front?&rdquo;</h1>
   <p class="lead">A URL checker tells you whether a page is malicious. It cannot tell you
-     whether the company behind it exists. Before money or data goes to a new vendor, somebody
-     has to check registration, DNS, certificates, scans, reviews and company records.</p>
+     whether the company behind it exists.</p>
   <div class="card" style="margin-top:34px">
     <h3>VendorLens answers with evidence, not vibes</h3>
-    <p>Nine OSINT tools, a planner that orders them, an observer that replans on surprises,
-       weighted risk signals, and a brief where every claim cites the tool and source behind it.</p>
+    <p>Eleven OSINT tools, a planner that orders them, an observer that replans on surprises,
+       weighted risk signals across three layers, and a brief where every claim cites the tool
+       and source behind it and carries a confidence tag.</p>
   </div>
 </section>
 
 <!-- 3 · agent live -->
-<section class="scene" data-s="3">
+<section class="scene" data-s="3" data-narration="Run one command. The agent plans eight keyless OSINT checks, cheapest and highest signal first. Then the observer notices the domain is only thirty-eight days old, and adds a phishing-feed check. That check lists the domain in PhishTank. The verdict is critical: one hundred out of one hundred, with every signal cited to its own source.">
   <div class="kicker">the agent · live run (canned mode, zero keys)</div>
   <h2 style="font-size:26px">python -m vendorlens acme-cloud-services.example --demo</h2>
   <div class="terminal">
     <div class="term-head"><span class="dot" style="background:#ff5f57"></span><span class="dot" style="background:#febc2e"></span><span class="dot" style="background:#28c840"></span></div>
     <div><span class="dim">$</span> python -m vendorlens acme-cloud-services.example --demo</div>
-    <div class="dim">[planner] 9 steps, cheapest high-signal first</div>
+    <div class="dim">[planner] 8 steps, cheapest high-signal first</div>
     <div>  s1 rdap_lookup      <span class="dim">registration age: cheapest strong signal</span></div>
-    <div>  s2 doh_dns          <span class="dim">does it resolve; does it take mail?</span></div>
+    <div>  s2 doh_dns          <span class="dim">resolves? takes mail? SPF / DMARC?</span></div>
     <div>  s3 tls_inspect      <span class="dim">certificate hygiene</span></div>
     <div>  s4 ct_logs          <span class="dim">certificate history + subdomains</span></div>
     <div>  s5 urlscan_reputation <span class="dim">independent web-scan verdicts</span></div>
-    <div>  s6 phishtank_check  <span class="dim">verified phishing feed?</span></div>
-    <div>  s7 fetch_homepage   <span class="dim">scam-phrase analysis</span></div>
-    <div>  s8 web_search_reports <span class="dim">independent reports</span></div>
-    <div>  s9 crustdata_enrich <span class="dim">firmographics of a real company</span></div>
-    <div style="margin-top:10px"><span class="green">VERDICT: MEDIUM (48/100)</span>  <span class="dim">9/9 tools ok · run 21199f99</span></div>
-    <div class="dim">artifacts: runs/acme-cloud-services.example/&lt;ts&gt;/ → brief.md, state.json, trace.jsonl</div>
+    <div>  s6 fetch_homepage   <span class="dim">scam copy + security posture</span></div>
+    <div>  s7 web_search_reports <span class="dim">independent reports</span></div>
+    <div>  s8 crustdata_enrich <span class="dim">firmographics of a real company</span></div>
+    <div><span class="purple">[observer · rule]</span> young domain → add a phishing-feed check</div>
+    <div>  s9 phishtank_check  <span class="red">LISTED</span> <span class="dim">verified phishing feed</span></div>
+    <div style="margin-top:10px"><span class="red">VERDICT: CRITICAL (100/100)</span>  <span class="dim">9 tools · every signal cited</span></div>
+    <div class="dim">artifacts: runs/&lt;domain&gt;/&lt;ts&gt;/ → brief.md, state.json, trace.jsonl</div>
   </div>
-  <div class="grid" style="margin-top:18px">
-    <div class="card"><h3 class="amber">urlscan_malicious +40</h3><p>2 of 3 scan verdicts marked malicious (phishing)</p></div>
-    <div class="card"><h3 class="green">certificates since 2022 -14</h3><p>14 certs in transparency logs, 4 subdomains</p></div>
+  <div class="grid" style="margin-top:16px">
+    <div class="card"><h3 class="red">listed_in_phishtank +55</h3><p>found by the rule-based replan, not the base plan</p></div>
+    <div class="card"><h3 class="amber">urlscan_malicious +40</h3><p>3 of 5 scan verdicts marked malicious (phishing)</p></div>
+    <div class="card"><h3 class="amber">self_signed_cert +25</h3><p>and only one certificate ever issued, covering one name</p></div>
   </div>
 </section>
 
 <!-- 4 · failure + recovery -->
-<section class="scene" data-s="4">
+<section class="scene" data-s="4" data-narration="When a source fails, the agent does not die. Retries are classified: only transient failures like five-hundred errors, rate limits and timeouts are retried, with jitter and a cap. Deterministic failures are recorded once. Recovery is an explicit event in the trace, and I can reproduce the whole sequence with one fault-injection flag.">
   <div class="kicker">the agent · failure, retry, recovery</div>
   <h2>When a source fails, the run continues</h2>
   <div class="terminal">
     <div class="term-head"><span class="dot" style="background:#ff5f57"></span><span class="dot" style="background:#febc2e"></span><span class="dot" style="background:#28c840"></span></div>
-    <div class="dim"># runs/amazon.com/20261011T203036Z/trace.jsonl (real live run)</div>
-    <div><span class="amber">tool_retry</span> phishtank_check attempt 1: PhishTank HTTP 503</div>
-    <div><span class="amber">tool_retry</span> phishtank_check attempt 2: PhishTank HTTP 503 <span class="dim">(backoff 2s → 4s)</span></div>
-    <div><span class="amber">tool_retry</span> phishtank_check attempt 3: PhishTank HTTP 503 <span class="dim">(backoff 8s)</span></div>
-    <div><span class="red">gave up after 3</span> — recorded as a failed step, run continues</div>
-    <div class="green">run_end score 12 band LOW — brief still written, every claim still cited</div>
+    <div class="dim"># examples/injected-failure-acme.example/trace.jsonl (current code)</div>
+    <div><span class="amber">tool_retry</span> ct_logs attempt 1: simulated 503 (fault injection)</div>
+    <div><span class="amber">tool_retry</span> ct_logs attempt 2: simulated 503 (fault injection)</div>
+    <div><span class="green">tool_recovered</span> ct_logs attempts: 3 <span class="dim">(transient only, jitter + cap)</span></div>
   </div>
-  <p class="lead" style="margin-top:22px">Per-step retry with exponential backoff <span class="dim">(vendorlens/agent.py:62)</span>,
-     failures never fatal <span class="dim">(agent.py:78)</span>, and the whole sequence lives in the trace.</p>
+  <div class="grid" style="margin-top:16px">
+    <div class="card"><h3>Classified retries</h3><p>Only 429 / 5xx / timeout retry. A 404 or NXDOMAIN is recorded once, with no wasted sleeps.</p></div>
+    <div class="card"><h3>Reproducible</h3><p><span class="blue">--inject-failure ct_logs:2</span> fails the first two attempts so the recovery is visible on camera.</p></div>
+  </div>
+  <p class="lead" style="margin-top:18px">The archived <span class="dim">runs/amazon.com/…/trace.jsonl</span> shows the earlier
+     behaviour: fixed sleeps retried even a deterministic "feed too large" error.</p>
 </section>
 
 <!-- 5 · neatlogs -->
-<section class="scene" data-s="5">
+<section class="scene" data-s="5" data-narration="Every planner and observer call is traced in neatlogs: one workflow span per investigation, with a nested span for each tool step, including arguments, outcome and latency. The same events are mirrored to a local trace file that is committed in the repo, so you can read the evidence without an account.">
   <div class="kicker">mandatory tool 1 · neatlogs</div>
   <h2>Every planner and observer call, traced</h2>
   <div class="code">
     <span class="purple">import</span> neatlogs<br/>
     neatlogs.init(api_key=..., endpoint=<span class="green">"https://ingest.neatlogs.com"</span>, workflow_name=<span class="green">"vendorlens-investigation"</span>)<br/>
     client = neatlogs.wrap(OpenAI(base_url=LITELLM_API_BASE))  <span class="dim"># auto-traces every model call</span><br/>
-    <span class="purple">with</span> neatlogs.trace(<span class="green">"vendorlens-investigation"</span>, kind=<span class="green">"WORKFLOW"</span>): <span class="dim"># one root trace per run</span>
+    <span class="purple">with</span> neatlogs.trace(<span class="green">"vendorlens-investigation"</span>, kind=<span class="green">"WORKFLOW"</span>): <span class="dim"># one root trace per run</span><br/>
+    &nbsp;&nbsp;&nbsp;&nbsp;<span class="purple">with</span> trace_tool(<span class="green">"rdap_lookup"</span>): ...  <span class="dim"># nested TOOL span per step</span>
   </div>
   <div class="grid" style="margin-top:18px">
     <div class="card"><h3>What lands in the dashboard</h3>
-      <p>Model, messages, latency, tokens for each planner/observer call; tool executions as structured events; one root WORKFLOW span per investigation.</p></div>
+      <p>Model, messages, latency and tokens for each call; one root WORKFLOW span per investigation with a nested span per tool step.</p></div>
     <div class="card"><h3>What lands in the repo</h3>
-      <p>The same tool events append to <span class="blue">runs/&lt;domain&gt;/&lt;ts&gt;/trace.jsonl</span> — committed evidence judges can read without an account.</p></div>
+      <p>The same tool events append to <span class="blue">runs/&lt;domain&gt;/&lt;ts&gt;/trace.jsonl</span> — committed evidence you can read without an account.</p></div>
   </div>
-  <div style="margin-top:16px" class="dim">Dashboard: app.neatlogs.com · live run proof: runs/linear.app/20261011T215820Z (LLM-planned, live tools, traced)</div>
+  <div style="margin-top:16px" class="dim">Dashboard: app.neatlogs.com · committed trace: runs/linear.app/20261011T215820Z</div>
 </section>
 
 <!-- 6 · Entire -->
-<section class="scene" data-s="6">
+<section class="scene" data-s="6" data-narration="Every commit is tied to the agent session behind it with Entire. The checkpoint records the decisions, the diffs and the context, and the checkpoint link and ID go into the submission.">
   <div class="kicker">mandatory tool 2 · Entire</div>
   <h2>Every commit links to the agent session behind it</h2>
   <div class="terminal">
     <div class="term-head"><span class="dot" style="background:#ff5f57"></span><span class="dot" style="background:#febc2e"></span><span class="dot" style="background:#28c840"></span></div>
     <div class="dim">$ entire checkpoint list</div>
-    <div class="green">checkpoint</div> <span class="dim">commit 4ef39f1… · agent session attached · branch main</span>
+    <div><span class="green">checkpoint</span> <span class="dim">ddf4ab1… · agent session attached · branch main</span></div>
     <div class="dim">$ entire checkpoint explain HEAD</div>
     <div>Checkpoint ties the commit to the OpenCode session that produced it:</div>
     <div class="dim">decisions, diffs and context stay with the repository.</div>
-    <div style="margin-top:8px"><span class="blue">entire.io/gh/warsang/vendorlens/commit/&lt;sha&gt;</span></div>
+    <div style="margin-top:8px"><span class="blue">entire.io/gh/warsang/vendorlens/commit/3d5aab5</span></div>
   </div>
   <p class="lead" style="margin-top:20px">Checkpoint link + ID in the README and the submission post.
      Sessions for every commit synced to the forge.</p>
 </section>
 
 <!-- 7 · cfo.ai -->
-<section class="scene" data-s="7">
+<section class="scene" data-s="7" data-narration="The business plan was built in cfo.ai: pricing tiers, unit economics, revenue scenarios, runway and break-even. Team margin is about sixty-five percent once enrichment is counted, and the plan breaks even at around one hundred and fifteen paying teams.">
   <div class="kicker">mandatory tool 3 · cfo.ai</div>
   <h2>Planned as a business, not just a build</h2>
   <div class="grid">
@@ -165,39 +170,39 @@
         <tr><th>Enterprise</th><td>custom · SSO, DPA</td></tr>
       </table></div>
     <div class="card"><h3>Unit economics</h3>
-      <p>~$0.04 blended model cost per investigation · ~$0.10 Crustdata enrichment (Team+) · gross margin ~80–85%.</p></div>
+      <p>~$0.04 blended model cost per investigation · ~$0.10 company enrichment per live run · Team margin ~65% at full use.</p></div>
     <div class="card"><h3>Year-1 revenue scenarios</h3>
       <p>Conservative $288k ARR · Base ~$1.0M ARR · Optimistic $2.7M ARR.</p></div>
-    <div class="card"><h3>Costs &amp; runway</h3>
-      <p>Burn ~$16k/mo · $250k pre-seed · ~15 months runway to profitability at ~450 paying teams.</p></div>
+    <div class="card"><h3>Runway &amp; break-even</h3>
+      <p>$250k pre-seed · ~15.6 months of cash at $16k/mo burn · break-even at ~115 paying teams.</p></div>
   </div>
   <div style="margin-top:18px" class="dim">Full plan: docs/business-plan.pdf · inputs: docs/business-plan-inputs.md · cfo.ai/neathacks</div>
 </section>
 
 <!-- 8 · on-device -->
-<section class="scene" data-s="8">
+<section class="scene" data-s="8" data-narration="The verdict layer runs in the browser. A typed-decision model scores the text on device. About twenty-nine megabytes of weights load once, and after that the decision makes zero network requests, so the vendor text never leaves the device.">
   <div class="kicker">the verdict layer · on-device</div>
   <h2>Scored in your browser, not on a server</h2>
   <div class="grid">
     <div>
-      <div class="bar-row"><span class="bar-lbl">scam operation?</span><div class="bar-track"><div class="bar-fill" style="width:89.5%;background:var(--amber)"></div></div><span class="bar-val">89.5%</span></div>
-      <div class="bar-row"><span class="bar-lbl">trustworthy (level 3)</span><div class="bar-track"><div class="bar-fill" style="width:31.8%;background:var(--blue)"></div></div><span class="bar-val">31.8%</span></div>
-      <div class="bar-row"><span class="bar-lbl">dominant risk signal</span><div class="bar-track"><div class="bar-fill" style="width:80.4%;background:var(--red)"></div></div><span class="bar-val">80.4%</span></div>
+      <div class="bar-row"><span class="bar-lbl">signs of a scam operation? (no)</span><div class="bar-track"><div class="bar-fill" style="width:94.5%;background:var(--green)"></div></div><span class="bar-val">94.5%</span></div>
+      <div class="bar-row"><span class="bar-lbl">trust level 3 of 4</span><div class="bar-track"><div class="bar-fill" style="width:33.2%;background:var(--blue)"></div></div><span class="bar-val">33.2%</span></div>
+      <div class="bar-row"><span class="bar-lbl">dominant risk: suspicious payment</span><div class="bar-track"><div class="bar-fill" style="width:78.7%;background:var(--red)"></div></div><span class="bar-val">78.7%</span></div>
       <div class="card" style="margin-top:16px"><p>Bekko 17m typed-decision model via jev-web + onnxruntime-web.
-        About 29 MB of weights load once, then the decision makes <strong>zero network requests</strong>.
-        Verdict text never leaves the device.</p></div>
+        The model preloads on page open with a progress bar, then the decision makes
+        <strong>zero network requests</strong>. Verdict text never leaves the device.</p></div>
     </div>
     <div class="card" style="display:flex;flex-direction:column;justify-content:center">
       <div class="pill">public demo</div>
       <h3 style="margin:14px 0"><a href="https://vendorlens-demo.pages.dev">vendorlens-demo.pages.dev</a></h3>
-      <p>Paste a vendor's homepage text, hit Investigate: the risk brief renders, then the
-         on-device bars fill in. No API key, no account, no data leaving the browser.</p>
+      <p>Hit Load example: the committed risk brief renders, then the on-device bars fill in.
+         No account, no API key, no data leaving the browser.</p>
     </div>
   </div>
 </section>
 
 <!-- 9 · close -->
-<section class="scene" data-s="9">
+<section class="scene" data-s="9" data-narration="Repo and demo are linked below. VendorLens: know your vendor before you wire.">
   <div class="kicker">close</div>
   <h1>VendorLens — know your vendor</h1>
   <p class="lead">Repo: <a href="https://github.com/warsang/vendorlens">github.com/warsang/vendorlens</a><br/>

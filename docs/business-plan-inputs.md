@@ -61,11 +61,33 @@ teams at SMBs doing 20-200 vendor onboardings a year.
 
 ## Moat
 
-Cited-evidence briefs (every claim sourced and confidence-tagged), a
-keyless/low-cost per-check OSINT stack that needs no enterprise contract, and
-an on-device private scoring layer. (Roadmap, NOT yet built: a local cache of
-past investigations forming a vendor-risk graph. The current code does not
-retain a cross-run graph, so it is not claimed as a shipped moat.)
+- Cited-evidence briefs: every claim links to a public source and carries a
+  confidence tag (corroborated / single-source / contradicted).
+- A keyless, low-cost OSINT stack: cents per check, no enterprise contract.
+- An on-device private verdict layer: verdict text never leaves the browser.
+- Roadmap (NOT shipped): a cross-run cache of past investigations. The code
+  does not retain a vendor-risk graph today, so it is not claimed as a moat.
+
+## Plan correction notes (for a cfo.ai re-export)
+
+The exported plan (`docs/business-plan.pdf`) already reconciles the runway
+figures (15.6 months of cash, break-even ~115-135 teams, Team margin ~65% at
+full use). Two wording items remain that the code does not support; correct
+these when re-exporting:
+
+1. **Moat.** Delete the "Accumulated vendor-risk graph" paragraph (the code
+   does not retain a cross-run graph of domains/registrants/hosting). Replace
+   with the shipped moat: cited-evidence briefs, a keyless low-cost OSINT
+   stack, and the on-device private verdict layer. A cross-run cache is
+   roadmap, not shipped.
+2. **Crustdata.** Change "Crustdata enrichment per enriched investigation
+   (Team+ only)" to per **live investigation** (the agent calls it on every
+   live run today); note that gating it to Team+ is a roadmap cost lever.
+
+Everything else (pricing, scenarios, burn, runway, break-even) is consistent
+with the code and needs no change.
+
+
 
 ## Competitive landscape
 
