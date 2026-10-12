@@ -9,14 +9,17 @@ checkpoint, and the cfo.ai plan.
 
 ## Status
 
-- The committed `docs/demo.mp4` (2:41) is built from `docs/video-slides.html`
-  with `python docs/build_video.py` (headless scene screenshots + Windows SAPI
-  narration + ffmpeg) and reflects the current behaviour: CRITICAL 100/100 for
-  the canned suspicious run, classified retry/recovery, the confidence column,
-  and the corrected business-plan numbers.
-- The GitHub release asset at `releases/tag/demo` should be refreshed with the
-  current mp4 (re-upload is a GitHub UI step).
-- Re-record or rebuild any time; keep it under 3 minutes.
+- The committed `docs/demo.mp4` (2:58) is built from `docs/video-slides.html`
+  with `python docs/build_video.py --audio <narration>` (headless scene
+  screenshots + a single pre-recorded narration track + ffmpeg; slides are
+  timed to the narration and cuts snap to pauses). It reflects the current
+  behaviour: CRITICAL 100/100 for the canned suspicious run, classified
+  retry/recovery, the confidence column, and the corrected business-plan
+  numbers. The narration track is the MiniMax Expressive Narrator mp3.
+- The GitHub release asset at `releases/tag/demo` is current (4.7 MB, same as
+  `docs/demo.mp4`).
+- Rebuild any time: `python docs/build_video.py --audio <mp3>`; keep it under
+  3 minutes.
 
 ## Final script
 

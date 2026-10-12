@@ -12,7 +12,7 @@ tag per claim, and links to the public source behind every signal.
   Open it, hit **Load example** to render a committed brief, and the Bekko
   17m typed-decision model scores the text **in the browser** (zero network
   after the ~29 MB of weights load; no text leaves the device).
-- **Demo video (2:41, covers neatlogs + Entire + cfo.ai):**
+- **Demo video (2:58, covers neatlogs + Entire + cfo.ai):**
   - `docs/demo.mp4`: https://github.com/warsang/vendorlens/blob/main/docs/demo.mp4
   - release asset (streamable/downloadable):
     https://github.com/warsang/vendorlens/releases/tag/demo
